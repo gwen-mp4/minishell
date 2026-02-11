@@ -41,9 +41,11 @@ typedef struct s_node
 	int				type;
 	char			*value;
 	char			*arg;
-	struct t_node	*next;
+	struct s_node	*next;
+	struct s_node	*previous;
 }	t_node;
 
 char	*parsing(char *cmd);
+t_node  *create_node(char *str, int len, t_node *list);
 
 #endif
