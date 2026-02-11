@@ -38,6 +38,8 @@ typedef struct s_node
     char    *value;
     char    *arg;
     t_node  next;
-}   t_node
+}   t_node;
+
+void    parsing(char *cmd);
 
 #endif
