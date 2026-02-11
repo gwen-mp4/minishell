@@ -1,0 +1,43 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: storck <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/11 10:49:54 by storck            #+#    #+#             */
+/*   Updated: 2026/02/11 10:49:56 by storck           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef MINISHELL_H
+# define MINISHELL_H
+
+# include <curses.h>
+# include <dirent.h>
+# include <fcntl.h>
+# include <readline/history.h>
+# include <readline/readline.h>
+# include <signal.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <string.h>
+# include <sys/ioctl.h>
+# include <sys/resource.h>
+# include <sys/stat.h>
+# include <sys/time.h>
+# include <sys/types.h>
+# include <sys/wait.h>
+# include <termios.h>
+# include <term.h>
+# include <unistd.h>
+
+typedef struct s_node
+{
+    int     type;
+    char    *value;
+    char    *arg;
+    t_node  next;
+}   t_node
+
+#endif
