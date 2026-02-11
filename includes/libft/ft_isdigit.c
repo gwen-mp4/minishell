@@ -1,27 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: storck <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/11 11:54:48 by storck            #+#    #+#             */
-/*   Updated: 2026/02/11 14:09:31 by storck           ###   ########.fr       */
+/*   Created: 2025/11/10 10:01:01 by storck            #+#    #+#             */
+/*   Updated: 2025/11/12 16:51:28 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+//#include <stdio.h>
+//#include <ctype.h>
+#include "libft.h"
 
-int	main(int ac, char **av, char **env)
+int	ft_isdigit(int n)
 {
-	char	*rl;
-
-	(void)ac;
-	(void)av;
-	(void)env;
-	rl = readline("Minishell > ");
-	rl = parsing(rl);
-	printf("%s\n", rl);
-	free (rl);
-	return (0);
+	if (n >= 48 && n <= 57)
+		return (2048);
+	else
+		return (0);
 }
+/*
+int	main(int argc, char **argv)
+{
+	char	n;
+
+	n = argv[1][0];
+	printf("%d\n", isdigit(n));
+	printf("%d\n", ft_isdigit(n));
+	return (argc);
+}
+*/

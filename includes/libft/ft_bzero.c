@@ -1,27 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: storck <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/11 11:54:48 by storck            #+#    #+#             */
-/*   Updated: 2026/02/11 14:09:31 by storck           ###   ########.fr       */
+/*   Created: 2025/11/10 11:10:51 by storck            #+#    #+#             */
+/*   Updated: 2025/11/13 14:37:15 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int	main(int ac, char **av, char **env)
+void	ft_bzero(void *s, size_t n)
 {
-	char	*rl;
-
-	(void)ac;
-	(void)av;
-	(void)env;
-	rl = readline("Minishell > ");
-	rl = parsing(rl);
-	printf("%s\n", rl);
-	free (rl);
-	return (0);
+	ft_memset(s, 0, n);
 }
+/*
+#include <stdio.h>
+#include <string.h>
+
+int     main(void)
+{
+        char str[50] = "/!\\ gogo test /!\\";
+        printf("\nBefore memset(): %s\n", str);
+
+        ft_bzero(str + 4, 4*sizeof(char));
+
+        printf("After memset():  %s\n", str);
+	printf("After memset():  %s\n", str + 8);
+        return 0;
+}
+*/

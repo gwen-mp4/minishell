@@ -6,7 +6,7 @@
 /*   By: storck <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 10:49:54 by storck            #+#    #+#             */
-/*   Updated: 2026/02/11 10:49:56 by storck           ###   ########.fr       */
+/*   Updated: 2026/02/11 14:06:07 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,16 @@
 # include <term.h>
 # include <unistd.h>
 
+# include "includes/libft/libft.h"
+
 typedef struct s_node
 {
-    int     type;
-    char    *value;
-    char    *arg;
-    t_node  next;
-}   t_node;
+	int				type;
+	char			*value;
+	char			*arg;
+	struct t_node	*next;
+}	t_node;
 
-void    parsing(char *cmd);
+char	*parsing(char *cmd);
 
 #endif

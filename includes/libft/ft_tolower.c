@@ -1,27 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_tolower.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: storck <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/11 11:54:48 by storck            #+#    #+#             */
-/*   Updated: 2026/02/11 14:09:31 by storck           ###   ########.fr       */
+/*   Created: 2025/11/10 15:35:50 by storck            #+#    #+#             */
+/*   Updated: 2025/11/12 17:29:04 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int	main(int ac, char **av, char **env)
+int	ft_tolower(int c)
 {
-	char	*rl;
-
-	(void)ac;
-	(void)av;
-	(void)env;
-	rl = readline("Minishell > ");
-	rl = parsing(rl);
-	printf("%s\n", rl);
-	free (rl);
-	return (0);
+	if (c >= 65 && c <= 90)
+		c += 32;
+	return (c);
 }
+/*
+#include <ctype.h>
+#include <stdio.h>
+
+int     main(void)
+{
+        char l = '[';
+        char m = '[';
+        char u = tolower(l);
+        char x = ft_tolower(m);
+
+        printf("%c in lowercase is %c\n", l, u);
+        printf("%c in lowercase is %c\n", m, x);
+        return (0);
+}
+*/

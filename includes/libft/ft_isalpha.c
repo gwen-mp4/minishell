@@ -1,27 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: storck <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/11 11:54:48 by storck            #+#    #+#             */
-/*   Updated: 2026/02/11 14:09:31 by storck           ###   ########.fr       */
+/*   Created: 2025/11/10 10:00:19 by storck            #+#    #+#             */
+/*   Updated: 2025/11/12 16:51:55 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+//#include <stdio.h>
+//#include <ctype.h>
+#include "libft.h"
 
-int	main(int ac, char **av, char **env)
+int	ft_isalpha(int c)
 {
-	char	*rl;
-
-	(void)ac;
-	(void)av;
-	(void)env;
-	rl = readline("Minishell > ");
-	rl = parsing(rl);
-	printf("%s\n", rl);
-	free (rl);
-	return (0);
+	if ((c >= 65 && c <= 90) || (c >= 97 && c <= 122))
+		return (1024);
+	else
+		return (0);
 }
+/*
+int	main(int argc, char **argv)
+{
+	char	c;
+
+	c = argv[1][0];
+	printf("%d\n", isalpha(c));
+	printf("%d\n", ft_isalpha(c));
+	return (argc);
+}
+*/

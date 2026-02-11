@@ -1,27 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: storck <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/11 11:54:48 by storck            #+#    #+#             */
-/*   Updated: 2026/02/11 14:09:31 by storck           ###   ########.fr       */
+/*   Created: 2025/11/11 15:12:19 by storck            #+#    #+#             */
+/*   Updated: 2025/11/13 13:16:37 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int	main(int ac, char **av, char **env)
+void	ft_striteri(char *s, void (*f)(unsigned int, char*))
 {
-	char	*rl;
+	unsigned int	i;
 
-	(void)ac;
-	(void)av;
-	(void)env;
-	rl = readline("Minishell > ");
-	rl = parsing(rl);
-	printf("%s\n", rl);
-	free (rl);
-	return (0);
+	if (!s || !f)
+		return ;
+	i = 0;
+	while (s[i])
+	{
+		f(i, &s[i]);
+		i++;
+	}
 }
+/*
+#include <stdio.h>
+
+void	test(unsigned int i, char *s)
+{
+	s[i] += 2;
+}
+
+int	main(int argc, char **argv)
+{
+	ft_striteri(argv[1], test);
+	printf("%s\n", argv[1]);
+	return (argc);
+}
+*/

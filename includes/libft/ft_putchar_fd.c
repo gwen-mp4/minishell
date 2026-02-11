@@ -1,27 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: storck <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/11 11:54:48 by storck            #+#    #+#             */
-/*   Updated: 2026/02/11 14:09:31 by storck           ###   ########.fr       */
+/*   Created: 2025/11/11 15:21:40 by storck            #+#    #+#             */
+/*   Updated: 2025/11/12 17:16:23 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include <unistd.h>
+#include "libft.h"
 
-int	main(int ac, char **av, char **env)
+void	ft_putchar_fd(char c, int fd)
 {
-	char	*rl;
-
-	(void)ac;
-	(void)av;
-	(void)env;
-	rl = readline("Minishell > ");
-	rl = parsing(rl);
-	printf("%s\n", rl);
-	free (rl);
+	write(fd, &c, 1);
+}
+/*
+int	main(void)
+{
+	ft_putchar_fd('A', 0);
+	ft_putchar_fd('\n', 0);
+	ft_putchar_fd('B', 1);
+        ft_putchar_fd('\n', 1);
+	ft_putchar_fd('C', 2);
+        ft_putchar_fd('\n', 2);
+	ft_putchar_fd('D', 3);
+        ft_putchar_fd('\n', 3);
 	return (0);
 }
+*/
