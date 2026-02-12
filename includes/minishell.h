@@ -46,20 +46,26 @@ typedef enum e_type
 	HEREDOC	// <<
 }	t_type;
 
-typedef struct s_node
+typedef struct s_token
 {
-	int				type;
-	char			*value;
-	char			*arg;
+	t_type			type;
+	char			*value; //pour word
 	struct s_node	*next;
-	struct s_node	*previous;
-}	t_node;
+	struct s_node	*prev;
+}	t_token;
+
+typedef struct s_data
+{
+	char	*line;
+	int		exit_code;
+	t_token	*token;
+}	t_data;
 
 /* parsing/parsing.c */
 char	*parsing(char *cmd);
 
 /* parsing/parsing-nod.c */
-t_node  *create_node(char *str, int len, t_node *list);
+t_token  *create_node(char *str, int len, t_token *list);
 char	**gen_arg_list(char **arg_list, char *str);
 
 /* parsing/parisng-utils.c*/
@@ -67,5 +73,15 @@ int		get_last_start(char *str, int i);
 int		increment_i(int i, char *str, char c);
 int		large_increment_i(int i, char *str);
 int		increment_index(int i, char *str, char c);
+
+/*lexing*/
+t_token	*lexer(char *line);
+
+/*signal*/
+void	sigint_handler(int sig);
+void	setup_signal(void);
+
+int		is_space(char c);
+int		is_special(char c);
 
 #endif

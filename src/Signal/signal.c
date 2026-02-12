@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../includes/minishell.h"
 
 void	sigint_handler(int sig)
 {
@@ -31,27 +31,4 @@ void	setup_signal(void)
 	sigaction(SIGINT, &sa, NULL);
 	sa.sa_handler = SIG_IGN;
 	sigaction(SIGQUIT, &sa, NULL);
-}
-
-int	main(void)
-{
-	char				*rd;
-
-	while (1)
-	{
-		setup_signal();
-		rd = readline("$> ");
-		if (!rd)
-		{
-			printf("Exiting minishell\n");
-			free(rd);
-			break ;
-		}
-		if (*rd)
-			add_history(rd);
-		printf("%s\n", rd);
-		free(rd);
-	}
-	rl_clear_history();
-	return (0);
 }

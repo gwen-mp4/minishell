@@ -31,3 +31,10 @@ Sid
 **To do list**
 -Reorganize .c files by putting them in src directory (to test Makefile)
 -Put Libft functions in **libft** directory (has to be created) and put *minishell.h* in **includes** directory
+
+**12/02/2026 16:30 by gwen**:
+
+-Added lexing directory, modified *parsing-nodes.c* into *create_tokens.c*
+-Modified *create_node* into *create_token*, so it creates a new token and add it to the back of the list with the function *add_back_token*, when detecting special characters or word.
+-Added *is_space()* and *is_special()*
+-Still working on the function *lexing()*, need to add a function that check quotes if it's single quote or double quote and activate a mode to write every character indide it until the corresponding closing quote (except if there's backslash \ behind it) to the _token_ as value. If there's not corresponding closing quote, then return *"Error"*.
