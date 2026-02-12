@@ -43,7 +43,7 @@ int	main(void)
 		rd = readline("$> ");
 		if (!rd)
 		{
-			printf("Terminating minishell\n");
+			printf("Exiting minishell\n");
 			free(rd);
 			break ;
 		}

@@ -36,6 +36,16 @@
 
 # include "../libft/libft/libft.h"
 
+typedef enum e_type
+{
+	WORD,
+	PIPE,
+	INPUT,	// <
+	OUTPUT,	// >
+	APPEND,	// >>
+	HEREDOC	// <<
+}	t_type;
+
 typedef struct s_node
 {
 	int				type;
