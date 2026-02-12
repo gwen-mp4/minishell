@@ -34,7 +34,7 @@
 # include <term.h>
 # include <unistd.h>
 
-# include "includes/libft/libft.h"
+# include "../libft/libft/libft.h"
 
 typedef struct s_node
 {
