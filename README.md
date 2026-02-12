@@ -36,5 +36,9 @@ Sid
 
 -Added lexing directory, modified *parsing-nodes.c* into *create_tokens.c*
 -Modified *create_node* into *create_token*, so it creates a new token and add it to the back of the list with the function *add_back_token*, when detecting special characters or word.
--Added *is_space()* and *is_special()*
+-Added *is_space()* and *is_operator()*
 -Still working on the function *lexing()*, need to add a function that check quotes if it's single quote or double quote and activate a mode to write every character indide it until the corresponding closing quote (except if there's backslash \ behind it) to the _token_ as value. If there's not corresponding closing quote, then return *"Error"*.
+
+**12/02/2026 21:18 by gwen**:
+
+-Added *handle_word()* and *handle_operator()* in the *lexer()* function so it will create a token and add them to the chained list, normally, a prompt like __echo "hello 'world'" | cat -e__ will be properly separated but it has to be tested, if there's any issue, feel free to modify it and note the modified line.

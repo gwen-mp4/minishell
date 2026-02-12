@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: storck <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 10:49:54 by storck            #+#    #+#             */
-/*   Updated: 2026/02/11 14:06:07 by storck           ###   ########.fr       */
+/*   Updated: 2026/02/12 21:18:44 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ typedef enum e_type
 typedef struct s_token
 {
 	t_type			type;
-	char			*value; //pour word
+	char			*value; //pour word seulement
 	struct s_node	*next;
 	struct s_node	*prev;
 }	t_token;
@@ -65,7 +65,8 @@ typedef struct s_data
 char	*parsing(char *cmd);
 
 /* parsing/parsing-nod.c */
-t_token  *create_node(char *str, int len, t_token *list);
+t_token  *create_token(t_type type, char *value);
+void    add_back_token(t_token **list, t_token *new);
 char	**gen_arg_list(char **arg_list, char *str);
 
 /* parsing/parisng-utils.c*/
@@ -75,13 +76,14 @@ int		large_increment_i(int i, char *str);
 int		increment_index(int i, char *str, char c);
 
 /*lexing*/
-t_token	*lexer(char *line);
+char	*read_word(char *line, int *i);
+t_token *lexer(char *input);
 
 /*signal*/
 void	sigint_handler(int sig);
 void	setup_signal(void);
 
 int		is_space(char c);
-int		is_special(char c);
+int		is_operator(char c);
 
 #endif
