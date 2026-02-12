@@ -1,5 +1,23 @@
 # Minishell Project
 
+**IMPORTANT (by gwen at 9:00)**
+Always work on another branch if the other person is working too, firstly, create a new branch and work on it, here's the plan.
+
+*git checkout master* (to be on the master branc, if already the case)
+*git pull* (to update the branch)
+*git checkout -b __my-branch__* (to create and go to the newly created branch named *my-branch*)
+
+While working
+_git add *_
+*git commit -m "..."*
+*git push -u origin __my-branch__* (to push your branch and make you local branch into remote branch, after this command used a first time, you can use normal git push, if you're going back to master, simply git push if you're working on it for some reasons)
+
+After finished
+*git checkout master*
+*git pull*
+*git merge __my-branch__* (to merge your branch into master, do it at the end of the day when you're leaving)
+*git push*
+
 
 # Progress: 
 Sid 
