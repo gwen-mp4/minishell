@@ -50,9 +50,12 @@ char	*parsing(char *cmd);
 
 /* parsing/parsing-nod.c */
 t_node  *create_node(char *str, int len, t_node *list);
-char	**gen_arg_list(char **arg_list, int count_total, char *str);
+char	**gen_arg_list(char **arg_list, char *str);
 
 /* parsing/parisng-utils.c*/
+int		get_last_start(char *str, int i);
+int		increment_i(int i, char *str, char c);
+int		large_increment_i(int i, char *str);
 int		increment_index(int i, char *str, char c);
 
 #endif

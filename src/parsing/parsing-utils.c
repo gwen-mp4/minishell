@@ -10,7 +10,30 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../includes/minishell.h"
+
+int	get_last_start(char *str, int i)
+{
+	while (str[i] && str[i] != ' ' && !(str[i] >= 9 && str[i] <= 13)
+		&& str[i] != 34 && str[i] != 39)
+		i--;
+	return (i + 1);
+}
+
+int	increment_i(int i, char *str, char c)
+{
+	while (str[i] && str[i] != c)
+		i++;
+	return (i + 1);
+}
+
+int large_increment_i(int i, char *str)
+{
+	while (str[i] && str[i] != ' ' && !(str[i] >= 9 && str[i] <= 13)
+		&& str[i] != 34 && str[i] != 39)
+		i++;
+	return (i);
+}
 
 int increment_index(int i, char *str, char c)
 {

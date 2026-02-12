@@ -24,7 +24,10 @@ LIB_A = libft.a
 LIB = $(LIB_DIR)$(LIB_A)
 
 SRC_DIR = src/
-SRC = mettre les fichiers .c dans le dossier src, ajuster si dossier en plus
+SRC = main.c \
+	parsing/parsing.c \
+	parsing/parsing-node.c \
+	parsing/parsing-utils.c
 SRCS = $(addprefix $(SRC_DIR), $(SRC))
 
 OBJ_DIR = obj/

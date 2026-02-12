@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../includes/minishell.h"
 
 char	*simplify_spaces(char *str, int start)
 {
@@ -55,38 +55,49 @@ int	counting(char *str)
 	while (str[i])
 	{
 		if (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
-			count++;
+			i++;
 		if (str[i] == 34 || str[i] == 39)
 		{
 			if (i > 0 && (count == 0 || (str[i + 1] != 32
 				&& !(str[i - 1] >= 9 && str[i - 1] <= 13))))
+			{
 				count++;
+				printf("%d : %c\n", i, str[i]);
+			}
 			if (i == 0)
+			{
 				count++;
+				printf("%d : %c\n", i, str[i]);
+			}
 			i = increment_index(i, str, str[i]);
+			count++;
+			printf("%d : %c\n", i, str[i]);
 		}
 		i++;
 	}
 	if (str[i - 1] != 32 && !(str[i - 1] >= 9 && str[i - 1] <= 13)
 			&& str[i - 1] != 34 && str[i - 1] != 39)
+	{
 		count++;
+		printf("%d : %c\n", i, str[i]);
+	}
 	return (count);
 }
 
 char	*parsing(char *cmd)
 {
 	char	*tmp;
-	char	**arg_list;
+	//char	**arg_list;
 	int		node_count;
 	//t_node	list;
 
 	tmp = ft_strdup(cmd);
 	tmp = clean_str(tmp);
 	node_count = counting(tmp); // Subject to change in case of commands with arguments, ex: "cat -e"
-	arg_list = malloc(sizeof(char *) * node_count + 1);
-	if (!arg_list)
-		return (NULL);
-	arg_list = gen_arg_list(arg_list, node_count, tmp);
+	//arg_list = malloc(sizeof(char *) * node_count + 1);
+	//if (!arg_list)
+	//	return (NULL);
+	//arg_list = gen_arg_list(arg_list, node_count, tmp);
 	//list = *gen_list(tmp);
 	//printf("exited\n");
 	//int	i = 0;
