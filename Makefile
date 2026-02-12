@@ -45,7 +45,7 @@ $(LIB):
 
 $(NAME): $(OBJS) $(LIB)
 	@echo "minishell compiled"
-	@$(CC) $(FLAGS) $(INC) $(OBJS) -L $(LIB_DIR) -o $(NAME)
+	@$(CC) $(FLAGS) $(INC) $(OBJS) -L $(LIB_DIR) -lreadline -o $(NAME)
 
 clean:
 	@echo "Cleaned."
