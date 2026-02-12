@@ -45,7 +45,14 @@ typedef struct s_node
 	struct s_node	*previous;
 }	t_node;
 
+/* parsing/parsing.c */
 char	*parsing(char *cmd);
+
+/* parsing/parsing-nod.c */
 t_node  *create_node(char *str, int len, t_node *list);
+char	**gen_arg_list(char **arg_list, int count_total, char *str);
+
+/* parsing/parisng-utils.c*/
+int		increment_index(int i, char *str, char c);
 
 #endif
