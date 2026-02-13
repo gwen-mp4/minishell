@@ -20,5 +20,6 @@ int	init_data(t_data *data, char **env)
 	data->infile = NULL;
 	data->outfile = NULL;
     data->env = env;
+    data->pipe_count = 0;
 	return (1);
 }
