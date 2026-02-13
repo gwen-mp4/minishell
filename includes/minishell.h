@@ -64,6 +64,8 @@ typedef struct s_data
 	char	*infile;
 	char	*outfile;
 	char	**env;
+	pid_t	last_pid;
+	int		pipe_count;
 }	t_data;
 
 //typedef struct s_pipe
@@ -103,6 +105,8 @@ void	setup_signal(void);
 /* utils */
 int		is_space(char c);
 int		is_operator(char c);
+void	free_data(t_data data);
+char	**get_args(t_token *token);
 
 /* init.c */
 int		init_data(t_data *data, char **env);
@@ -118,5 +122,15 @@ char	**path_split(const char *s, char c);
 
 /* interpret.c */
 void    interpret(t_data *data);
+
+/* interpret_pipe.c */
+int		pipe_exec_process(t_data *data, t_token *token);
+
+/* pipe_process.c */
+pid_t	fork_process(void);
+void	pipe_process(int p_fd[2]);
+void	redirect_fd(int old_fd, int new_fd);
+int		file_read_process(char *infile);
+int		file_write_process(char *outfile);
 
 #endif

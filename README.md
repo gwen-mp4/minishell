@@ -42,3 +42,8 @@ Sid
 **12/02/2026 21:18 by gwen**:
 
 -Added *handle_word()* and *handle_operator()* in the *lexer()* function so it will create a token and add them to the chained list, normally, a prompt like __echo "hello 'world'" | cat -e__ will be properly separated but it has to be tested, if there's any issue, feel free to modify it and note the modified line.
+
+**13/02/2026 18:30 by storck**:
+
+-Added fd in and out to data structure. Started the process of interpreting the command in token list: "<" opens infile, ">" opens or create outfile in truncate mode, ">>" opens or create outfile in  append mode. Also imported usefull functions from pipex: process to get command paths from env and process for forking, piping, redirecting fd and opening input and output files.
+-started pipe execution process. Will need tweaking to work with the token list logic.

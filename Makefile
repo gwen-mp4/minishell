@@ -31,6 +31,8 @@ SRC = main.c \
 	Lexing/quote.c \
 	Signal/signal.c \
 	Interpret/interpret.c \
+	Interpret/interpret_pipe.c \
+	Interpret/pipe_process.c \
 	Utils/utils.c \
 	Utils/init.c
 SRCS = $(addprefix $(SRC_DIR), $(SRC))
