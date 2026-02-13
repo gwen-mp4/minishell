@@ -42,6 +42,7 @@ void    add_back_token(t_token **list, t_token *new)
         while (tmp->next)
             tmp = tmp->next;
         tmp->next = new;
+        new->prev = tmp;
     }
 }
 

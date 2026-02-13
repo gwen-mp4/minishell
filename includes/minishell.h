@@ -50,8 +50,8 @@ typedef struct s_token
 {
 	t_type			type;
 	char			*value; //pour word seulement
-	struct s_node	*next;
-	struct s_node	*prev;
+	struct s_token	*next;
+	struct s_token	*prev;
 }	t_token;
 
 typedef struct s_data
@@ -83,7 +83,11 @@ t_token *lexer(char *input);
 void	sigint_handler(int sig);
 void	setup_signal(void);
 
+/* utils */
 int		is_space(char c);
 int		is_operator(char c);
+
+/* error */
+void	error_cleanup(t_token **tokens);
 
 #endif

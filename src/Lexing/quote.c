@@ -20,7 +20,7 @@ char	*read_word(char *line, int *i)
             dq = !dq;
         else if (!sq && !dq)
 		{
-            if (is_space(line[*i]) || is_special(line[*i]))
+            if (is_space(line[*i]) || is_operator(line[*i]))
                 break;
         }
         (*i)++;

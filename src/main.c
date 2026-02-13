@@ -26,6 +26,24 @@
 // 	return (0);
 // }
 
+//Funcion to test the token list.
+/*
+void	check_list(t_token *token)
+{
+	t_token *tmp;
+
+	tmp = token;
+	while (tmp)
+	{
+		printf("%d : ", tmp->type);
+		if (tmp->value)
+			printf("%s", tmp->value);
+		printf("\n");
+		tmp = tmp->next;
+	}
+}
+*/
+
 int	main(void)
 {
 	t_data	data;
@@ -38,9 +56,11 @@ int	main(void)
 			break ;
 		if (*data.line)
 			add_history(data.line);
-		lexer(data.line);
+		data.token = lexer(data.line);
+		//check_list(data.token);
 		printf("%s\n", data.line);
 		free(data.line);
+		//error_cleanup(&data.token);
 	}
 	rl_clear_history();
 	return (0);

@@ -40,6 +40,7 @@ int handle_operator(char *input, int *i, t_token **tokens)
     (*i)++;
     return (*i);
 }
+
 int handle_word(char *input, int *i, t_token **tokens)
 {
     char *word;
