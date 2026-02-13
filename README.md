@@ -42,3 +42,9 @@ Sid
 **12/02/2026 21:18 by gwen**:
 
 -Added *handle_word()* and *handle_operator()* in the *lexer()* function so it will create a token and add them to the chained list, normally, a prompt like __echo "hello 'world'" | cat -e__ will be properly separated but it has to be tested, if there's any issue, feel free to modify it and note the modified line.
+
+**13/02/2026 16:12 by gwen**:
+
+-Modified *error_cleanup()* to print error when quote unmatched and moved the cleaning tokens into *clean_tokens()*. Also modified *clean_tokens* so there'll be no segfault, but still segfault sometimes when turning on signals and exit.
+-All tests passed for lexing, as said before, need to fix segfault when exitting but I think we can fix it after environment and etc... are all setup for better understanding on how to fix
+-And most importantly, *Makefile* is done, please add additional source files in SRC and make (and also, if you have modified the header file betweentimes, do *make re*)

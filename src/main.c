@@ -6,7 +6,7 @@
 /*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:54:48 by storck            #+#    #+#             */
-/*   Updated: 2026/02/13 14:27:03 by gwen             ###   ########.fr       */
+/*   Updated: 2026/02/13 16:20:19 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,12 @@ int	main(int ac, char **av, char **env)
 {
 	t_data	data;
 
-	(void)ac;
-	(void)av;
+	(void) ac;
+	(void) av;
 	while (1)
 	{
 		//setup_signal();
-		init_data(&data, env);
+		//init_data(&data, env);
 		data.line = readline("$> ");
 		if (!data.line)
 			break ;
@@ -73,9 +73,9 @@ int	main(int ac, char **av, char **env)
 		data.token = lexer(data.line);
 		check_list(data.token);
 		printf("%s\n", data.line);
-		interpret(&data);
+		//interpret(&data);
 		free(data.line);
-		error_cleanup(data.token);
+		clean_tokens(data.token);
 	}
 	rl_clear_history();
 	return (0);
