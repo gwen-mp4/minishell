@@ -3,27 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: storck <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 10:43:38 by storck            #+#    #+#             */
-/*   Updated: 2026/02/13 10:43:41 by storck           ###   ########.fr       */
+/*   Updated: 2026/02/13 13:53:57 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void    error_cleanup(t_token **tokens)
+/*Only free *tokens and not **tokens because it's a chained list, so there's no malloc, otherwise it's segfault*/
+void    error_cleanup(t_token *tokens)
 {
     t_token *tmp;
 
-    tmp = *tokens;
+    tmp = tokens;
     while (tmp)
     {
-        if (tmp->value)
-            free(tmp->value);
-        tmp = tmp->next;
-        free(tmp->prev);
+        tmp = tokens->next;
+        free(tokens->value);
+        free(tokens);
+        tokens = tmp;
     }
-    free(tmp);
-    free(tokens);
 }
