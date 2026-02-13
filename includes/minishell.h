@@ -59,7 +59,24 @@ typedef struct s_data
 	char	*line;
 	int		exit_code;
 	t_token	*token;
+	int		fd_in;
+	int		fd_out;
+	char	*infile;
+	char	*outfile;
+	char	**env;
 }	t_data;
+
+//typedef struct s_pipe
+//{
+//	int		fd_in;
+//	int		fd_out;
+//	char	*infile;
+//	char	*outfile;
+//	char	**envp;
+//	pid_t	last_pid;
+//	t_cmd	*cmd;
+//	int		size;
+//}	t_pipe;
 
 /* parsing/parsing.c */
 char	*parsing(char *cmd);
@@ -87,7 +104,19 @@ void	setup_signal(void);
 int		is_space(char c);
 int		is_operator(char c);
 
+/* init.c */
+int		init_data(t_data *data, char **env);
+
 /* error */
 void	error_cleanup(t_token **tokens);
+
+/* path_finding.c */
+char	*get_path(char *cmd, char **envp);
+
+/* path_split.c */
+char	**path_split(const char *s, char c);
+
+/* interpret.c */
+void    interpret(t_token *list);
 
 #endif

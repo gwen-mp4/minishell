@@ -44,13 +44,14 @@ void	check_list(t_token *token)
 }
 */
 
-int	main(void)
+int	main(int ac, char **av, char **env)
 {
 	t_data	data;
 
 	while (1)
 	{
 		//setup_signal();
+		init_data(&data, env);
 		data.line = readline("$> ");
 		if (!data.line)
 			break ;
@@ -59,6 +60,7 @@ int	main(void)
 		data.token = lexer(data.line);
 		//check_list(data.token);
 		printf("%s\n", data.line);
+		interpret(&data);
 		free(data.line);
 		//error_cleanup(&data.token);
 	}
