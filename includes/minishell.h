@@ -6,7 +6,7 @@
 /*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 10:49:54 by storck            #+#    #+#             */
-/*   Updated: 2026/02/13 14:17:36 by gwen             ###   ########.fr       */
+/*   Updated: 2026/02/13 15:33:24 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ int		is_operator(char c);
 int		init_data(t_data *data, char **env);
 
 /* error */
+void    clean_tokens(t_token *tokens);
 void	error_cleanup(t_token *tokens);
 
 /* path_finding.c */
