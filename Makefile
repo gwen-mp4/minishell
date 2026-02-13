@@ -30,7 +30,9 @@ SRC = main.c \
 	Lexing/lexing.c \
 	Lexing/quote.c \
 	Signal/signal.c \
-	Utils/utils.c
+	Interpret/interpret.c \
+	Utils/utils.c \
+	Utils/init.c
 SRCS = $(addprefix $(SRC_DIR), $(SRC))
 
 OBJ_DIR = obj/

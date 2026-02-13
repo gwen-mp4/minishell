@@ -117,6 +117,6 @@ char	*get_path(char *cmd, char **envp);
 char	**path_split(const char *s, char c);
 
 /* interpret.c */
-void    interpret(t_token *list);
+void    interpret(t_data *data);
 
 #endif

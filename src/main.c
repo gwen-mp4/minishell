@@ -59,6 +59,8 @@ int	main(int ac, char **av, char **env)
 {
 	t_data	data;
 
+	(void)ac;
+	(void)av;
 	while (1)
 	{
 		//setup_signal();
