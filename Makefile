@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: gwen <marvin@42.fr>                        +#+  +:+       +#+         #
+#    By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/11 15:53:54 by gwen              #+#    #+#              #
-#    Updated: 2026/02/11 15:53:55 by gwen             ###   ########.fr        #
+#    Updated: 2026/02/13 14:20:24 by gwen             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,44 +19,47 @@ RM = rm -rf
 
 INC = -I includes
 
-LIB_DIR = libft
+LIB_DIR = libft/
 LIB_A = libft.a
 LIB = $(LIB_DIR)$(LIB_A)
 
 SRC_DIR = src/
 SRC = main.c \
-	parsing/parsing.c \
-	parsing/parsing-node.c \
-	parsing/parsing-utils.c
+	Error/error.c \
+	Lexing/create_tokens.c \
+	Lexing/lexing.c \
+	Lexing/quote.c \
+	Signal/signal.c \
+	Utils/utils.c
 SRCS = $(addprefix $(SRC_DIR), $(SRC))
 
 OBJ_DIR = obj/
 OBJ = $(SRC:.c=.o)
 OBJS = $(addprefix $(OBJ_DIR), $(OBJ))
 
-all: $(NAME) $(LIB)
+all: $(NAME)
 
-$(OBJ_DIR)%.o: $(SRC_DIR)%.c | $(OBJ_DIR)
+$(NAME): $(OBJS) $(LIB)
+	@echo "minishell compiled"
+	@$(CC) $(FLAGS) $(INC) $(OBJS) -L $(LIB_DIR) -lft -lreadline -o $(NAME)
+
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c
+	@mkdir -p $(dir $@)
 	@$(CC) $(FLAGS) -c $< -o $@ $(INC)
-
-$(OBJ_DIR):
-	@mkdir -p $(OBJ_DIR)
 
 $(LIB):
 	@echo "Making Libft..."
 	@make -sC $(LIB_DIR)
 
-$(NAME): $(OBJS) $(LIB)
-	@echo "minishell compiled"
-	@$(CC) $(FLAGS) $(INC) $(OBJS) -L $(LIB_DIR) -lreadline -o $(NAME)
-
 clean:
 	@echo "Cleaned."
 	@$(RM) $(OBJ_DIR)
+	@make -sC $(LIB_DIR) clean
 
 fclean: clean
 	@echo "Full cleaned."
 	@$(RM) $(NAME)
+	@make -sC $(LIB_DIR) fclean
 
 re: fclean all
 

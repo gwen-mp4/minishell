@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_tokens.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: storck <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:19:46 by storck            #+#    #+#             */
-/*   Updated: 2026/02/12 15:23:24 by gwen             ###   ########.fr       */
+/*   Updated: 2026/02/13 13:47:24 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ void    add_back_token(t_token **list, t_token *new)
         while (tmp->next)
             tmp = tmp->next;
         tmp->next = new;
-        new->prev = tmp;
     }
 }
 

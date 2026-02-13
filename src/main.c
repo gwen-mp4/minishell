@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: storck <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:54:48 by storck            #+#    #+#             */
-/*   Updated: 2026/02/11 14:09:31 by storck           ###   ########.fr       */
+/*   Updated: 2026/02/13 13:57:37 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,23 +26,34 @@
 // 	return (0);
 // }
 
+/*Function to convert type into string for lexing test*/
+const char	*token_type_str(t_type type)
+{
+	if (type == WORD)
+		return ("WORD");
+	if (type == INPUT)
+		return ("INPUT");
+	if (type == HEREDOC)
+		return ("HEREDOC");
+	if (type == OUTPUT)
+		return ("OUTPUT");
+	if (type == APPEND)
+		return ("APPEND");
+	if (type == PIPE)
+		return ("PIPE");
+	return ("UNKNOWN");
+}
+
 //Funcion to test the token list.
-/*
 void	check_list(t_token *token)
 {
-	t_token *tmp;
-
-	tmp = token;
-	while (tmp)
+	while (token)
 	{
-		printf("%d : ", tmp->type);
-		if (tmp->value)
-			printf("%s", tmp->value);
-		printf("\n");
-		tmp = tmp->next;
+		printf("%s: %s\n", token_type_str(token->type), token->value);
+		token = token->next;
 	}
 }
-*/
+
 
 int	main(void)
 {
@@ -57,10 +68,10 @@ int	main(void)
 		if (*data.line)
 			add_history(data.line);
 		data.token = lexer(data.line);
-		//check_list(data.token);
+		check_list(data.token);
 		printf("%s\n", data.line);
 		free(data.line);
-		//error_cleanup(&data.token);
+		error_cleanup(data.token);
 	}
 	rl_clear_history();
 	return (0);

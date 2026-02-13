@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 10:49:54 by storck            #+#    #+#             */
-/*   Updated: 2026/02/12 21:18:44 by marvin           ###   ########.fr       */
+/*   Updated: 2026/02/13 14:17:36 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 # include <term.h>
 # include <unistd.h>
 
-# include "../libft/libft/libft.h"
+# include "../libft/libft.h"
 
 typedef enum e_type
 {
@@ -51,7 +51,7 @@ typedef struct s_token
 	t_type			type;
 	char			*value; //pour word seulement
 	struct s_token	*next;
-	struct s_token	*prev;
+	//struct s_token	*prev;
 }	t_token;
 
 typedef struct s_data
@@ -88,6 +88,6 @@ int		is_space(char c);
 int		is_operator(char c);
 
 /* error */
-void	error_cleanup(t_token **tokens);
+void	error_cleanup(t_token *tokens);
 
 #endif
