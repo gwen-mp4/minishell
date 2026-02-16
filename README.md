@@ -58,4 +58,23 @@ Sid
 
 -Fixed segfault if quote error
 -Added *t_quote* struct and added to *t_data*
--Modified the lexing so that it doesn't take quote, e.g: echo "hello 'world'" -> echo hello 'world'
+-Modified the lexing so that it doesn't take quote/unnecessary quote, e.g: echo "hello 'world'" -> echo hello 'world'
+-Backslashes are not required in the subject (keep in my mind)
+-Added *s_cmd* struct, have to complete *s_redirs* struct
+-Going to start parsing next time, separate the prompt into av (argv) and redirs (<, <<, >, >>) with the pipe (|) as separator
+e.g: _cat < test.txt > out | grep t | wc -l_ is going to be:
+
+__cmd1:__
+*av = ["cat", NULL]*
+*redirs = [< test.txt, > out]*
+*next = cmd2*
+
+__cmd2:__
+*av = ["grep", "t", NULL]*
+*redirs = []*
+*next = cmd3*
+
+__cmd3:__
+*av = ["wc", "-l", NULL]*
+*redirs = []*
+*next = NULL*

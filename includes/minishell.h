@@ -6,7 +6,7 @@
 /*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 10:49:54 by storck            #+#    #+#             */
-/*   Updated: 2026/02/16 12:13:12 by gwen             ###   ########.fr       */
+/*   Updated: 2026/02/16 14:48:11 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,13 @@ typedef struct s_data
 	t_token	*token;
 	t_quote	*quote;
 }	t_data;
+
+// typedef struct s_cmd
+// {
+// 	char		**av;
+// 	t_redir		*redirs;
+// 	struct s_cmd	*next;
+// }	t_cmd;
 
 //typedef struct s_pipe
 //{
