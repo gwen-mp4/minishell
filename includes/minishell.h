@@ -6,7 +6,7 @@
 /*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 10:49:54 by storck            #+#    #+#             */
-/*   Updated: 2026/02/16 11:01:11 by gwen             ###   ########.fr       */
+/*   Updated: 2026/02/16 12:13:12 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,16 @@ typedef struct s_token
 	//struct s_token	*prev;
 }	t_token;
 
+typedef struct s_quote
+{
+	int	sq;
+	int	dq;
+}	t_quote;
+
 typedef struct s_data
 {
 	char	*line;
 	int		exit_code;
-	t_token	*token;
 	int		fd_in;
 	int		fd_out;
 	char	*infile;
@@ -66,6 +71,8 @@ typedef struct s_data
 	char	**env;
 	pid_t	last_pid;
 	int		pipe_count;
+	t_token	*token;
+	t_quote	*quote;
 }	t_data;
 
 //typedef struct s_pipe

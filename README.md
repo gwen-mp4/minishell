@@ -53,3 +53,9 @@ Sid
 
 -Added fd in and out to data structure. Started the process of interpreting the command in token list: "<" opens infile, ">" opens or create outfile in truncate mode, ">>" opens or create outfile in  append mode. Also imported usefull functions from pipex: process to get command paths from env and process for forking, piping, redirecting fd and opening input and output files.
 -started pipe execution process. Will need tweaking to work with the token list logic.
+
+**16/02/2026 12:54 by gwen**:
+
+-Fixed segfault if quote error
+-Added *t_quote* struct and added to *t_data*
+-Modified the lexing so that it doesn't take quote, e.g: echo "hello 'world'" -> echo hello 'world'

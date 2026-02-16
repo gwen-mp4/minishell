@@ -6,7 +6,7 @@
 #    By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/11 15:53:54 by gwen              #+#    #+#              #
-#    Updated: 2026/02/13 14:20:24 by gwen             ###   ########.fr        #
+#    Updated: 2026/02/16 11:17:10 by gwen             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,9 +30,6 @@ SRC = main.c \
 	Lexing/lexing.c \
 	Lexing/quote.c \
 	Signal/signal.c \
-	Interpret/interpret.c \
-	Interpret/interpret_pipe.c \
-	Interpret/pipe_process.c \
 	Utils/utils.c \
 	Utils/init.c
 SRCS = $(addprefix $(SRC_DIR), $(SRC))

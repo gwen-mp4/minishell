@@ -6,7 +6,7 @@
 /*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 14:31:52 by gwen              #+#    #+#             */
-/*   Updated: 2026/02/13 15:46:19 by gwen             ###   ########.fr       */
+/*   Updated: 2026/02/16 11:35:17 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,5 +71,7 @@ t_token *lexer(char *input)
         else
             i = handle_word(input, &i, &tokens);
     }
+    if (i == -1)
+        return (NULL);
     return (tokens);
 }

@@ -6,7 +6,7 @@
 /*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 15:08:54 by gwen              #+#    #+#             */
-/*   Updated: 2026/02/16 11:02:43 by gwen             ###   ########.fr       */
+/*   Updated: 2026/02/16 12:55:53 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,51 +26,53 @@ int	is_operator(char c)
 	return (0);
 }
 
-void	free_data(t_data *data)
-{
-	free(data->line);
-	free(data->infile);
-	free(data->outfile);
-	error_cleanup(data->token);
-	free(data);
-}
+//Select all the lines you want and CTRL+K+U to uncomment and CTRL+K+C to comment
 
-void	fill_args(char *args, t_token *token)
-{
-	int		i;
-	t_token	*tmp;
+// void	free_data(t_data *data)
+// {
+// 	free(data->line);
+// 	free(data->infile);
+// 	free(data->outfile);
+// 	error_cleanup(data->token);
+// 	free(data);
+// }
+
+// void	fill_args(char *args, t_token *token)
+// {
+// 	int		i;
+// 	t_token	*tmp;
 	
-	i = 0;
-	tmp = token;
-	while (tmp->type == WORD)
-	{
-		args[i] = malloc(sizeof(char) * ft_strlen(tmp->value));
-		if (!args[i])
-			return (perror(malloc), NULL);
-		args[i] = ft_strdup(tmp->value);
-		i++;
-		tmp = tmp->next;
-	}
-}
+// 	i = 0;
+// 	tmp = token;
+// 	while (tmp->type == WORD)
+// 	{
+// 		args[i] = malloc(sizeof(char) * ft_strlen(tmp->value));
+// 		if (!args[i])
+// 			return (perror(malloc), NULL);
+// 		args[i] = ft_strdup(tmp->value);
+// 		i++;
+// 		tmp = tmp->next;
+// 	}
+// }
 
-char	**get_args(t_token *token)
-{
-	int		i;
-	char	**args;
-	t_token *tmp;
+// char	**get_args(t_token *token)
+// {
+// 	int		i;
+// 	char	**args;
+// 	t_token *tmp;
 
-	i = 0;
-	tmp = token;
-	while (tmp->type == WORD)
-	{
-		i++;
-		tmp = tmp->next;
-	}
-	if (i == 1)
-		return (ft_split(token->value));
-	args = malloc(sizeof(char *) * (i + 1));
-	if (!args)
-		return (perror(malloc), NULL);
-	args[i] = '\0';
-	return (args);
-}
+// 	i = 0;
+// 	tmp = token;
+// 	while (tmp->type == WORD)
+// 	{
+// 		i++;
+// 		tmp = tmp->next;
+// 	}
+// 	if (i == 1)
+// 		return (ft_split(token->value));
+// 	args = malloc(sizeof(char *) * (i + 1));
+// 	if (!args)
+// 		return (perror(malloc), NULL);
+// 	args[i] = '\0';
+// 	return (args);
+// }
