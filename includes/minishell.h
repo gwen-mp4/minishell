@@ -6,7 +6,7 @@
 /*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 10:49:54 by storck            #+#    #+#             */
-/*   Updated: 2026/02/13 15:33:24 by gwen             ###   ########.fr       */
+/*   Updated: 2026/02/16 11:01:11 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ void	setup_signal(void);
 /* utils */
 int		is_space(char c);
 int		is_operator(char c);
-void	free_data(t_data data);
+void	free_data(t_data *data);
 char	**get_args(t_token *token);
 
 /* init.c */

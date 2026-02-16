@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 15:08:54 by gwen              #+#    #+#             */
-/*   Updated: 2026/02/12 21:15:29 by marvin           ###   ########.fr       */
+/*   Updated: 2026/02/16 11:02:43 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	is_operator(char c)
 	return (0);
 }
 
-void	free_data(t_data data)
+void	free_data(t_data *data)
 {
 	free(data->line);
 	free(data->infile);
@@ -67,7 +67,7 @@ char	**get_args(t_token *token)
 		tmp = tmp->next;
 	}
 	if (i == 1)
-		return(ft_split(token->value));
+		return (ft_split(token->value));
 	args = malloc(sizeof(char *) * (i + 1));
 	if (!args)
 		return (perror(malloc), NULL);

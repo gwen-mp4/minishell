@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   interpret_pipe.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: storck <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 15:13:58 by storck            #+#    #+#             */
-/*   Updated: 2026/02/13 15:13:59 by storck           ###   ########.fr       */
+/*   Updated: 2026/02/16 11:01:45 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void    child(t_data *data, int p_fd[2], t_token *token)
     char    **args;
 
     args = get_args(token);
-    pipe_process(p_fd)
+    pipe_process(p_fd);
     pid = fork_process();
     if (!pid)
     {
@@ -42,11 +42,11 @@ void    parent(t_data *data, int p_fd[2], t_token *token)
     pid_t   pid;
     char    **args;
 
-    args = get_args(); 
+    args = get_args(token); //added token
     pid = fork_process();
     if (pid == 0)
     {
-        close(p_fd[1])
+        close(p_fd[1]);
         redirect_fd(p_fd[0], STDIN_FILENO);
         if (data->fd_out == -1)
         {
@@ -54,7 +54,7 @@ void    parent(t_data *data, int p_fd[2], t_token *token)
             close(p_fd[0]);
             exit(EXIT_FAILURE);
         }
-        redirect_fd(data->fd_out, STDOUT_FILENO)
+        redirect_fd(data->fd_out, STDOUT_FILENO);
         exec(data, args, data->env);
     }
     data->last_pid = pid;
