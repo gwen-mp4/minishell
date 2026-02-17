@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 10:49:54 by storck            #+#    #+#             */
-/*   Updated: 2026/02/16 14:48:11 by gwen             ###   ########.fr       */
+/*   Updated: 2026/02/17 18:41:46 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,20 @@ typedef struct s_quote
 	int	dq;
 }	t_quote;
 
+typedef struct s_redir // for <, <<, >>, >
+{
+	t_type			type;
+	char			*filename;
+	struct s_redir	*next;
+}	t_redir;
+
+typedef struct s_cmd // av for WORD and redirs for operator except pipe
+{
+	char			**av;
+	t_redir			*redirs;
+	struct s_cmd	*next;
+}	t_cmd;
+
 typedef struct s_data
 {
 	char	*line;
@@ -73,14 +87,8 @@ typedef struct s_data
 	int		pipe_count;
 	t_token	*token;
 	t_quote	*quote;
+	t_cmd	*cmd;
 }	t_data;
-
-// typedef struct s_cmd
-// {
-// 	char		**av;
-// 	t_redir		*redirs;
-// 	struct s_cmd	*next;
-// }	t_cmd;
 
 //typedef struct s_pipe
 //{
@@ -94,19 +102,11 @@ typedef struct s_data
 //	int		size;
 //}	t_pipe;
 
-/* parsing/parsing.c */
+/* parsing*/
 char	*parsing(char *cmd);
-
-/* parsing/parsing-nod.c */
-t_token  *create_token(t_type type, char *value);
-void    add_back_token(t_token **list, t_token *new);
-char	**gen_arg_list(char **arg_list, char *str);
-
-/* parsing/parisng-utils.c*/
-int		get_last_start(char *str, int i);
-int		increment_i(int i, char *str, char c);
-int		large_increment_i(int i, char *str);
-int		increment_index(int i, char *str, char c);
+t_cmd	*new_cmd(void);
+int		add_arg_to_cmd(char *word, t_cmd *cmd);
+int		add_redir_to_cmd(t_type type, char *filename, t_cmd *cmd);
 
 /*lexing*/
 char	*read_word(char *line, int *i);
@@ -119,6 +119,7 @@ void	setup_signal(void);
 /* utils */
 int		is_space(char c);
 int		is_operator(char c);
+int		is_redir(t_type type);
 void	free_data(t_data *data);
 char	**get_args(t_token *token);
 

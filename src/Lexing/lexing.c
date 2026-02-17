@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexing.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 14:31:52 by gwen              #+#    #+#             */
-/*   Updated: 2026/02/16 11:35:17 by gwen             ###   ########.fr       */
+/*   Updated: 2026/02/17 16:11:50 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int handle_word(char *input, int *i, t_token **tokens)
 t_token *lexer(char *input)
 {
     t_token *tokens;
-    int i;
+    int     i;
     
 	tokens = NULL;
 	i = 0;

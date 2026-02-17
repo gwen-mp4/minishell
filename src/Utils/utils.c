@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 15:08:54 by gwen              #+#    #+#             */
-/*   Updated: 2026/02/16 12:55:53 by gwen             ###   ########.fr       */
+/*   Updated: 2026/02/17 18:44:31 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,15 @@ int	is_operator(char c)
 	return (0);
 }
 
-//Select all the lines you want and CTRL+K+U to uncomment and CTRL+K+C to comment
+int	is_redir(t_type type)
+{
+	if (type == INPUT || type == APPEND
+		|| type == OUTPUT || type == HEREDOC)
+		return (1);
+	return (0);
+}
 
-// void	free_data(t_data *data)
-// {
-// 	free(data->line);
-// 	free(data->infile);
-// 	free(data->outfile);
-// 	error_cleanup(data->token);
-// 	free(data);
-// }
+//Select all the lines you want and CTRL+K+U to uncomment and CTRL+K+C to comment
 
 // void	fill_args(char *args, t_token *token)
 // {

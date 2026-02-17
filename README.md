@@ -78,3 +78,13 @@ __cmd3:__
 *av = ["wc", "-l", NULL]*
 *redirs = []*
 *next = NULL*
+
+**17/02/2026 19:00 by gwen**:
+
+-Added *s_cmd* and *s_redir* struct and added it to *s_data*
+-Added parsing, adding tokens to commands, WORD into **argv and REDIRS into *redir
+-Added free commands that free argv, redirs and command and added the functions in free_data()
+-Moved Error/error.c into Utils directory
+-Created free.c in Utils and moved free_data() in free.c
+-Have to test it presented as previous written plan
+To-do: add 42 header for Parsing/create_cmd.c, Parsing/parsing_utils.c and Utils/free.c

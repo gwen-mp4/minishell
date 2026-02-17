@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+         #
+#    By: marvin <marvin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/11 15:53:54 by gwen              #+#    #+#              #
-#    Updated: 2026/02/16 11:17:10 by gwen             ###   ########.fr        #
+#    Updated: 2026/02/17 18:52:40 by marvin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,13 +25,16 @@ LIB = $(LIB_DIR)$(LIB_A)
 
 SRC_DIR = src/
 SRC = main.c \
-	Error/error.c \
 	Lexing/create_tokens.c \
 	Lexing/lexing.c \
 	Lexing/quote.c \
+	Parsing/create_cmd.c \
+	Parsing/parsing.c \
 	Signal/signal.c \
 	Utils/utils.c \
-	Utils/init.c
+	Utils/init.c \
+	Utils/error.c \
+	Utils/free.c
 SRCS = $(addprefix $(SRC_DIR), $(SRC))
 
 OBJ_DIR = obj/
