@@ -28,13 +28,14 @@ SRC = main.c \
 	Lexing/create_tokens.c \
 	Lexing/lexing.c \
 	Lexing/quote.c \
-	Parsing/create_cmd.c \
-	Parsing/parsing.c \
+	parsing/create_cmd.c \
+	parsing/parsing.c \
 	Signal/signal.c \
 	Utils/utils.c \
 	Utils/init.c \
 	Utils/error.c \
 	Utils/free.c
+
 SRCS = $(addprefix $(SRC_DIR), $(SRC))
 
 OBJ_DIR = obj/

@@ -103,7 +103,7 @@ typedef struct s_data
 //}	t_pipe;
 
 /* parsing*/
-char	*parsing(char *cmd);
+t_cmd	*parsing(t_token *token);
 t_cmd	*new_cmd(void);
 int		add_arg_to_cmd(char *word, t_cmd *cmd);
 int		add_redir_to_cmd(t_type type, char *filename, t_cmd *cmd);
@@ -148,5 +148,9 @@ void	pipe_process(int p_fd[2]);
 void	redirect_fd(int old_fd, int new_fd);
 int		file_read_process(char *infile);
 int		file_write_process(char *outfile);
+
+/* create_tokens.c */
+void    add_back_token(t_token **list, t_token *new);
+t_token	*create_token(t_type type, char *value);
 
 #endif
