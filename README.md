@@ -88,3 +88,9 @@ __cmd3:__
 -Created free.c in Utils and moved free_data() in free.c
 -Have to test it presented as previous written plan
 To-do: add 42 header for Parsing/create_cmd.c, Parsing/parsing_utils.c and Utils/free.c
+
+
+**18/02/2026 14:30 by storck**:
+
+-Started the execution process that matches the parsing, needs testing.
+-Need discution to match proprely the parsing and execution.
