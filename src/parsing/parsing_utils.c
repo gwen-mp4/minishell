@@ -26,9 +26,9 @@ static int	argv_len(char **argv)
 
 int	add_arg_to_cmd(char *word, t_cmd *cmd)
 {
-	int	**new;
-	int	i;
-	int	len;
+	char	**new;
+	int		i;
+	int		len;
 
 	len = argv_len(cmd->av);
 	new = malloc((len + 2) * sizeof(char *));
@@ -55,10 +55,10 @@ t_redir	*new_redir(t_type type, char *filename)
 	if (!redir)
 		return (NULL);
 	if (type == INPUT)
-		redir->type == INPUT;
+		redir->type = INPUT;
 	else if (type == APPEND)
-		redir->type == APPEND;
-	else if (type = OUTPUT)
+		redir->type = APPEND;
+	else if (type == OUTPUT)
 		redir->type = OUTPUT;
 	else if (type == HEREDOC)
 		redir->type = HEREDOC;

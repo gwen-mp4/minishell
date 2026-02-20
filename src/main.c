@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:54:48 by storck            #+#    #+#             */
-/*   Updated: 2026/02/17 19:09:25 by marvin           ###   ########.fr       */
+/*   Updated: 2026/02/20 13:58:46 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ const char	*token_type_str(t_type type)
 	if (type == WORD)
 		return ("WORD");
 	if (type == INPUT)
-		return ("INPUT");
+		return ("<");
 	if (type == HEREDOC)
-		return ("HEREDOC");
+		return ("<<");
 	if (type == OUTPUT)
-		return ("OUTPUT");
+		return (">");
 	if (type == APPEND)
-		return ("APPEND");
+		return (">>");
 	if (type == PIPE)
 		return ("PIPE");
 	return ("UNKNOWN");
@@ -40,6 +40,39 @@ void	check_list(t_token *token)
 	}
 }
 
+/*Function to test if parsing is good*/
+void	check_cmd(t_cmd *cmd)
+{
+	int	i;
+	int	j;
+	t_redir	*redir;
+
+	while (cmd)
+	{
+		printf("==CMD %p==\n", cmd);
+		printf("Argv:\n");
+		if (cmd->av)
+		{
+			i = 0;
+			while (cmd->av[i])
+			{
+				printf("[%d] - %s\n", i, cmd->av[i]);
+				i++;
+			}
+		}
+		printf("Redirs:\n");
+		redir = cmd->redirs;
+		j = 0;
+		while (redir)
+		{
+			printf("[%d] - %s  %s\n", j, token_type_str(redir->type), redir->filename);
+			j++;
+			redir = redir->next;
+		}
+		cmd = cmd->next;
+	}
+}
+
 int	main(int ac, char **av, char **env)
 {
 	t_data	data;
@@ -50,6 +83,7 @@ int	main(int ac, char **av, char **env)
 	while (1)
 	{
 		setup_signal();
+		//data.cmd = NULL;
 		//init_data(&data, env);
 		data.line = readline("$> ");
 		if (!data.line)
@@ -59,7 +93,11 @@ int	main(int ac, char **av, char **env)
 		data.token = lexer(data.line);
 		if (!data.token)
 			clean_tokens(data.token);
-		check_list(data.token);
+		data.cmd = parsing(data.token);
+		if (!data.cmd)
+			free_cmds(data.cmd);
+		//check_list(data.token);
+		check_cmd(data.cmd);
 		//printf("%s\n", data.line);
 		//interpret(&data);
 		free(data.line);

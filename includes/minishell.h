@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 10:49:54 by storck            #+#    #+#             */
-/*   Updated: 2026/02/17 18:41:46 by marvin           ###   ########.fr       */
+/*   Updated: 2026/02/20 14:58:18 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,8 @@ void	setup_signal(void);
 int		is_space(char c);
 int		is_operator(char c);
 int		is_redir(t_type type);
+void    clean_tokens(t_token *tokens);
+void	free_cmds(t_cmd *cmd);
 void	free_data(t_data *data);
 char	**get_args(t_token *token);
 
@@ -127,8 +129,8 @@ char	**get_args(t_token *token);
 int		init_data(t_data *data, char **env);
 
 /* error */
-void    clean_tokens(t_token *tokens);
-void	error_cleanup(t_token *tokens);
+int		error_cleanup_lexing(t_token *tokens, int status);
+int		error_cleanup_parsing(t_cmd *cmds, const char *error);
 
 /* path_finding.c */
 char	*get_path(char *cmd, char **envp);

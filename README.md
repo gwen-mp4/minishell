@@ -94,3 +94,8 @@ To-do: add 42 header for Parsing/create_cmd.c, Parsing/parsing_utils.c and Utils
 
 -Started the execution process that matches the parsing, needs testing.
 -Need discution to match proprely the parsing and execution.
+
+**20/02/2026 15:15 by gwen**:
+
+-Lexing and parsing are all good, perhaps need to fix free (at the end)
+-Started to manage and print error if the prompt if invalid

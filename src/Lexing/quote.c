@@ -53,7 +53,7 @@ char	*read_word(char *line, int *i)
 
 	quote.sq = 0;
 	quote.dq = 0;
-	buf = malloc(sizeof(char) * ft_strlen(line + 1));
+	buf = malloc(sizeof(char) * ft_strlen(line) + 1);
 	if (!buf)
 		return (NULL);
 	if (ft_incremente(line, buf, i, &quote) == NULL)
