@@ -99,3 +99,10 @@ To-do: add 42 header for Parsing/create_cmd.c, Parsing/parsing_utils.c and Utils
 
 -Lexing and parsing are all good, perhaps need to fix free (at the end)
 -Started to manage and print error if the prompt if invalid
+
+**20/02/2026 18:30 by storck**:
+
+-Adapted the file descriptor redirection process to work with the parsing output, might need fixing for case with 0 pipe (aka signe command prompts).
+-Started the process for HEREDOC. Opens a temporary file and write the read from readline() up to the limiter, then uses it's fd as if "<<" was "<".
+TODO: Use unlink after the prompt process has ended to destroy the file created.
+
