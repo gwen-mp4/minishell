@@ -36,6 +36,8 @@
 
 # include "../libft/libft.h"
 
+# define HEREDOC_NAME "heredoc_"
+
 typedef enum e_type
 {
 	WORD,

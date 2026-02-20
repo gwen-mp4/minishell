@@ -12,32 +12,46 @@
 
 #include "../../includes/minishell.h"
 
-void    set_fds(t_type type, int p_fd[2])
+void    set_fds(t_cmd cmd, int p_fd[2])
 {
-    if (redirs->type == INPUT)
+    int     fd;
+    t_redir tmp;
+
+    tmp = cmd->redirs;
+    while (tmp)
     {
-        close(p_fd[0]);
-        redirect_fd(redirs->filename, STDIN_FILENO);
-        redirect_fd(p_fd[1], STDOUT_FILENO);
-        close(p_fd[1]);
+        if (tmp->type == INPUT)
+        {
+            if (tmp->type == INPUT)
+                fd = file_read_process(tmp->filename);
+            else if (tmp->type == HEREDOC)
+                fd = file_heredoc_process(tmp->filename);
+            redirect_fd(fd, STDIN_FILENO);
+            redirect_fd(p_fd[1], STDOUT_FILENO);
+        }
+        if (tmp->type == OUTPUT || tmp->type == APPEND)
+        {
+            if (tmp->type == OUTPUT)
+                fd = file_write_process(tmp->filename);
+            else if (tmp->type == APPEND)
+                fd = file_append_process(tmp->filename);
+            redirect_fd(p_fd[0], STDIN_FILENO);
+            redirect_fd(fd, STDOUT_FILENO);
+        }
+        tmp = tmp->next;
     }
-    else if (redirs->type == OUTPUT || redirs->type == APPEND)
-    {
-        close(p_fd[1]);
-        redirect_fd(p_fd[0], STDIN_FILENO);
-        redirect_fd(redirs->filename, STDOUT_FILENO);
-        close(p_fs[0]);
-    }
+    close(p_fd[0]);
+    close(p_fd[1]);
 }
 
-void    exec_cmd(t_cmd cmd, int p_fd[2])
+void    exec_cmd(t_cmd cmd, int p_fd[2], env)
 {
     char    *path;
     char    *tmp;
 
-    set_fds(cmd->redirs, p_fd);
+    set_fds(cmd, p_fd);
     tmp = cmd->args[0];
-    path = get_path(cmd->args[0], g_minishell.env);
+    path = get_path(cmd->args[0], env);
     if (!path)
     {
         ft_putstr_fd(tmp, 2);
@@ -45,7 +59,7 @@ void    exec_cmd(t_cmd cmd, int p_fd[2])
         //total free minishell
         exit(127);
     }
-    if(execve(path, cmd->args, g_minishell.env) == -1)
+    if(execve(path, cmd->args, env) == -1)
     {
         //total free minishell
         exit(1);
@@ -59,9 +73,9 @@ void    execution(t_cmd *cmd)
     int     p_fd[2];
     int     status;
 
-    pipe_process(p_fd);
     while (cmd)
     {
+        pipe_process(p_fd);
         pid = fork_process();
         if (!pid)
             exec_cmd(cmd, p_fd);
