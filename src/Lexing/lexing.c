@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexing.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 14:31:52 by gwen              #+#    #+#             */
-/*   Updated: 2026/02/17 16:11:50 by marvin           ###   ########.fr       */
+/*   Updated: 2026/02/20 14:21:36 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int handle_word(char *input, int *i, t_token **tokens)
     
     word = read_word(input, i);
     if (!word)
-        return (error_cleanup(*tokens), -1);
+        return (error_cleanup_lexing(*tokens, 0), -1);
     add_back_token(tokens, create_token(WORD, word));
     free(word);
     return (*i);
@@ -67,11 +67,17 @@ t_token *lexer(char *input)
         if (!input[i])
             break;
         if (is_operator(input[i]))
+        {
             i = handle_operator(input, &i, &tokens);
+            if (i == -1)
+                return (NULL);
+        }
         else
+        {
             i = handle_word(input, &i, &tokens);
+            if (i == -1)
+                return (NULL);
+        }
     }
-    if (i == -1)
-        return (NULL);
     return (tokens);
 }

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: marvin <marvin@student.42.fr>              +#+  +:+       +#+         #
+#    By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/11 15:53:54 by gwen              #+#    #+#              #
-#    Updated: 2026/02/17 18:52:40 by marvin           ###   ########.fr        #
+#    Updated: 2026/02/20 10:56:56 by gwen             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ SRC = main.c \
 	Lexing/quote.c \
 	parsing/create_cmd.c \
 	parsing/parsing.c \
+	parsing/parsing_utils.c \
 	Signal/signal.c \
 	Utils/utils.c \
 	Utils/init.c \
