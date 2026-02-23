@@ -31,7 +31,13 @@ SRC = main.c \
 	parsing/create_cmd.c \
 	parsing/parsing.c \
 	parsing/parsing_utils.c \
+	Interpret/append_file_process.c \
+	Interpret/here_doc_process.c \
+	Interpret/interpret.c \
+	Interpret/pipe_process.c \
 	Signal/signal.c \
+	Path/path_finding.c \
+	Path/path_split.c \
 	Utils/utils.c \
 	Utils/init.c \
 	Utils/error.c \

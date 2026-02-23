@@ -79,12 +79,11 @@ int	main(int ac, char **av, char **env)
 
 	(void) ac;
 	(void) av;
-	(void) env;
 	while (1)
 	{
 		setup_signal();
 		//data.cmd = NULL;
-		//init_data(&data, env);
+		init_data(&data, env);
 		data.line = readline("$> ");
 		if (!data.line)
 			break ;
@@ -96,6 +95,7 @@ int	main(int ac, char **av, char **env)
 		data.cmd = parsing(data.token);
 		if (!data.cmd)
 			free_cmds(data.cmd);
+		execution(data.cmd, &data);
 		//check_list(data.token);
 		check_cmd(data.cmd);
 		//printf("%s\n", data.line);

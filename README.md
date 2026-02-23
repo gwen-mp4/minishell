@@ -106,3 +106,9 @@ To-do: add 42 header for Parsing/create_cmd.c, Parsing/parsing_utils.c and Utils
 -Started the process for HEREDOC. Opens a temporary file and write the read from readline() up to the limiter, then uses it's fd as if "<<" was "<".
 TODO: Use unlink after the prompt process has ended to destroy the file created.
 
+**23/02/2026 13:00 by storck**:
+
+-Debbuged and started testing the execution of commands. Remaining Buggs:
+    - Doesn't read Infile (Cause fd redirection issues sometiems but not othes, content is never red);
+    - Error when passing a pipe (More fd redirection issues)
+    - Simple command with both input and output file cause infinite loop.
