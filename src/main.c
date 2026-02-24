@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:54:48 by storck            #+#    #+#             */
-/*   Updated: 2026/02/20 13:58:46 by gwen             ###   ########.fr       */
+/*   Updated: 2026/02/24 10:51:17 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,16 +92,23 @@ int	main(int ac, char **av, char **env)
 			add_history(data.line);
 		data.token = lexer(data.line);
 		if (!data.token)
-			clean_tokens(data.token);
+		{
+			free(data.line);
+			continue;
+		}
 		data.cmd = parsing(data.token);
 		if (!data.cmd)
-			free_cmds(data.cmd);
+		{
+			free(data.line);
+			continue;
+		}
 		//check_list(data.token);
 		check_cmd(data.cmd);
 		//printf("%s\n", data.line);
 		//interpret(&data);
 		free(data.line);
 		clean_tokens(data.token);
+		free_cmds(data.cmd);
 	}
 	rl_clear_history();
 	return (0);
