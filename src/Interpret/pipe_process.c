@@ -48,6 +48,7 @@ int	file_read_process(char *infile)
 {
 	int	fd_in;
 
+	printf("%s: ", infile);
 	fd_in = open(infile, O_RDONLY, 0644);
 	if (fd_in == -1)
 	{
@@ -55,6 +56,7 @@ int	file_read_process(char *infile)
 		perror(infile);
 		return (-1);
 	}
+	printf("%d\n", fd_in);
 	return (fd_in);
 }
 

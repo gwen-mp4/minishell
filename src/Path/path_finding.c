@@ -12,6 +12,16 @@
 
 #include "../../includes/minishell.h"
 
+void	free_tab(char **tabl)
+{
+	int	i;
+
+	i = 0;
+	while (tabl[i])
+		free(tabl[i++]);
+	free(tabl);
+}
+
 char	**paths(char **envp)
 {
 	char	**my_paths;

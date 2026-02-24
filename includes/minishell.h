@@ -144,7 +144,7 @@ char	*get_path(char *cmd, char **envp);
 char	**path_split(const char *s, char c);
 
 /* interpret.c */
-void    interpret(t_data *data);
+void    execution(t_cmd *cmd, t_data *data);
 
 /* interpret_pipe.c */
 int		pipe_exec_process(t_data *data, t_token *token);
@@ -159,5 +159,11 @@ int		file_write_process(char *outfile);
 /* create_tokens.c */
 void    add_back_token(t_token **list, t_token *new);
 t_token	*create_token(t_type type, char *value);
+
+/* here_doc_process.c */
+int 	file_heredoc_process(t_redir *heredoc, char *delim);
+
+/* append_file_process.c */
+int		file_append_process(char *outfile);
 
 #endif

@@ -12,20 +12,21 @@
 
 #include "../../includes/minishell.h"
 
-void    set_fds(t_cmd cmd, int p_fd[2])
+void    set_fds(t_cmd *cmd, int p_fd[2])
 {
     int     fd;
-    t_redir tmp;
+    t_redir *tmp;
 
     tmp = cmd->redirs;
     while (tmp)
     {
+        printf("fd_loop\n");
         if (tmp->type == INPUT)
         {
             if (tmp->type == INPUT)
                 fd = file_read_process(tmp->filename);
             else if (tmp->type == HEREDOC)
-                fd = file_heredoc_process(tmp->filename);
+                fd = file_heredoc_process(tmp, tmp->filename);
             redirect_fd(fd, STDIN_FILENO);
             redirect_fd(p_fd[1], STDOUT_FILENO);
         }
@@ -44,30 +45,33 @@ void    set_fds(t_cmd cmd, int p_fd[2])
     close(p_fd[1]);
 }
 
-void    exec_cmd(t_cmd cmd, int p_fd[2], env)
+void    exec_cmd(t_cmd *cmd, int p_fd[2], char **env)
 {
     char    *path;
     char    *tmp;
 
     set_fds(cmd, p_fd);
-    tmp = cmd->args[0];
-    path = get_path(cmd->args[0], env);
+    tmp = cmd->av[0];
+    path = get_path(cmd->av[0], env);
     if (!path)
     {
+        ft_putendl_fd("ERROR PATH", 2);
         ft_putstr_fd(tmp, 2);
         ft_putendl_fd(": command not found", 2);
         //total free minishell
         exit(127);
     }
-    if(execve(path, cmd->args, env) == -1)
-    {
-        //total free minishell
-        exit(1);
-    }
-    
+    // if(execve(path, cmd->av, env) == -1)
+    // {
+    //     ft_putendl_fd("ERROR EXEC", 2);
+    //     //total free minishell
+    //     exit(1);
+    // }
+    execve(path, cmd->av, env);
+    ft_putendl_fd("EXECUTED", 2);
 }
 
-void    execution(t_cmd *cmd)
+void    execution(t_cmd *cmd, t_data *data)
 {
     pid_t   pid;
     int     p_fd[2];
@@ -75,12 +79,18 @@ void    execution(t_cmd *cmd)
 
     while (cmd)
     {
+        int i = 0;
+        while (cmd->av[i])
+        {
+            printf("%s\n", cmd->av[i]);
+            i++;
+        }
         pipe_process(p_fd);
         pid = fork_process();
         if (!pid)
-            exec_cmd(cmd, p_fd);
+            exec_cmd(cmd, p_fd, data->env);
         waitpid(pid, &status, 0);
-        cmd->next;
+        cmd = cmd->next;
     }
 }
 

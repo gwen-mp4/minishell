@@ -40,10 +40,9 @@ void	fill_doc(int fd, char *delim)
 		ft_putendl_fd(line, fd);
 		free(line);
 	}
-	free(line);
 }
 
-int file_heredoc_process(t_redir heredoc, char *delim)
+int file_heredoc_process(t_redir *heredoc, char *delim)
 {
 	int		fd;
     char    *doc_name;
