@@ -114,8 +114,8 @@ TODO: Use unlink after the prompt process has ended to destroy the file created.
     ~~- Error when passing a pipe (More fd redirection issues)~~
     ~~- Simple command with both input and output file cause infinite loop.~~
 
-**25/02/2026 00:00 by storck**:
+**25/02/2026 15:00 by storck**:
 
 -Fixed simple commands that was broken because was trying to process as a pipe. ~~Need to fix processes with pipes.~~
 -Fixed when managing pipes, seems to work but new issue: cmd exits program.
--Fixed the problem for single cmd, working on a fix for pipe cmd.
+-Fixed the problem for single cmd, working on a fix for pipe cmd. Problems seems to happen on next readline(), as if an emprty line was red.

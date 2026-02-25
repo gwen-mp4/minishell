@@ -12,7 +12,7 @@
 
 #include "../../includes/minishell.h"
 
-void    set_simple_fds(t_cmd *cmd)
+void    set_fds(t_cmd *cmd)
 {
     t_redir *tmp;
 
@@ -27,36 +27,12 @@ void    set_simple_fds(t_cmd *cmd)
     }
 }
 
-void    set_fds(t_cmd *cmd, int p_fd[2])
-{
-    int     fd;
-    t_redir *tmp;
-
-    tmp = cmd->redirs;
-    while(tmp)
-    {
-        if (tmp->type == INPUT || tmp->type == HEREDOC)
-        {
-            fd = input_redirection(tmp);
-            redirect_fd(p_fd[1], STDOUT_FILENO);
-        }
-        if (tmp->type == OUTPUT || tmp->type == APPEND)
-        {
-            fd = output_redirection(tmp);
-            redirect_fd(p_fd[0], STDIN_FILENO);
-        }
-        tmp = tmp->next;
-    }
-    close(p_fd[0]);
-    close(p_fd[1]);
-}
-
 void    exec_cmd(t_cmd *cmd, char **env)
 {
     char    *path;
     char    *tmp;
 
-    set_simple_fds(cmd);
+    set_fds(cmd);
     tmp = cmd->av[0];
     path = get_path(cmd->av[0], env);
     if (!path)
@@ -88,12 +64,14 @@ void    do_pipe(t_cmd *cmd, char **env)
         close(p_fd[0]);
         redirect_fd(p_fd[1], STDOUT_FILENO);
         exec_cmd(cmd, env);
+        close(p_fd[1]);
     }
     else
     {
         close(p_fd[1]);
         redirect_fd(p_fd[0], STDIN_FILENO);
         waitpid(pid, NULL, 0);
+        close(p_fd[0]);
     }
 }
 
