@@ -35,7 +35,8 @@ int	parsing_token_one(t_token **token, t_cmd **current, t_token *tokens_head)
 	return (1);
 }
 
-int	parsing_token_two(t_token **token, t_cmd **current, t_token *tokens_head)
+int	parsing_token_two(t_token **token, t_cmd **current,
+	t_token *tokens_head, t_data *data)
 {
 	t_token	*tok;
 	t_cmd	*cur;
@@ -44,6 +45,7 @@ int	parsing_token_two(t_token **token, t_cmd **current, t_token *tokens_head)
 	cur = *current;
 	if (tok->type == PIPE)
 	{
+		data->pipe_count++;
 		if (!tok->next || tok->next->type == PIPE)
 		{
 			error_cleanup_parsing(*current, "newline");
@@ -58,12 +60,13 @@ int	parsing_token_two(t_token **token, t_cmd **current, t_token *tokens_head)
 	return (1);
 }
 
-t_cmd	*parsing(t_token *token)
+t_cmd	*parsing(t_token *token, t_data *data)
 {
 	t_cmd	*head;
 	t_cmd	*current;
 	t_token	*tokens_head;
 
+	data->pipe_count = 0;
 	if (!token)
 		return (NULL);
 	if (token->type == PIPE)
@@ -78,7 +81,7 @@ t_cmd	*parsing(t_token *token)
 	{
 		if (!parsing_token_one(&token, &current, tokens_head))
 			return (NULL);
-		if (!parsing_token_two(&token, &current, tokens_head))
+		if (!parsing_token_two(&token, &current, tokens_head, data))
 			return (NULL);
 		token = token->next;
 	}

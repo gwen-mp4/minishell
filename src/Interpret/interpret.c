@@ -12,32 +12,38 @@
 
 #include "../../includes/minishell.h"
 
+void    set_simple_fds(t_cmd *cmd)
+{
+    t_redir *tmp;
+
+    tmp = cmd->redirs;
+    while(tmp)
+    {
+        if (tmp->type == INPUT || tmp->type == HEREDOC)
+            input_redirection(tmp);
+        if (tmp->type == OUTPUT || tmp->type == APPEND)
+            output_redirection(tmp);
+        tmp = tmp->next;
+    }
+}
+
 void    set_fds(t_cmd *cmd, int p_fd[2])
 {
     int     fd;
     t_redir *tmp;
 
     tmp = cmd->redirs;
-    while (tmp)
+    while(tmp)
     {
-        printf("fd_loop\n");
-        if (tmp->type == INPUT)
+        if (tmp->type == INPUT || tmp->type == HEREDOC)
         {
-            if (tmp->type == INPUT)
-                fd = file_read_process(tmp->filename);
-            else if (tmp->type == HEREDOC)
-                fd = file_heredoc_process(tmp, tmp->filename);
-            redirect_fd(fd, STDIN_FILENO);
+            fd = input_redirection(tmp);
             redirect_fd(p_fd[1], STDOUT_FILENO);
         }
         if (tmp->type == OUTPUT || tmp->type == APPEND)
         {
-            if (tmp->type == OUTPUT)
-                fd = file_write_process(tmp->filename);
-            else if (tmp->type == APPEND)
-                fd = file_append_process(tmp->filename);
+            fd = output_redirection(tmp);
             redirect_fd(p_fd[0], STDIN_FILENO);
-            redirect_fd(fd, STDOUT_FILENO);
         }
         tmp = tmp->next;
     }
@@ -45,12 +51,12 @@ void    set_fds(t_cmd *cmd, int p_fd[2])
     close(p_fd[1]);
 }
 
-void    exec_cmd(t_cmd *cmd, int p_fd[2], char **env)
+void    exec_cmd(t_cmd *cmd, char **env)
 {
     char    *path;
     char    *tmp;
 
-    set_fds(cmd, p_fd);
+    set_simple_fds(cmd);
     tmp = cmd->av[0];
     path = get_path(cmd->av[0], env);
     if (!path)
@@ -61,97 +67,70 @@ void    exec_cmd(t_cmd *cmd, int p_fd[2], char **env)
         //total free minishell
         exit(127);
     }
-    // if(execve(path, cmd->av, env) == -1)
-    // {
-    //     ft_putendl_fd("ERROR EXEC", 2);
-    //     //total free minishell
-    //     exit(1);
-    // }
-    execve(path, cmd->av, env);
+    if(execve(path, cmd->av, env) == -1)
+    {
+        ft_putendl_fd("ERROR EXEC", 2);
+        //total free minishell
+        exit(1);
+    }
     ft_putendl_fd("EXECUTED", 2);
+}
+
+void    do_pipe(t_cmd *cmd, char **env)
+{
+    pid_t   pid;
+    int     p_fd[2];
+
+    pipe_process(p_fd);
+    pid = fork_process();
+    if (!pid)
+    {
+        close(p_fd[0]);
+        redirect_fd(p_fd[1], STDOUT_FILENO);
+        exec_cmd(cmd, env);
+    }
+    else
+    {
+        close(p_fd[1]);
+        redirect_fd(p_fd[0], STDIN_FILENO);
+        waitpid(pid, NULL, 0);
+    }
 }
 
 void    execution(t_cmd *cmd, t_data *data)
 {
     pid_t   pid;
-    int     p_fd[2];
-    int     status;
 
-    while (cmd)
+    if (data->pipe_count == 0)
     {
-        int i = 0;
-        while (cmd->av[i])
-        {
-            printf("%s\n", cmd->av[i]);
-            i++;
-        }
-        pipe_process(p_fd);
         pid = fork_process();
         if (!pid)
-            exec_cmd(cmd, p_fd, data->env);
-        waitpid(pid, &status, 0);
-        cmd = cmd->next;
+            exec_cmd(cmd, data->env);
+        else   
+            waitpid(pid, NULL, 0);
     }
+    else
+    {
+        while (data->pipe_count >= 0)
+        {
+            do_pipe(cmd, data->env);
+            data->pipe_count--;
+            cmd = cmd->next;
+        }
+    }
+    //ft_putendl_fd("do last cmd", 2);
+    //exec_cmd(cmd, data->env);
+    // while (cmd)
+    // {
+    //     printf("Boucle\n");
+    //     pipe_process(p_fd);
+    //     pid = fork_process();
+    //     if (!pid)
+    //     {
+    //         printf("not a pid\n");
+    //         exec_cmd(cmd, p_fd, data->env, data);
+    //     }
+    //     waitpid(pid, &status, 0);
+    //     cmd = cmd->next;
+    // }
 }
-
-// void    input_process(t_data *data, t_token *token)
-// {
-//     if (access(token->next->value, F_OK | R_OK))
-//     {
-//         data->infile = token->next->value;
-//         data->fd_in = file_read_process(token->next->value);
-//         token = token->next;
-//     }
-//     return ;
-// }
-
-// void    output_process(t_data *data, t_token *token)
-// {
-//     if (token->next->type == WORD)
-//     {
-//         data->outfile = token->next->value;
-//         data->fd_out = file_write_process(token->next->value);
-//         token = token->next;
-//     }
-//     return ;
-// }
-
-// void    append_process(t_data *data, t_token *token)
-// {
-//     if (token->next->type == WORD)
-//     {
-//         data->outfile = token->next->value;
-//         data->fd_out = open(data->outfile, O_CREAT | O_WRONLY | O_APPEND, 0644);
-//         if (data->fd_out == -1)
-//         {
-//             ft_putstr_fd("open ", 2);
-//             perror(token->next->value);
-//             return ;
-//         }
-//         token = token->next;
-//     }
-//     return ;
-// }
-
-// void    interpret(t_data *data)
-// {
-//     t_token *tmp;
-
-//     tmp = data->token;
-//     while (tmp)
-//     {
-//         if (tmp->type == PIPE)
-//             data->pipe_count++;
-//         else if (tmp->type == INPUT)
-//             input_process(data, tmp);
-//         else if (tmp->type == OUTPUT)
-//             output_process(data, tmp);
-//         else if (tmp->type == APPEND)
-//             append_process(data, tmp);
-//         else if (tmp->type == HEREDOC)
-//             printf("heredoc\n");
-//         else
-//             printf("word\n");
-//         tmp = tmp->next;
-//     }
-// }

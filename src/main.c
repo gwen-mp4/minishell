@@ -81,6 +81,7 @@ int	main(int ac, char **av, char **env)
 	(void) av;
 	while (1)
 	{
+		printf("Started reading\n");
 		setup_signal();
 		//data.cmd = NULL;
 		init_data(&data, env);
@@ -95,14 +96,15 @@ int	main(int ac, char **av, char **env)
 			free(data.line);
 			continue;
 		}
-		data.cmd = parsing(data.token);
+		data.cmd = parsing(data.token, &data);
 		if (!data.cmd)
 		{
 			free(data.line);
 			continue;
 		}
-			free_cmds(data.cmd);
+		//free_cmds(data.cmd);
 		execution(data.cmd, &data);
+		printf("Exited execution\n");
 		//check_list(data.token);
 		check_cmd(data.cmd);
 		//printf("%s\n", data.line);
@@ -110,6 +112,7 @@ int	main(int ac, char **av, char **env)
 		free(data.line);
 		clean_tokens(data.token);
 		free_cmds(data.cmd);
+		printf("Cleaned read\n");
 	}
 	rl_clear_history();
 	return (0);

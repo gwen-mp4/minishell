@@ -110,6 +110,12 @@ TODO: Use unlink after the prompt process has ended to destroy the file created.
 **23/02/2026 13:00 by storck**:
 
 -Debbuged and started testing the execution of commands. Remaining Buggs:
-    - Doesn't read Infile (Cause fd redirection issues sometiems but not othes, content is never red);
-    - Error when passing a pipe (More fd redirection issues)
-    - Simple command with both input and output file cause infinite loop.
+    ~~- Doesn't read Infile (Cause fd redirection issues sometiems but not others, content is never red);~~
+    ~~- Error when passing a pipe (More fd redirection issues)~~
+    ~~- Simple command with both input and output file cause infinite loop.~~
+
+**25/02/2026 00:00 by storck**:
+
+-Fixed simple commands that was broken because was trying to process as a pipe. ~~Need to fix processes with pipes.~~
+-Fixed when managing pipes, seems to work but new issue: cmd exits program.
+-Fixed the problem for single cmd, working on a fix for pipe cmd.

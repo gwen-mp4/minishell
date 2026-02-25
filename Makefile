@@ -32,6 +32,7 @@ SRC = main.c \
 	parsing/parsing.c \
 	parsing/parsing_utils.c \
 	Interpret/append_file_process.c \
+	Interpret/fd_redirection.c \
 	Interpret/here_doc_process.c \
 	Interpret/interpret.c \
 	Interpret/pipe_process.c \

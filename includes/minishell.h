@@ -105,7 +105,7 @@ typedef struct s_data
 //}	t_pipe;
 
 /* parsing*/
-t_cmd	*parsing(t_token *token);
+t_cmd	*parsing(t_token *token, t_data *data);
 t_cmd	*new_cmd(void);
 int		add_arg_to_cmd(char *word, t_cmd *cmd);
 int		add_redir_to_cmd(t_type type, char *filename, t_cmd *cmd);
@@ -165,5 +165,9 @@ int 	file_heredoc_process(t_redir *heredoc, char *delim);
 
 /* append_file_process.c */
 int		file_append_process(char *outfile);
+
+/* fd_redirection.c */
+int 	input_redirection(t_redir *redir);
+int 	output_redirection(t_redir *redir);
 
 #endif
