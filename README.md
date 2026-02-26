@@ -119,3 +119,7 @@ TODO: Use unlink after the prompt process has ended to destroy the file created.
 -Fixed simple commands that was broken because was trying to process as a pipe. ~~Need to fix processes with pipes.~~
 -Fixed when managing pipes, seems to work but new issue: cmd exits program.
 -Fixed the problem for single cmd, working on a fix for pipe cmd. Problems seems to happen on next readline(), as if an emprty line was red.
+
+**26/02/2026 12:00 by storck**:
+
+-All pipes are piping! Call me the plumber!
