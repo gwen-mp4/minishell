@@ -81,52 +81,37 @@ int	main(int ac, char **av, char **env)
 	(void) av;
 	while (1)
 	{
-		printf("Started reading\n");
 		setup_signal();
-		printf("test ----------> 1\n");
 		//data.cmd = NULL;
 		init_data(&data, env);
-		printf("test ----------> 2\n");
 		data.line = readline("$> ");
 		printf("%s\n", data.line);
 		if (!data.line)
-		{
-			printf("oups\n");
 			break ;
-		}
 		if (*data.line)
 			add_history(data.line);
-		printf("test ----------> 3\n");
 		data.token = lexer(data.line);
-		printf("test ----------> 4\n");
 		if (!data.token)
 		{
 			free(data.line);
 			continue;
 		}
-		printf("test ----------> 5\n");
 		data.cmd = parsing(data.token, &data);
-		printf("test ----------> 6\n");
 		if (!data.cmd)
 		{
 			free(data.line);
 			continue;
 		}
-		printf("test ----------> 7\n");
 		//free_cmds(data.cmd);
 		execution(data.cmd, &data);
 		printf("Exited execution\n");
 		//check_list(data.token);
 		check_cmd(data.cmd);
-		printf("test ----------> 8\n");
 		//printf("%s\n", data.line);
 		//interpret(&data);
 		free(data.line);
-		printf("test ----------> 9\n");
 		clean_tokens(data.token);
-		printf("test ----------> 10\n");
 		free_cmds(data.cmd);
-		printf("Cleaned read\n");
 	}
 	rl_clear_history();
 	return (0);

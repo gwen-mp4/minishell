@@ -56,7 +56,7 @@ void    do_pipe(t_cmd *cmd, char **env)
 {
     pid_t   pid;
     int     p_fd[2];
-
+    
     pipe_process(p_fd);
     pid = fork_process();
     if (!pid)
@@ -78,7 +78,11 @@ void    do_pipe(t_cmd *cmd, char **env)
 void    execution(t_cmd *cmd, t_data *data)
 {
     pid_t   pid;
+    int     save_in;
+    int     save_out;
 
+    save_in = dup(STDIN_FILENO);
+    save_out = dup(STDOUT_FILENO);
     if (data->pipe_count == 0)
     {
         pid = fork_process();
@@ -96,19 +100,6 @@ void    execution(t_cmd *cmd, t_data *data)
             cmd = cmd->next;
         }
     }
-    //ft_putendl_fd("do last cmd", 2);
-    //exec_cmd(cmd, data->env);
-    // while (cmd)
-    // {
-    //     printf("Boucle\n");
-    //     pipe_process(p_fd);
-    //     pid = fork_process();
-    //     if (!pid)
-    //     {
-    //         printf("not a pid\n");
-    //         exec_cmd(cmd, p_fd, data->env, data);
-    //     }
-    //     waitpid(pid, &status, 0);
-    //     cmd = cmd->next;
-    // }
+    redirect_fd(save_in, STDIN_FILENO);
+    redirect_fd(save_out, STDOUT_FILENO);
 }
