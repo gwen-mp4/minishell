@@ -85,7 +85,6 @@ int	main(int ac, char **av, char **env)
 		//data.cmd = NULL;
 		init_data(&data, env);
 		data.line = readline("$> ");
-		printf("%s\n", data.line);
 		if (!data.line)
 			break ;
 		if (*data.line)
@@ -105,7 +104,7 @@ int	main(int ac, char **av, char **env)
 		//free_cmds(data.cmd);
 		execution(data.cmd, &data);
 		//check_list(data.token);
-		check_cmd(data.cmd);
+		//check_cmd(data.cmd);
 		//printf("%s\n", data.line);
 		//interpret(&data);
 		free(data.line);

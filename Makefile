@@ -31,7 +31,15 @@ SRC = main.c \
 	parsing/create_cmd.c \
 	parsing/parsing.c \
 	parsing/parsing_utils.c \
+	Builtin/exec_cd.c \
+	Builtin/exec_echo.c \
+	Builtin/exec_env.c \
+	Builtin/exec_exit.c \
+	Builtin/exec_export.c \
+	Builtin/exec_pwd.c \
+	Builtin/exec_unset.c \
 	Interpret/append_file_process.c \
+	Interpret/exec_builtin.c \
 	Interpret/fd_redirection.c \
 	Interpret/here_doc_process.c \
 	Interpret/interpret.c \

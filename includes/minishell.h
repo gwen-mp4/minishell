@@ -36,6 +36,10 @@
 
 # include "../libft/libft.h"
 
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 1024
+# endif
+
 # define HEREDOC_NAME "heredoc_"
 
 typedef enum e_type
@@ -169,5 +173,18 @@ int		file_append_process(char *outfile);
 /* fd_redirection.c */
 int 	input_redirection(t_redir *redir);
 int 	output_redirection(t_redir *redir);
+
+/* exec_builtin */
+int 	is_builtin(char *str);
+void    exec_builtin(char **args);
+
+/* builtins */
+void    exec_cd(char *path);
+void    exec_echo(char **arg);
+void    exec_env(void);
+void    exec_exit(void);
+void    exec_export(void);
+void    exec_pwd(void);
+void    exec_unset(void);
 
 #endif

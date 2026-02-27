@@ -123,3 +123,12 @@ TODO: Use unlink after the prompt process has ended to destroy the file created.
 **26/02/2026 12:00 by storck**:
 
 -All pipes are piping! Call me the plumber!
+
+**27/02/2026 13:00 by storck**:
+
+-Started addinf builting cmds, need testing.
+    TODO builtins:  -export
+                    -unset
+                    -env
+                    -exit
+-Found a bug when processing pipe with undefined read or write pipe.
