@@ -104,7 +104,6 @@ int	main(int ac, char **av, char **env)
 		}
 		//free_cmds(data.cmd);
 		execution(data.cmd, &data);
-		printf("Exited execution\n");
 		//check_list(data.token);
 		check_cmd(data.cmd);
 		//printf("%s\n", data.line);

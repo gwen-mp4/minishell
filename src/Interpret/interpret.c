@@ -30,15 +30,15 @@ void    set_fds(t_cmd *cmd)
 void    exec_cmd(t_cmd *cmd, char **env)
 {
     char    *path;
-    char    *tmp;
 
     set_fds(cmd);
-    tmp = cmd->av[0];
+    if (is_builtin(cmd->av[0]))
+        return (exec_builtin(cmd->av[0]));
     path = get_path(cmd->av[0], env);
     if (!path)
     {
         ft_putendl_fd("ERROR PATH", 2);
-        ft_putstr_fd(tmp, 2);
+        ft_putstr_fd(cmd->av[0], 2);
         ft_putendl_fd(": command not found", 2);
         //total free minishell
         exit(127);
@@ -49,7 +49,6 @@ void    exec_cmd(t_cmd *cmd, char **env)
         //total free minishell
         exit(1);
     }
-    ft_putendl_fd("EXECUTED", 2);
 }
 
 void    do_pipe(t_cmd *cmd, char **env)
