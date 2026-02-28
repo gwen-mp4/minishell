@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:54:48 by storck            #+#    #+#             */
-/*   Updated: 2026/02/24 11:27:43 by marvin           ###   ########.fr       */
+/*   Updated: 2026/02/27 10:18:37 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,11 +79,12 @@ int	main(int ac, char **av, char **env)
 
 	(void) ac;
 	(void) av;
+	(void) env;
 	while (1)
 	{
 		setup_signal();
 		//data.cmd = NULL;
-		init_data(&data, env);
+		//init_data(&data, env);
 		data.line = readline("$> ");
 		printf("%s\n", data.line);
 		if (!data.line)
@@ -102,8 +103,7 @@ int	main(int ac, char **av, char **env)
 			free(data.line);
 			continue;
 		}
-		//free_cmds(data.cmd);
-		execution(data.cmd, &data);
+		//execution(data.cmd, &data);
 		//check_list(data.token);
 		check_cmd(data.cmd);
 		//printf("%s\n", data.line);
