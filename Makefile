@@ -6,7 +6,7 @@
 #    By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/11 15:53:54 by gwen              #+#    #+#              #
-#    Updated: 2026/02/20 10:56:56 by gwen             ###   ########.fr        #
+#    Updated: 2026/03/02 14:06:34 by gwen             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,13 +44,14 @@ SRC = main.c \
 	Interpret/here_doc_process.c \
 	Interpret/interpret.c \
 	Interpret/pipe_process.c \
-	Signal/signal.c \
 	Path/path_finding.c \
 	Path/path_split.c \
 	Utils/utils.c \
 	Utils/init.c \
 	Utils/error.c \
-	Utils/free.c
+	Utils/free.c \
+	Utils/signal.c \
+	Utils/debug.c
 
 SRCS = $(addprefix $(SRC_DIR), $(SRC))
 

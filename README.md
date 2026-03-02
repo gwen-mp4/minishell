@@ -132,3 +132,12 @@ TODO: Use unlink after the prompt process has ended to destroy the file created.
                     -env
                     -exit
 -Found a bug when processing pipe with undefined read or write pipe.
+
+**02/03/2026 15:45 by gwen**:
+
+-Modified signals so it manages SIGINT, SIGQUIT and SIGTSTP
+-Added *signal_heredoc()* and *signal_child()*:
+    *signal_heredoc()*:
+        -Use the heredoc signal when using heredoc, I've modified the function *fill_doc()* so it manages signals but still need to be fix when exitting heredoc
+    *signal_child()*:
+        -Use the child signal when a child is processing (a command is executing), have to add, didn't add it.

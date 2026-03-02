@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 10:49:54 by storck            #+#    #+#             */
-/*   Updated: 2026/02/24 11:14:39 by marvin           ###   ########.fr       */
+/*   Updated: 2026/03/02 15:03:02 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 # include <termios.h>
 # include <term.h>
 # include <unistd.h>
+# include <errno.h>
 
 # include "../libft/libft.h"
 
@@ -41,6 +42,8 @@
 # endif
 
 # define HEREDOC_NAME "heredoc_"
+
+extern volatile sig_atomic_t	g_sig;
 
 typedef enum e_type
 {
@@ -118,10 +121,6 @@ int		add_redir_to_cmd(t_type type, char *filename, t_cmd *cmd);
 char	*read_word(char *line, int *i);
 t_token *lexer(char *input);
 
-/*signal*/
-void	sigint_handler(int sig);
-void	setup_signal(void);
-
 /* utils */
 int		is_space(char c);
 int		is_operator(char c);
@@ -130,9 +129,12 @@ void    clean_tokens(t_token *tokens);
 void	free_cmds(t_cmd *cmd);
 void	free_data(t_data *data);
 char	**get_args(t_token *token);
+void	signal_heredoc(void);
+void	setup_signal(void);
+void	signal_child(void);
 
 /* init.c */
-int		init_data(t_data *data, char **env);
+int		init_data(t_data *data, int ac, char **av, char **env);
 
 /* error */
 int		error_cleanup_lexing(t_token *tokens, int status);
