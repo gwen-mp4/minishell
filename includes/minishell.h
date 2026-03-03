@@ -150,6 +150,7 @@ char	*get_path(char *cmd, char **envp);
 char	**path_split(const char *s, char c);
 
 /* interpret.c */
+void    set_fds(t_cmd *cmd);
 void    execution(t_cmd *cmd, t_data *data);
 
 /* interpret_pipe.c */
@@ -178,7 +179,7 @@ int 	output_redirection(t_redir *redir);
 
 /* exec_builtin */
 int 	is_builtin(char *str);
-void    exec_builtin(char **args);
+void    exec_builtin(t_cmd *cmd, char **args);
 
 /* builtins */
 void    exec_cd(char *path);

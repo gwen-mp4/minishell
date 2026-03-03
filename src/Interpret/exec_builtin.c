@@ -32,8 +32,9 @@ int is_builtin(char *str)
         return (0);
 }
 
-void    exec_builtin(char **arg)
+void    exec_builtin(t_cmd *cmd, char **arg)
 {
+    set_fds(cmd);
     if (strncmp(arg[0], "echo", ft_strlen(arg[0])) == 0)
         exec_echo(arg + 1);
     else if (strncmp(arg[0], "cd", ft_strlen(arg[0])) == 0)

@@ -36,6 +36,8 @@ void	pipe_process(int p_fd[2])
 
 void	redirect_fd(int old_fd, int new_fd)
 {
+	if (old_fd == new_fd)
+		return ;
 	if (dup2(old_fd, new_fd) == -1)
 	{
 		perror("dup2");

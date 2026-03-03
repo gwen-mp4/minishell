@@ -22,15 +22,12 @@ void    exec_echo(char **arg)
         i = 0;
     while (arg[i])
     {
-        printf("[W:%d] = ", i);
         ft_putstr_fd(arg[i], STDOUT_FILENO);
         if (arg[i + 1] != NULL)
             ft_putchar_fd(' ', STDOUT_FILENO);
         i++;
     }
-    printf("exited loop\n");
     if (ft_strncmp(arg[0], "-n", 2) != 0)
         ft_putchar_fd('\n', STDOUT_FILENO);
-    printf("Echo Done\n");
     return ;
 }

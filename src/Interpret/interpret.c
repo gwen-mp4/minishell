@@ -32,8 +32,8 @@ void    exec_cmd(t_cmd *cmd, char **env)
     char    *path;
 
     set_fds(cmd);
-    if (is_builtin(cmd->av[0]))
-        return (printf("Builtin Done\n"), exec_builtin(cmd->av));
+    //if (is_builtin(cmd->av[0]))
+    //    return (exec_builtin(cmd->av));
     path = get_path(cmd->av[0], env);
     if (!path)
     {
@@ -76,35 +76,28 @@ void    do_pipe(t_cmd *cmd, char **env)
 
 void    execution(t_cmd *cmd, t_data *data)
 {
-    //pid_t   pid;
+    pid_t   pid;
     int     save_in;
     int     save_out;
 
     save_in = dup(STDIN_FILENO);
     save_out = dup(STDOUT_FILENO);
-    while (data->pipe_count >= 0)
+    while (data->pipe_count > 0)
     {
         do_pipe(cmd, data->env);
         data->pipe_count--;
         cmd = cmd->next;
     }
-    // if (data->pipe_count == 0)
-    // {
-    //     pid = fork_process();
-    //     if (!pid)
-    //         exec_cmd(cmd, data->env);
-    //     else   
-    //         waitpid(pid, NULL, 0);
-    // }
-    // else
-    // {
-    //     while (data->pipe_count >= 0)
-    //     {
-    //         do_pipe(cmd, data->env);
-    //         data->pipe_count--;
-    //         cmd = cmd->next;
-    //     }
-    // }
+    if (is_builtin(cmd->av[0]))
+        exec_builtin(cmd, cmd->av);
+    else
+    {
+        pid = fork_process();
+        if (!pid)
+            exec_cmd(cmd, data->env);
+        else   
+            waitpid(pid, NULL, 0);
+    }
     redirect_fd(save_in, STDIN_FILENO);
     redirect_fd(save_out, STDOUT_FILENO);
 }
