@@ -32,7 +32,7 @@ int is_builtin(char *str)
         return (0);
 }
 
-void    exec_builtin(t_cmd *cmd, char **arg)
+void    exec_builtin(t_cmd *cmd, char **arg, t_data *data)
 {
     set_fds(cmd);
     if (strncmp(arg[0], "echo", ft_strlen(arg[0])) == 0)
@@ -42,11 +42,11 @@ void    exec_builtin(t_cmd *cmd, char **arg)
     else if (strncmp(arg[0], "pwd", ft_strlen(arg[0])) == 0)
         exec_pwd();
     else if (strncmp(arg[0], "export", ft_strlen(arg[0])) == 0)
-        exec_export();
+        exec_export(arg, data);
     else if (strncmp(arg[0], "unset", ft_strlen(arg[0])) == 0)
-        exec_unset();
+        exec_unset(arg, data);
     else if (strncmp(arg[0], "env", ft_strlen(arg[0])) == 0)
         exec_env();
     else if (strncmp(arg[0], "exit", ft_strlen(arg[0])) == 0)
-        exec_exit();
+        exec_exit(arg);
 }

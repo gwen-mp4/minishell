@@ -153,6 +153,7 @@ TODO: Use unlink after the prompt process has ended to destroy the file created.
             -code env
             -code exit
 
+<<<<<<< HEAD
 **03/03/2026 14:00 by gwen**:
 
 -It seems that there're several major problems while interpreting, *heredoc segfault*.
@@ -174,3 +175,8 @@ TODO: Use unlink after the prompt process has ended to destroy the file created.
     ==2268==  The main thread stack size used in this run was 8388608.
 If you can fix it
 -Added some protections to input/output redirection so if fd < 0, return EXIT_FAILURE.
+=======
+**03/03/2026 17:00 by storck**:
+
+-Continued builtins (unset, exit and export), still need to do env and some utils functions.
+>>>>>>> 965d75ce47e8b9896cf5cf646f6a20ac39621d07

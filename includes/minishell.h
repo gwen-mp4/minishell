@@ -55,6 +55,13 @@ typedef enum e_type
 	HEREDOC	// <<
 }	t_type;
 
+typedef struct s_env
+{
+	char			*key;
+	char			*value;
+	struct s_env	*next;
+}	t_env;
+
 typedef struct s_token
 {
 	t_type			type;
@@ -97,6 +104,7 @@ typedef struct s_data
 	t_token	*token;
 	t_quote	*quote;
 	t_cmd	*cmd;
+	t_env	*envlst;
 }	t_data;
 
 //typedef struct s_pipe
@@ -143,6 +151,9 @@ void	error_command_not_found(const char *cmd);
 void	error_permission_denied(const char *file);
 void	error_no_such_file(const char *file);
 
+/* error2.c */
+void    error_too_many_arguments(const char *cmd);
+
 /* path_finding.c */
 char	*get_path(char *cmd, char **envp);
 
@@ -179,15 +190,18 @@ int 	output_redirection(t_redir *redir);
 
 /* exec_builtin */
 int 	is_builtin(char *str);
-void    exec_builtin(t_cmd *cmd, char **args);
+void    exec_builtin(t_cmd *cmd, char **args, t_data *data);
+
+/* builtin_utils */
+int check_key(char *str);
 
 /* builtins */
 void    exec_cd(char *path);
 void    exec_echo(char **arg);
 void    exec_env(void);
-void    exec_exit(void);
-void    exec_export(void);
+void    exec_exit(char **args);
+void    exec_export(char **args, t_data *data);
 void    exec_pwd(void);
-void    exec_unset(void);
+void    exec_unset(char **args, t_data *data);
 
 #endif
