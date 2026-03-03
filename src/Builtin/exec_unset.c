@@ -12,7 +12,52 @@
 
 #include "../../includes/minishell.h"
 
-void    exec_unset(void)
+void    unset_helper(char *key, t_data *data)
 {
-    return ;
+    t_env   current;
+    t_env   prev;
+
+    prev = NULL;
+    current = data->envlst;
+    while (current)
+    {
+        if (!ft_strncmp(key, current->key, ft_strlen(key)))
+        {
+            if (prev)
+                prev->next = current->next;
+            else
+                data->envlst = current->next;
+            free (current);
+            return ;
+        }
+        prev = current;
+        current = current->next;
+    }
+}
+
+void    exec_unset(char **args, t_data *data)
+{
+    int     i;
+    bool    err;
+
+    i = 1;
+    if (!args[1])
+        return (0);
+    err = false;
+    while (args[i])
+    {
+        if (!check_key(args[i]))
+        {
+            ft_putstr_fd("minishell: unset: `", 2);
+			ft_putstr_fd(args[i], 2);
+			ft_putstr_fd("': not a valid identifier\n", 2);
+			err = true;
+        }
+        else
+        {
+            ptr = extract_key(args[i]);
+            ft_lstadd_back(&list, ft_lstnew(ptr));
+            unset_helper(extract_key(args[i]));
+        }
+    }
 }
