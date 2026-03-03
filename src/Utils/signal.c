@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 10:56:12 by gwen              #+#    #+#             */
-/*   Updated: 2026/03/02 15:47:18 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/03 10:50:04 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 static void	sigint_handler(int sig)
 {
 	(void) sig;
-	signal(SIGINT, sigint_handler);
 	g_sig = SIGINT;
 	write(2, "\n", 1);
 	rl_replace_line("", 0);
@@ -26,7 +25,6 @@ static void	sigint_handler(int sig)
 static void	sigint_heredoc(int sig)
 {
 	(void) sig;
-	signal(SIGINT, sigint_heredoc);
 	g_sig = SIGINT;
 	write(2, "\n", 1);
 	rl_replace_line("", 0);
@@ -34,20 +32,38 @@ static void	sigint_heredoc(int sig)
 }
 void	setup_signal(void)
 {
-	signal(SIGINT, sigint_handler);
-	signal(SIGQUIT, SIG_IGN);
-	signal(SIGTSTP, SIG_IGN);
+	struct sigaction	sa;
+
+	g_sig = 0;
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = 0;
+	sa.sa_handler = sigint_handler;
+	sigaction(SIGINT, &sa, NULL);
+	sa.sa_handler = SIG_IGN;
+	sigaction(SIGQUIT, &sa, NULL);
+	sigaction(SIGTSTP, &sa, NULL);
 }
 
 void	signal_child(void)
 {
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
-	signal(SIGTSTP, SIG_DFL);
+	struct sigaction	sa;
+
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = 0;
+	sa.sa_handler = SIG_DFL;
+	sigaction(SIGINT, &sa, NULL);
+	sigaction(SIGQUIT, &sa, NULL);
+	sigaction(SIGTSTP, &sa, NULL);
 }
 
 void	signal_heredoc(void)
 {
-	signal(SIGINT, sigint_heredoc);
-	signal(SIGQUIT, SIG_IGN);
+	struct sigaction	sa;
+
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = 0;
+	sa.sa_handler = sigint_heredoc;
+	sigaction(SIGINT, &sa, NULL);
+	sa.sa_handler = SIG_IGN;
+	sigaction(SIGQUIT, &sa, NULL);
 }

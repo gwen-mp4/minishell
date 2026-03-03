@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc_process.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 11:58:17 by storck            #+#    #+#             */
-/*   Updated: 2026/03/02 15:45:51 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/03 11:11:37 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ void    fill_doc(int fd, char *delim)
    char    *line;
 
    /* use simpler handlers while in heredoc */
+   g_sig = 0;
    signal_heredoc();
    while (1)
    {
-       g_sig = 0;
        line = readline("$>");
        if (!line)                /* EOF / ctrl-D */
            break ;
