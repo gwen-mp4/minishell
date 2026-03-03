@@ -152,3 +152,25 @@ TODO: Use unlink after the prompt process has ended to destroy the file created.
             -code unset
             -code env
             -code exit
+
+**03/03/2026 14:00 by gwen**:
+
+-It seems that there're several major problems while interpreting, *heredoc segfault*.
+## Valgrind indicates:
+    ==2268== Invalid read of size 8
+    ==2268==    at 0x10ADCA: execution (in /mnt/c/Users/wenge/VS Code C/Coding/minishell/minishell)
+    ==2268==    by 0x1095C7: main (in /mnt/c/Users/wenge/VS Code C/Coding/minishell/minishell)
+    ==2268==  Address 0x0 is not stack'd, malloc'd or (recently) free'd
+    ==2268==
+    ==2268==
+    ==2268== Process terminating with default action of signal 11 (SIGSEGV)
+    ==2268==  Access not within mapped region at address 0x0
+    ==2268==    at 0x10ADCA: execution (in /mnt/c/Users/wenge/VS Code C/Coding/minishell/minishell)
+    ==2268==    by 0x1095C7: main (in /mnt/c/Users/wenge/VS Code C/Coding/minishell/minishell)
+    ==2268==  If you believe this happened as a result of a stack
+    ==2268==  overflow in your program's main thread (unlikely but
+    ==2268==  possible), you can try to increase the size of the
+    ==2268==  main thread stack using the --main-stacksize= flag.
+    ==2268==  The main thread stack size used in this run was 8388608.
+If you can fix it
+-Added some protections to input/output redirection so if fd < 0, return EXIT_FAILURE.

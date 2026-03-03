@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 11:58:17 by storck            #+#    #+#             */
-/*   Updated: 2026/03/03 11:11:37 by marvin           ###   ########.fr       */
+/*   Updated: 2026/03/03 13:47:28 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static char	*get_heredoc_name(void)
 {
-	static int	i;
+	static int		i;
 	char		*name;
 	char		*number;
 
@@ -27,32 +27,33 @@ static char	*get_heredoc_name(void)
 	return (name);
 }
 
-void    fill_doc(int fd, char *delim)
+int fill_doc(int fd, char *delim)
 {
-   char    *line;
+	char	*line;
 
-   /* use simpler handlers while in heredoc */
-   g_sig = 0;
-   signal_heredoc();
-   while (1)
-   {
-       line = readline("$>");
-       if (!line)                /* EOF / ctrl-D */
-           break ;
-       if (g_sig == SIGINT)      /* ctrl-C pressed */
-       {
-           free(line);
-           break ;
-       }
-       if (ft_strnstr(line, delim, ft_strlen(delim)))
-       {
-           free(line);
-           break ;
-       }
-       ft_putendl_fd(line, fd);
-       free(line);
-   }
-   setup_signal();
+	/* use simpler handlers while in heredoc */
+	g_sig = 0;
+	signal_heredoc();
+	while (1)
+	{
+		line = readline("$>");
+		if (!line) /* EOF / ctrl-D */
+			break;
+		if (g_sig == SIGINT) /* ctrl-C pressed */
+		{
+			free(line);
+			return (EXIT_FAILURE);
+		}
+		if (ft_strncmp(line, delim, ft_strlen(delim)) == 0)
+		{
+			free(line);
+			break;
+		}
+		ft_putendl_fd(line, fd);
+		free(line);
+	}
+	setup_signal();
+	return (close(fd), EXIT_SUCCESS);
 }
 
 int file_heredoc_process(t_redir *heredoc, char *delim)
@@ -61,11 +62,22 @@ int file_heredoc_process(t_redir *heredoc, char *delim)
     char    *doc_name;
 
     doc_name = get_heredoc_name();
+	if (!doc_name)
+		return (EXIT_FAILURE);
     fd = open(doc_name, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	fill_doc(fd, delim);
+	if (fd < 0)
+		return (free(doc_name), EXIT_FAILURE);
+	if (fill_doc(fd, delim) == EXIT_FAILURE)
+	{
+		close(fd);
+		unlink(doc_name);
+		free(doc_name);
+		return (EXIT_FAILURE);
+	}
 	free(heredoc->filename);
     heredoc->filename = doc_name;
 	close(fd);
 	fd = open(heredoc->filename, O_RDONLY, 0644);
+	unlink(heredoc->filename);
 	return (fd);
 }

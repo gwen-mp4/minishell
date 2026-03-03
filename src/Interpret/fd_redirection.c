@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fd_redirection.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/25 10:31:45 by storck            #+#    #+#             */
-/*   Updated: 2026/03/02 15:01:04 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/03 13:31:31 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ int input_redirection(t_redir *redir)
         fd = file_read_process(redir->filename);
     else
         fd = file_heredoc_process(redir, redir->filename);
+    if (fd < 0)
+        return (EXIT_FAILURE);
     redirect_fd(fd, STDIN_FILENO);
     return (fd);
 }
@@ -32,6 +34,8 @@ int output_redirection(t_redir *redir)
         fd = file_write_process(redir->filename);
     else
         fd = file_append_process(redir->filename);
+    if (fd < 0)
+        return (EXIT_FAILURE);
     redirect_fd(fd, STDOUT_FILENO);
     return (fd);
 }

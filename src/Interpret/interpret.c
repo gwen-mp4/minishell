@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   interpret.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 12:43:54 by storck            #+#    #+#             */
-/*   Updated: 2026/03/02 15:46:44 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/03 13:54:25 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void    exec_cmd(t_cmd *cmd, char **env)
 {
     char    *path;
 
+    signal_child(); //setting child signal before exec
     set_fds(cmd);
     //if (is_builtin(cmd->av[0]))
     //    return (exec_builtin(cmd->av));
@@ -63,7 +64,7 @@ void    do_pipe(t_cmd *cmd, char **env)
         close(p_fd[0]);
         redirect_fd(p_fd[1], STDOUT_FILENO);
         exec_cmd(cmd, env);
-        close(p_fd[1]);
+        close(p_fd[1]); //it doesn't reach if exec_cmd succeed or fail
     }
     else
     {
