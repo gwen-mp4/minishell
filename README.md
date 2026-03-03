@@ -152,3 +152,7 @@ TODO: Use unlink after the prompt process has ended to destroy the file created.
             -code unset
             -code env
             -code exit
+
+**03/03/2026 17:00 by storck**:
+
+-Continued builtins (unset, exit and export), still need to do env and some utils functions.
