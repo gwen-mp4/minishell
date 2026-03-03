@@ -89,7 +89,7 @@ void    execution(t_cmd *cmd, t_data *data)
         cmd = cmd->next;
     }
     if (is_builtin(cmd->av[0]))
-        exec_builtin(cmd, cmd->av);
+        exec_builtin(cmd, cmd->av, data);
     else
     {
         pid = fork_process();
