@@ -141,3 +141,14 @@ TODO: Use unlink after the prompt process has ended to destroy the file created.
         -Use the heredoc signal when using heredoc, I've modified the function *fill_doc()* so it manages signals but still need to be fix when exitting heredoc
     *signal_child()*:
         -Use the child signal when a child is processing (a command is executing), have to add, didn't add it.
+
+**03/03/2026 12:00 by storck**:
+
+-Fixed the problem that caused faulty fd redirection when executing a command without a set infile or outfile.
+-Fixed an issue with Bulit-in commnads that caused them to behave weirdly at exit (needed Ctrl+D one more time for each built-ins executed before exiting minishell)
+-Tested echo and pwd, all seems fine.
+    TODO:   -test cd
+            -code export
+            -code unset
+            -code env
+            -code exit
