@@ -6,7 +6,7 @@
 /*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 10:49:54 by storck            #+#    #+#             */
-/*   Updated: 2026/03/02 15:03:02 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/04 11:37:34 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,14 +76,15 @@ typedef struct s_quote
 	int	dq;
 }	t_quote;
 
-typedef struct s_redir // for <, <<, >>, >
+typedef struct s_redir
 {
 	t_type			type;
 	char			*filename;
+	int				fd;
 	struct s_redir	*next;
 }	t_redir;
 
-typedef struct s_cmd // av for WORD and redirs for operator except pipe
+typedef struct s_cmd
 {
 	char			**av;
 	t_redir			*redirs;
