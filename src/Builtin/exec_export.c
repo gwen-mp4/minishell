@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_export.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: storck <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 12:31:48 by storck            #+#    #+#             */
-/*   Updated: 2026/02/27 12:31:53 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/04 11:51:38 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int error_export_msg(char *name)
 {
     ft_putstr_fd("minishell: export: `", 2);
-	ft_putstr_fd(identifier, 2);
+	ft_putstr_fd(name, 2);
 	ft_putstr_fd("': not a valid identifier\n", 2);
 	return (1);
 }
@@ -28,7 +28,7 @@ void    export_list(t_data *data)
     lst = data->envlst;
     while (lst)
     {
-        if (lst->value != NULL && (ft_strncmp(list->key, "_", 1) != 0))
+        if (lst->value != NULL && (ft_strncmp(lst->key, "_", 1) != 0))
         {
             printf("declare -x %s=\"", lst->key);
             i = 0;
@@ -75,15 +75,15 @@ void    exec_export(char **args, t_data *data)
         return (export_list(data));
     while (args[i])
     {
-        if (ft_check_key(args[i]) == 0)
+        if (check_key(args[i]) == 0)
             status = error_export_msg(args[i]);
         else
         {
             key = extract_key(args[i]);
-            if (env_entry_exists(key))
-                update_envlst(key, extract_value(args[i]), false);
+            if (env_entry_exists(key, data))
+                update_envlst(key, extract_value(args[i]), data, false);
             else
-                update_envlst(key, extract_value(args[i]), true);
+                update_envlst(key, extract_value(args[i]), data, true);
         }
         i++;
     }

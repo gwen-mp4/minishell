@@ -12,7 +12,15 @@
 
 #include "../../includes/minishell.h"
 
-void    exec_env(void)
+void    exec_env(t_data *data)
 {
-    return ;
+    t_env   *lst;
+
+    lst = data->envlst;
+    while (lst)
+    {
+        if (lst->value != NULL)
+            printf("%s=%s\n", lst->key, lst->value);
+        lst = lst->next;
+    }
 }

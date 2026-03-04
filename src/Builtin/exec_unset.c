@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_unset.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: storck <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 12:32:06 by storck            #+#    #+#             */
-/*   Updated: 2026/02/27 12:32:11 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/04 11:56:23 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void    unset_helper(char *key, t_data *data)
 {
-    t_env   current;
-    t_env   prev;
+    t_env   *current;
+    t_env   *prev;
 
     prev = NULL;
     current = data->envlst;
@@ -39,10 +39,11 @@ void    exec_unset(char **args, t_data *data)
 {
     int     i;
     bool    err;
+    char    *ptr;
 
     i = 1;
     if (!args[1])
-        return (0);
+        return ;
     err = false;
     while (args[i])
     {
@@ -56,8 +57,8 @@ void    exec_unset(char **args, t_data *data)
         else
         {
             ptr = extract_key(args[i]);
-            ft_lstadd_back(&list, ft_lstnew(ptr));
-            unset_helper(extract_key(args[i]));
+            ft_lstadd_back(&(data->envlst), ft_lstnew(ptr));
+            unset_helper(extract_key(args[i]), data);
         }
     }
 }
