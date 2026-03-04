@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   interpret.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 12:43:54 by storck            #+#    #+#             */
-/*   Updated: 2026/03/03 13:54:25 by marvin           ###   ########.fr       */
+/*   Updated: 2026/03/04 11:58:37 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void    exec_cmd(t_cmd *cmd, char **env)
 
     signal_child(); //setting child signal before exec
     set_fds(cmd);
-    //if (is_builtin(cmd->av[0]))
+    // if (is_builtin(cmd->av[0]))
     //    return (exec_builtin(cmd->av));
     path = get_path(cmd->av[0], env);
     if (!path)
@@ -54,25 +54,49 @@ void    exec_cmd(t_cmd *cmd, char **env)
 
 void    do_pipe(t_cmd *cmd, char **env)
 {
-    pid_t   pid;
-    int     p_fd[2];
-    
-    pipe_process(p_fd);
-    pid = fork_process();
-    if (!pid)
-    {
-        close(p_fd[0]);
-        redirect_fd(p_fd[1], STDOUT_FILENO);
-        exec_cmd(cmd, env);
-        close(p_fd[1]); //it doesn't reach if exec_cmd succeed or fail
-    }
-    else
-    {
-        close(p_fd[1]);
-        redirect_fd(p_fd[0], STDIN_FILENO);
-        waitpid(pid, NULL, 0);
-        close(p_fd[0]);
-    }
+	pid_t	pid;
+	int		p_fd[2];
+
+	pipe_process(p_fd);
+	pid = fork_process();
+	if (!pid)
+	{
+		close(p_fd[0]);
+		redirect_fd(p_fd[1], STDOUT_FILENO);
+		exec_cmd(cmd, env);
+	}
+	else
+	{
+		close(p_fd[1]);
+		redirect_fd(p_fd[0], STDIN_FILENO);
+		waitpid(pid, NULL, 0);
+	}
+}
+
+int	prepare_heredoc(t_cmd *cmd)
+{
+	t_cmd	*c;
+	t_redir	*r;
+	int		fd;
+	
+	c = cmd;
+	while (c)
+	{
+		r = c->redirs;
+		while (r)
+		{
+			if (r->type == HEREDOC)
+			{
+				fd = create_heredoc(r->filename);
+				if (fd < 0)
+					return (EXIT_FAILURE);
+				r->fd = fd;
+			}
+			r = r->next;
+		}
+		c = c->next;
+	}
+	return (EXIT_SUCCESS);
 }
 
 void    execution(t_cmd *cmd, t_data *data)
@@ -83,22 +107,21 @@ void    execution(t_cmd *cmd, t_data *data)
 
     save_in = dup(STDIN_FILENO);
     save_out = dup(STDOUT_FILENO);
+	if (prepare_heredoc(cmd) == EXIT_FAILURE)
+		return ;
     while (data->pipe_count > 0)
     {
         do_pipe(cmd, data->env);
         data->pipe_count--;
         cmd = cmd->next;
     }
-    if (is_builtin(cmd->av[0]))
-        exec_builtin(cmd, cmd->av, data);
+    // if (is_builtin(cmd->av[0]))
+    //     exec_builtin(cmd, cmd->av, data);
+    pid = fork_process();
+    if (!pid)
+        exec_cmd(cmd, data->env);
     else
-    {
-        pid = fork_process();
-        if (!pid)
-            exec_cmd(cmd, data->env);
-        else   
-            waitpid(pid, NULL, 0);
-    }
+        waitpid(pid, NULL, 0);
     redirect_fd(save_in, STDIN_FILENO);
     redirect_fd(save_out, STDOUT_FILENO);
 }

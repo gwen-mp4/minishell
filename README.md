@@ -178,3 +178,5 @@ If you can fix it
 **03/03/2026 17:00 by storck**:
 
 -Continued builtins (unset, exit and export), still need to do env and some utils functions.
+
+**add all builtin files and exec_builtin.c after finishing

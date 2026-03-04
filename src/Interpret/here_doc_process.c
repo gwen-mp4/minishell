@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc_process.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 11:58:17 by storck            #+#    #+#             */
-/*   Updated: 2026/03/03 13:47:28 by marvin           ###   ########.fr       */
+/*   Updated: 2026/03/04 11:52:15 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ int fill_doc(int fd, char *delim)
 {
 	char	*line;
 
-	/* use simpler handlers while in heredoc */
 	g_sig = 0;
 	signal_heredoc();
 	while (1)
