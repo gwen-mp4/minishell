@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   interpret.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 12:43:54 by storck            #+#    #+#             */
-/*   Updated: 2026/03/04 12:36:56 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/04 13:19:07 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	prepare_heredoc(t_cmd *cmd)
 		{
 			if (r->type == HEREDOC)
 			{
-				fd = create_heredoc(r->filename);
+				fd = file_heredoc_process(r);
 				if (fd < 0)
 					return (EXIT_FAILURE);
 				r->fd = fd;

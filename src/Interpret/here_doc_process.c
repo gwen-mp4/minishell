@@ -6,7 +6,7 @@
 /*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 11:58:17 by storck            #+#    #+#             */
-/*   Updated: 2026/03/04 11:52:15 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/04 13:10:41 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,19 +31,17 @@ int fill_doc(int fd, char *delim)
 {
 	char	*line;
 
-	g_sig = 0;
-	signal_heredoc();
 	while (1)
 	{
-		line = readline("$>");
+		line = readline("heredoc>");
 		if (!line) /* EOF / ctrl-D */
 			break;
 		if (g_sig == SIGINT) /* ctrl-C pressed */
 		{
 			free(line);
-			return (EXIT_FAILURE);
+			return (close(fd), EXIT_FAILURE);
 		}
-		if (ft_strncmp(line, delim, ft_strlen(delim)) == 0)
+		if (ft_strcmp(line, delim) == 0)
 		{
 			free(line);
 			break;
@@ -51,32 +49,43 @@ int fill_doc(int fd, char *delim)
 		ft_putendl_fd(line, fd);
 		free(line);
 	}
-	setup_signal();
 	return (close(fd), EXIT_SUCCESS);
 }
 
-int file_heredoc_process(t_redir *heredoc, char *delim)
+int file_heredoc_process(t_redir *heredoc)
 {
 	int		fd;
     char    *doc_name;
+	pid_t	pid;
+	int		status;
 
     doc_name = get_heredoc_name();
 	if (!doc_name)
-		return (EXIT_FAILURE);
+		return (-1);
     fd = open(doc_name, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (fd < 0)
-		return (free(doc_name), EXIT_FAILURE);
-	if (fill_doc(fd, delim) == EXIT_FAILURE)
+		return (free(doc_name), -1);
+	pid = fork_process();
+	if (!pid)
 	{
-		close(fd);
+		signal_heredoc();
+		if (fill_doc(fd, heredoc->filename) == EXIT_FAILURE)
+			exit (1);
+		exit (0);
+	}
+	close(fd);
+	signal(SIGINT, SIG_IGN);
+	waitpid(pid, &status, 0);
+	setup_signal();
+	if (WIFSIGNALED(status) || WEXITSTATUS(status) != 0)
+	{
 		unlink(doc_name);
 		free(doc_name);
-		return (EXIT_FAILURE);
+		return (-1);
 	}
-	free(heredoc->filename);
-    heredoc->filename = doc_name;
+	fd = open(doc_name, O_RDONLY);
+	unlink(doc_name);
+	free(doc_name);
 	close(fd);
-	fd = open(heredoc->filename, O_RDONLY, 0644);
-	unlink(heredoc->filename);
 	return (fd);
 }
