@@ -6,7 +6,7 @@
 /*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 11:58:17 by storck            #+#    #+#             */
-/*   Updated: 2026/03/04 15:59:46 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/04 16:14:27 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	heredoc_parent(pid_t pid, char *doc_name, int fd)
 	signal(SIGINT, SIG_IGN);
 	waitpid(pid, &status, 0);
 	setup_signal();
-	if (WIFSIGNALED(status) || WEXITSTATUS(status) != 0)
+	if (!WIFEXITED(status) || WEXITSTATUS(status) != 0)
 		return (unlink(doc_name), free(doc_name), -1);
 	fd = open(doc_name, O_RDONLY);
 	unlink(doc_name);
