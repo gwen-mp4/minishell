@@ -6,7 +6,7 @@
 #    By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/11 15:53:54 by gwen              #+#    #+#              #
-#    Updated: 2026/03/04 14:38:38 by gwen             ###   ########.fr        #
+#    Updated: 2026/03/04 15:22:39 by gwen             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,8 @@ SRC = main.c \
 	Utils/init.c \
 	Utils/error.c \
 	Utils/free.c \
+	Utils/signal_child.c \
+	Utils/signal_heredoc.c \
 	Utils/signal.c \
 	Utils/debug.c
 

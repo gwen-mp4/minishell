@@ -180,3 +180,9 @@ If you can fix it
 -Continued builtins (unset, exit and export), still need to do env and some utils functions.
 
 **add all builtin files and exec_builtin.c after finishing
+
+**04/03/2026 16:10 by gwen**:
+
+-Fixed heredoc, now it works (perfectly? still need more hardcore test)
+-Fixed signals issues
+-Need to fix norm (a lot, i'm not kidding)
