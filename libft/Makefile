@@ -3,14 +3,14 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+         #
+#    By: storck <storck@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/06 14:05:09 by gwen              #+#    #+#              #
-#    Updated: 2026/03/04 14:43:19 by gwen             ###   ########.fr        #
+#    Updated: 2026/03/04 15:32:47 by storck           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC = gcc
+CC = cc
 AR = ar rcs
 RM = rm -f
 CFLAGS = -Wall -Wextra -Werror
@@ -32,8 +32,8 @@ HEADER = libft.h
 
 all: $(NAME) 
 
-$(NAME): $(OBJ)
-	$(AR) $(NAME) $(OBJ)
+$(NAME): $(OBJ) $(OBJ_BONUS)
+	$(AR) $(NAME) $(OBJ) $(OBJ_BONUS)
 
 %.o: %.c $(HEADER)
 	$(CC) $(CFLAGS) -o $@ -c $< -I .

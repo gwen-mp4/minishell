@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 10:49:54 by storck            #+#    #+#             */
-/*   Updated: 2026/03/04 13:19:38 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/04 15:48:36 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,13 @@ typedef struct s_cmd
 	struct s_cmd	*next;
 }	t_cmd;
 
+typedef struct s_var
+{
+	char			*name;
+	char			*content;
+	struct s_var	*next;
+}	t_var;
+
 typedef struct s_data
 {
 	char	*line;
@@ -107,6 +114,7 @@ typedef struct s_data
 	t_cmd	*cmd;
 	t_env	*envlst;
 	t_list	*trash;
+	t_var	*vars;
 }	t_data;
 
 //typedef struct s_pipe
@@ -215,5 +223,11 @@ bool    env_entry_exists(char *key, t_data *data);
 t_env   *envlst_new(char *key, char *value);
 void    envlst_back(t_env *new, t_data *data);
 void    update_envlst(char *key, char *value, t_data *data, bool create);
+
+/* variable.c */
+void    filter_var(t_cmd *cmd, t_data *data);
+
+/* var_utils.c */
+void    add_var(t_data *data, char *name, char *content);
 
 #endif
