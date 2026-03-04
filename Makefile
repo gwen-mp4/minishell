@@ -6,7 +6,7 @@
 #    By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/11 15:53:54 by gwen              #+#    #+#              #
-#    Updated: 2026/03/04 12:04:01 by gwen             ###   ########.fr        #
+#    Updated: 2026/03/04 12:56:47 by gwen             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,17 +31,7 @@ SRC = main.c \
 	parsing/create_cmd.c \
 	parsing/parsing.c \
 	parsing/parsing_utils.c \
-	Builtin/env_utils_1.c \
-	Builtin/env_utils_2.c \
-	Builtin/exec_cd.c \
-	Builtin/exec_echo.c \
-	Builtin/exec_env.c \
-	Builtin/exec_exit.c \
-	Builtin/exec_export.c \
-	Builtin/exec_pwd.c \
-	Builtin/exec_unset.c \
 	Interpret/append_file_process.c \
-	Interpret/exec_builtin.c \
 	Interpret/fd_redirection.c \
 	Interpret/here_doc_process.c \
 	Interpret/interpret.c \

@@ -6,7 +6,7 @@
 /*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 10:49:54 by storck            #+#    #+#             */
-/*   Updated: 2026/03/04 12:03:53 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/04 12:32:53 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,7 +181,7 @@ void    add_back_token(t_token **list, t_token *new);
 t_token	*create_token(t_type type, char *value);
 
 /* here_doc_process.c */
-int 	file_heredoc_process(t_redir *heredoc, char *delim);
+int 	file_heredoc_process(t_redir *heredoc);
 
 /* append_file_process.c */
 int		file_append_process(char *outfile);
