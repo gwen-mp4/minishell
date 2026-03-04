@@ -3,51 +3,67 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: gwen <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/11 10:29:57 by storck            #+#    #+#             */
-/*   Updated: 2026/02/16 11:45:58 by gwen             ###   ########.fr       */
+/*   Created: 2025/11/08 15:15:18 by gwen              #+#    #+#             */
+/*   Updated: 2025/11/08 15:15:20 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "libft.h"
 
-char	*ft_substr(const char *s, unsigned int start, size_t len)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	unsigned int	i;
-	char			*sub_s;
-	size_t			slen;
+	char			*substr;
+	unsigned int	s1_len;
+	size_t			sub_len;
 
-	i = 0;
+	s1_len = ft_strlen(s);
 	if (!s)
-		return (0);
-	slen = ft_strlen(s);
-	if (start >= slen)
+		return (NULL);
+	if (start > s1_len)
 		return (ft_strdup(""));
-	if (len > slen - start)
-		len = slen - start;
-	sub_s = malloc(sizeof(char) * (len + 1));
-	if (!sub_s)
-		return (0);
-	while (i < len && s[i + start])
-	{
-		sub_s[i] = s[i + start];
-		i++;
-	}
-	sub_s[i] = '\0';
-	return (sub_s);
+	sub_len = s1_len - start;
+	if (len > sub_len)
+		len = sub_len;
+	substr = ft_calloc(len + 1, sizeof(char));
+	if (!substr)
+		return (NULL);
+	ft_strlcpy(substr, (char *)&s[start], len + 1);
+	return (substr);
 }
 /*
 #include <stdio.h>
 
 int	main(void)
 {
+	const char	*str = "Hello world!";
 	char	*sub;
 
-	sub = ft_substr("Hello World!", 4, 0);
+	sub = ft_substr(str, 6, 5);
 	printf("%s\n", sub);
 	free(sub);
+
+	sub = ft_substr(str, 0, 5);
+	printf("%s\n", sub);
+	free(sub);
+
+	sub = ft_substr(str, 6, 50);
+	printf("%s\n", sub);
+	free(sub);
+
+	sub = ft_substr(str, 20, 5);
+	printf("%s\n", sub);
+	free(sub);
+
+	sub = ft_substr(str, 5, 0);
+	printf("%s\n", sub);
+	free(sub);
+
+	sub = ft_substr("", 0, 5);
+	printf("%s\n", sub);
+	free(sub);
+
 	return (0);
 }
 */

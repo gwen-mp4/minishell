@@ -6,7 +6,7 @@
 /*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 11:58:17 by storck            #+#    #+#             */
-/*   Updated: 2026/03/04 13:10:41 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/04 14:17:52 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int file_heredoc_process(t_redir *heredoc)
     fd = open(doc_name, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (fd < 0)
 		return (free(doc_name), -1);
-	pid = fork_process();
+	pid = fork();
 	if (!pid)
 	{
 		signal_heredoc();
@@ -73,19 +73,14 @@ int file_heredoc_process(t_redir *heredoc)
 			exit (1);
 		exit (0);
 	}
-	close(fd);
-	signal(SIGINT, SIG_IGN);
+	if (pid < 0)
+		return (close(fd), unlink(doc_name), free(doc_name), -1);
 	waitpid(pid, &status, 0);
 	setup_signal();
-	if (WIFSIGNALED(status) || WEXITSTATUS(status) != 0)
-	{
-		unlink(doc_name);
-		free(doc_name);
-		return (-1);
-	}
+	if (!WIFEXITED(status) || WEXITSTATUS(status) != 0)
+		return (unlink(doc_name), free(doc_name), -1);
 	fd = open(doc_name, O_RDONLY);
-	unlink(doc_name);
-	free(doc_name);
-	close(fd);
-	return (fd);
+	if (fd < 0)
+		return (unlink(doc_name), free(doc_name), -1);
+	return (unlink(doc_name), free(doc_name), fd);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: storck <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: gwen <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/10 15:41:23 by storck            #+#    #+#             */
-/*   Updated: 2025/11/14 12:48:05 by storck           ###   ########.fr       */
+/*   Created: 2025/11/07 13:35:49 by gwen              #+#    #+#             */
+/*   Updated: 2025/11/07 13:35:50 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,41 +14,36 @@
 
 char	*ft_strchr(const char *s, int c)
 {
-	while (*s)
+	unsigned int	i;
+	char			true_char;
+
+	i = 0;
+	true_char = (char)c;
+	while (s[i])
 	{
-		if (*s == (char)c)
-			return ((char *)s);
-		s++;
+		if (s[i] == true_char)
+			return ((char *)&s[i]);
+		i++;
 	}
-	if ((char)c == '\0')
-		return ((char *)s);
-	return (0);
+	if (s[i] == true_char)
+		return ((char *)&s[i]);
+	return (NULL);
 }
 /*
 #include <stdio.h>
 #include <string.h>
-
-int main()
+ 
+#define SIZE 40
+ 
+int main(void)
 {
-    // define a string
-    const char* str = "Hello t World.";
-    // define a char ch to be searched in str
-    int ch = ('t' + 256);
-
-    // Use strchr to find the first occurrence of the
-    // character 's'
-    const char* result = ft_strchr(str, ch);
-
-    if (result != NULL) {
-        // Calculate the position by subtracting the base
-        // pointer from the result pointer
-        printf("Character '%c' found at position: %ld\n",
-               ch, result - str);
-    }
-    else {
-        printf("Character '%c' not found.\n", ch);
-    }
-
-    return 0;
+  char buffer1[SIZE] = "computer program";
+  char * ptr;
+  int    ch = 'p';
+ 
+  ptr = ft_strchr( buffer1, ch );
+  printf( "The first occurrence of %c in '%s' is '%s'\n",
+            ch, buffer1, ptr );
+ 
 }
 */

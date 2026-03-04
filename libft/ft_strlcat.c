@@ -3,58 +3,54 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: storck <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: gwen <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/10 14:49:56 by storck            #+#    #+#             */
-/*   Updated: 2025/11/13 14:41:07 by storck           ###   ########.fr       */
+/*   Created: 2025/11/07 11:20:47 by gwen              #+#    #+#             */
+/*   Updated: 2025/11/07 11:40:16 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlcat(char *dst, const char *src, size_t siz)
+size_t	ft_strlcat(char *dest, const char *src, size_t destsize)
 {
-	size_t	i;
-	size_t	j;
 	size_t	src_len;
-	size_t	dst_len;
+	size_t	dest_len;
 
 	src_len = ft_strlen(src);
-	dst_len = ft_strlen(dst);
-	if (siz == 0)
-		return (src_len);
-	i = 0;
-	while (dst[i])
-		i++;
-	j = 0;
-	while (j + i < siz - 1 && src[j])
-	{
-		dst[j + i] = src[j];
-		j++;
-	}
-	if (siz <= dst_len)
-		return (src_len + siz);
+	dest_len = ft_strlen(dest);
+	if (dest_len >= destsize)
+		return (src_len + destsize);
+	if (src_len < destsize - dest_len)
+		ft_memcpy(dest + dest_len, src, src_len + 1);
 	else
 	{
-		dst[i + j] = '\0';
-		return (src_len + dst_len);
+		ft_memcpy(dest + dest_len, src, destsize - dest_len - 1);
+		dest[destsize - 1] = '\0';
 	}
+	return (dest_len + src_len);
 }
 /*
+#include <string.h>
 #include <stdio.h>
-#include <bsd/string.h>
 
-int main()
+int	main(void)
 {
-	char first[] = "This is ";
-	char last[] = "a potentially long string";
-	int r;
-	int size = 0;
+	char	dest[20] = "Hello";
+	const char	*src = "world";
+	size_t	n1 = ft_strlcat(dest, src, sizeof(dest));
+	char	small[10] = "Hello";
+	size_t	n2 = ft_strlcat(small, src, sizeof(small));
+	char	empty[10] = "";
+	size_t	n3 = ft_strlcat(empty, src, sizeof(empty));
+	char	zero[5] = "abcd";
+	size_t	n4 = ft_strlcat(zero, src, 0);
 
-	r = ft_strlcat(buffer,last,size);
+	printf("%s, %zu\n", dest, n1);
+	printf("%s, %zu\n", small, n2);
+	printf("%s, %zu\n", empty, n3);
+	printf("%s, %zu\n", zero, n4);
 
-	puts(buffer);
-	printf("Value returned: %d\n",r);
-	return(0);
+	return (0);
 }
-*/
+	*/

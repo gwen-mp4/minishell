@@ -3,47 +3,62 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: storck <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: gwen <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/11 14:55:11 by storck            #+#    #+#             */
-/*   Updated: 2025/11/12 17:25:27 by storck           ###   ########.fr       */
+/*   Created: 2025/11/08 15:16:44 by gwen              #+#    #+#             */
+/*   Updated: 2025/11/08 15:16:46 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdlib.h>
 
-char	*ft_strmapi(const char *s, char (*f)(unsigned int, char))
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	int		i;
-	int		len;
-	char	*mapi;
+	char			*dest;
+	unsigned int	i;
 
+	if (!s)
+		return (NULL);
+	dest = ft_strdup(s);
+	if (!dest)
+		return (NULL);
 	i = 0;
-	len = ft_strlen(s);
-	mapi = malloc(sizeof(char) * (len + 1));
-	if (!mapi)
-		return (0);
-	while (s[i])
+	while (dest[i])
 	{
-		mapi[i] = (*f)(i, s[i]);
+		dest[i] = (*f)(i, s[i]);
 		i++;
 	}
-	mapi[i] = '\0';
-	return (mapi);
+	dest[i] = '\0';
+	return (dest);
 }
+
 /*
-char	test(unsigned int i, char c)
+char	upper_even(unsigned int i, char c)
 {
-	c += i;
+	if (i % 2 == 0 && c >= 'a' && c <= 'z')
+		return (c - 32);
 	return (c);
 }
 
 #include <stdio.h>
 
-int	 main(int argc, char **argv)
+int	main(void)
 {
-	printf("%s\n", ft_strmapi(argv[1], test));
-	return (argc);
+	char	*str = "abcdef";
+	char	*res;
+
+	res = ft_strmapi(str, upper_even);
+	printf("%s\n", res);
+	free(res);
+
+	res = ft_strmapi("", upper_even);
+	printf("%s\n", res);
+	free(res);
+
+	res = ft_strmapi(NULL, upper_even);
+	if (!res)
+		printf("NULL\n");
+
+	return (0);
 }
-*/
+	*/

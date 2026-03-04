@@ -3,46 +3,60 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: storck <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: gwen <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/10 17:31:17 by storck            #+#    #+#             */
-/*   Updated: 2025/11/14 12:56:15 by storck           ###   ########.fr       */
+/*   Created: 2025/11/07 13:34:33 by gwen              #+#    #+#             */
+/*   Updated: 2025/11/07 13:34:34 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_atoi(const char *nptr)
+int	ft_atoi(const char *str)
 {
 	int	i;
-	int	num;
+	int	res;
 	int	sign;
 
 	i = 0;
-	num = 0;
+	res = 0;
 	sign = 1;
-	while ((nptr[i] >= 9 && nptr[i] <= 13) || nptr[i] == 32)
+	while ((str[i] >= '\t' && str[i] <= '\r') || str[i] == ' ')
 		i++;
-	if (nptr[i] == '+' || nptr[i] == '-')
+	if (str[i] == '+' || str[i] == '-')
 	{
-		if (nptr[i] == '-')
-			sign = -sign;
+		if (str[i] == '-')
+			sign *= -1;
 		i++;
 	}
-	while (nptr[i] >= '0' && nptr[i] <= '9')
+	while (ft_isdigit(str[i]))
 	{
-		num = (num * 10) + (nptr[i] - '0');
+		res = (res * 10) + (str[i] - '0');
 		i++;
 	}
-	return (num * sign);
+	return (res * sign);
 }
 /*
 #include <stdio.h>
+#include <stdio.h>
 
-int	main(int argc, char **argv)
+int	main(void)
 {
-	printf("%d\n", ft_atoi("   \t \n +0123"));
-	(void)argv;
-	return (argc);
+	char	str[] = "1235455448784";
+	char	str2[] = "-654";
+	char	str3[] = "+478";
+	char	str4[] = "hello";
+
+	printf("%d\n", atoi(str));
+	printf("%d\n", atoi(str2));
+	printf("%d\n", atoi(str3));
+	printf("%d\n", atoi(str4));
+
+	printf("%d\n", ft_atoi(str));
+	printf("%d\n", ft_atoi(str2));
+	printf("%d\n", ft_atoi(str3));
+	printf("%d\n", ft_atoi(str4));
+
+	return (0);
 }
-*/
+	*/

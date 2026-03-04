@@ -3,41 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: storck <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: gwen <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/10 10:02:28 by storck            #+#    #+#             */
-/*   Updated: 2025/11/13 14:48:28 by storck           ###   ########.fr       */
+/*   Created: 2025/11/07 10:44:03 by gwen              #+#    #+#             */
+/*   Updated: 2025/11/07 11:10:36 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memset(void *dest, int c, size_t count)
+void	*ft_memset(void *s, int c, size_t n)
 {
-	char	*d;
-	size_t	i;
+	unsigned char	*ptr;
 
-	d = (char *)dest;
-	i = 0;
-	while (i < count)
-	{
-		d[i] = (char)c;
-		i++;
-	}
-	return (dest);
+	ptr = (unsigned char *)s;
+	while (n--)
+		*ptr++ = (unsigned char)c;
+	return (s);
 }
-/*
-#include <stdio.h>
-#include <string.h>
-
-int	main(void)
-{
-	char str[50] = "/!\\ gogo test /!\\";
-       	printf("\nBefore memset(): %s\n", str);
-
-	ft_memset(str + 4, 'X', 4*sizeof(char));
-
-	printf("After memset():  %s\n", str);
-	return 0;
-}
-*/

@@ -3,59 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: storck <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: gwen <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/10 16:40:44 by storck            #+#    #+#             */
-/*   Updated: 2025/11/13 14:42:39 by storck           ###   ########.fr       */
+/*   Created: 2025/11/07 13:36:12 by gwen              #+#    #+#             */
+/*   Updated: 2025/11/07 13:36:13 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strnstr(const char *big, const char *little, size_t len)
+char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 {
 	size_t	i;
 	size_t	j;
 
+	if (needle[0] == '\0')
+		return ((char *)haystack);
 	i = 0;
-	j = 0;
-	if (*little == 0)
-		return ((char *)big);
-	while ((i < len) && (*big != 0))
+	while (haystack[i] && i < len)
 	{
-		if (big[0] == little[0])
+		j = 0;
+		while (haystack[i + j] == needle[j] && needle[j] && i + j < len)
 		{
-			j = 0;
-			while (little[j] && big[j] && (i + j) < len)
-			{
-				if (little[j] != big[j])
-					break ;
-				j++;
-				if (little[j] == 0)
-					return ((char *)big);
-			}
+			j++;
+			if (!needle[j])
+				return ((char *)&haystack[i]);
 		}
-		big++;
 		i++;
 	}
-	return (0);
+	return (NULL);
 }
-/*
-#include <stdio.h>
-#include <bsd/string.h>
-
-int main(void)
-{
-    char *haystack = "Very secret hidden text";
-    char *needle = "";
-    char *location;
-    size_t size = 4;
-
-    location = ft_strnstr(haystack, needle, size);
-    if(location == NULL)
-        puts("Unable to find string with strnstr().");
-    else
-        printf("%s\n", location);
-    return(0);
-}
-*/

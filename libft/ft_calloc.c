@@ -3,44 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: storck <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: gwen <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/11 10:07:00 by storck            #+#    #+#             */
-/*   Updated: 2025/11/13 14:37:37 by storck           ###   ########.fr       */
+/*   Created: 2025/11/08 11:59:03 by gwen              #+#    #+#             */
+/*   Updated: 2025/11/08 11:59:05 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdlib.h>
+#include <stdint.h>
+#include <limits.h>
 
-void	*ft_calloc(size_t nmemb, size_t size)
+void	*ft_calloc(size_t count, size_t size)
 {
-	void	*mempt;
+	unsigned char	*tmp;
+	size_t			total;
 
-	mempt = malloc(nmemb * size);
-	if (!mempt)
-		return (0);
-	ft_bzero(mempt, nmemb * size);
-	return (mempt);
+	if (size != 0 && (count > SIZE_MAX / size))
+		return (NULL);
+	total = count * size;
+	tmp = malloc(total);
+	if (!tmp)
+		return (NULL);
+	ft_bzero(tmp, total);
+	return (tmp);
 }
-/*
-#include <stdio.h>
-
-int main() {
-    int *ptr = (int *)ft_calloc(4294967295, sizeof(int));
-    
-    // Checking if failed or pass
-    if (ptr == NULL) {
-        printf("Allocation Failed");
-        exit(0);
-    }
-    
-    // No need to populate as already
-    // initialized to 0
-        
-    // Print the array
-    for (int i = 0; i < 5; i++)
-        printf("%d ", ptr[i]);
-    return 0;
-}
-*/

@@ -3,56 +3,50 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: storck <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: gwen <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/10 11:33:17 by storck            #+#    #+#             */
-/*   Updated: 2025/11/13 14:39:46 by storck           ###   ########.fr       */
+/*   Created: 2025/11/07 13:35:37 by gwen              #+#    #+#             */
+/*   Updated: 2025/11/07 14:33:44 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memmove(void *dst, void *src, size_t n)
+void	*ft_memmove(void *dest, const void *src, size_t n)
 {
-	const unsigned char	*source;
-	unsigned char		*dest;
-	long				i;
+	unsigned char		*tmp_dest;
+	unsigned char		*tmp_src;
 
-	source = (const unsigned char *)src;
-	dest = (unsigned char *)dst;
-	if (!dest && !src && n)
-		return (dest);
-	i = n;
-	if (dest >= source)
+	tmp_dest = (unsigned char *)dest;
+	tmp_src = (unsigned char *)src;
+	if (!tmp_dest && !tmp_src)
+		return (NULL);
+	if (tmp_dest > tmp_src)
 	{
-		while (--i >= 0)
-			dest[i] = source[i];
-	}
-	else
-	{
-		i = 0;
-		while ((size_t)i < n)
+		while (n > 0)
 		{
-			dest[i] = source[i];
-			i++;
+			tmp_dest[n - 1] = tmp_src[n - 1];
+			n--;
 		}
 	}
-	return (dst);
+	else
+		ft_memcpy(tmp_dest, tmp_src, n);
+	return (dest);
 }
 /*
-#include <string.h>
 #include <stdio.h>
-#include <stdlib.h>
+#include <string.h>
 
-int main(){
-	char a[50]="hare rama hare rama";
+int	main(void)
+{
+	char	str[] = "0123456789";
+	char	str2[] = "0123456789";
 
-	char b[50]="hare rama hare rama";
-
-	ft_memmove(a+5,a,20);
-	puts(a);
-
-	memmove(b+5,b,20);
-	puts(b);
+	printf("%s\n", str);
+	ft_memmove(str + 3, str, 5);
+	printf("%s\n", str);
+	memmove(str2 + 3, str2, 5);
+	printf("%s\n", str2);
+	return (0);
 }
 */

@@ -3,56 +3,49 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: storck <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: gwen <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/10 11:21:22 by storck            #+#    #+#             */
-/*   Updated: 2025/11/14 14:06:47 by storck           ###   ########.fr       */
+/*   Created: 2025/11/07 13:03:34 by gwen              #+#    #+#             */
+/*   Updated: 2025/11/07 13:03:36 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memcpy(void *dest, const void *src, size_t size)
+void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
-	size_t				i;
-	unsigned char		*d;
-	const unsigned char	*s;
+	size_t			i;
 
+	if (!dest && !src)
+		return (0);
 	i = 0;
-	d = (unsigned char *)dest;
-	s = (const unsigned char *)src;
-	if (dest == NULL && src == NULL)
-		return (NULL);
-	while (i < size)
+	while (i < n)
 	{
-		d[i] = s[i];
+		((char *)dest)[i] = ((char *)src)[i];
 		i++;
 	}
-	return (dest);
+	return ((void *)dest);
 }
 /*
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 
-int main() {
+int	main(void)
+{
+	char	*str = "Hello world!";
+	char	dest[20];
+	char	dest2[20];
 
-    int array [] = { 54, 85, 20, 63, 21 };
-    int * copy = NULL;
-    int length = sizeof( int ) * 4;
+	printf("%s\n", str);
 
-    // Memory allocation and copy
-    copy = (int *) malloc( length );
-    ft_memcpy( copy, array, length );
+	ft_memcpy(dest, str, 5);
+	dest[5] ='\0';
+	printf("%s\n", dest);
 
-    // Display the copied values
-    for( length=0; length<5; length++ ) {
-        printf( "%d ", copy[ length ] );
-    }
-    printf( "\n" );
+	memcpy(dest2, str, 5);
+	dest[5] = '\0';
+	printf("%s\n", dest2);
 
-    free( copy );
-
-    return 0;
+	return (0);
 }
-*/
+	*/

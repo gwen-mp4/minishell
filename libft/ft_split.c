@@ -3,115 +3,123 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: storck <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: gwen <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/13 15:18:11 by storck            #+#    #+#             */
-/*   Updated: 2025/11/14 14:09:23 by storck           ###   ########.fr       */
+/*   Created: 2025/11/08 15:15:59 by gwen              #+#    #+#             */
+/*   Updated: 2025/11/08 15:16:00 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdlib.h>
-//#include <stdio.h>
 
-int	ft_count(const char *s, char c)
+static int	word_count(const char *str, char sep)
 {
-	int	count;
-	int	mode;
+	int	word;
+	int	i;
+	int	trigg;
 
-	count = 0;
-	mode = 0;
-	while (*s)
+	word = 0;
+	i = 0;
+	trigg = 0;
+	while (str[i])
 	{
-		if (!mode && *s != c)
+		if (str[i] != sep && trigg == 0)
 		{
-			count++;
-			mode = 1;
+			trigg = 1;
+			word++;
 		}
-		if (*s == c)
-			mode = 0;
-		s++;
+		else if (str[i] == sep)
+			trigg = 0;
+		i++;
 	}
-	return (count);
+	return (word);
 }
 
-static char	*ft_add_w(const char *s, char c)
+static void	free_all(int n, char **strs)
+{
+	int	i;
+
+	i = 0;
+	while (i < n)
+	{
+		free(strs[i]);
+		i++;
+	}
+	free(strs);
+}
+
+static char	*write_word(const char *str, char sep)
 {
 	int		i;
 	char	*word;
 
 	i = 0;
-	while (s[i] && s[i] != c)
+	while (str[i] && str[i] != sep)
 		i++;
-	word = (char *)malloc(sizeof(char) * (i + 1));
+	word = ft_calloc(i + 1, sizeof(char));
 	if (!word)
 		return (NULL);
-	ft_memcpy(word, s, i);
+	ft_memcpy(word, str, i);
 	word[i] = '\0';
 	return (word);
 }
 
-static void	ft_free_split(char **arr, int j)
+static int	write_word2(const char *str, char sep, char **splitted)
 {
-	while (j-- > 0)
-	{
-		free(arr[j]);
-	}
-	free (arr);
-}
-
-static int	ft_populate(char **split, const char *s, char c)
-{
-	int	i;
-	int	j;
+	int		i;
+	int		j;
 
 	i = 0;
 	j = 0;
-	while (s[i])
+	while (str[i])
 	{
-		if (s[i] != c)
+		if (str[i] != sep)
 		{
-			split[j] = ft_add_w(&s[i], c);
-			if (!split[j])
-				return (ft_free_split(split, j), 0);
+			splitted[j] = write_word(&str[i], sep);
+			if (!splitted[j])
+				return (free_all(j, splitted), 0);
 			j++;
-			while (s[i] && s[i] != c)
+			while (str[i] && str[i] != sep)
 				i++;
 		}
 		else
 			i++;
 	}
-	split[j] = NULL;
+	splitted[j] = NULL;
 	return (1);
 }
 
-char	**ft_split(const char *s, char c)
+char	**ft_split(char const *s, char c)
 {
-	char	**split;
+	char	**dest;
+	int		len;
 
 	if (!s)
 		return (NULL);
-	split = malloc(sizeof(char *) * (ft_count(s, c) + 1));
-	if (!split)
+	len = word_count(s, c);
+	dest = ft_calloc(len + 1, sizeof(char *));
+	if (!dest)
 		return (NULL);
-	if (!ft_populate(split, s, c))
+	if (!write_word2(s, c, dest))
 		return (NULL);
-	return (split);
+	return (dest);
 }
 /*
-int	main(int argc, char **argv)
-{
-	char	**list;
-	int	i;
+#include <stdio.h>
 
-	i = 0;
-	list = ft_split("\0aa\0bbb", '\0');
-	while (list[i])
-	{
-		printf("%s\n", list[i]);
-		i++;
-	}
-	(void) argv;
-	return (argc);
+int	main(void)
+{
+	char	**res;
+	int		i;
+
+	res = ft_split("222    2      Hello   world    2  ", '2');
+	printf("Test1\n");
+	for (i = 0; res[i]; i++)
+		printf("[%d] %s\n\n", i, res[i]);
+	for (i = 0; res[i]; i++)
+		free(res[i]);
+	free(res);
+
+	return (0);
 }
 */

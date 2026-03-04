@@ -3,108 +3,62 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: storck <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: gwen <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/11 11:18:49 by storck            #+#    #+#             */
-/*   Updated: 2025/11/13 15:08:07 by storck           ###   ########.fr       */
+/*   Created: 2025/11/08 15:15:48 by gwen              #+#    #+#             */
+/*   Updated: 2025/11/08 15:15:50 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdlib.h>
 
-int	ft_isinset(const char *set, char c)
+static int	is_set(char c, char *str)
 {
-	int	i;
-
-	i = 0;
-	while (set[i])
+	while (*str)
 	{
-		if (set[i] == c)
+		if (c == *str)
 			return (1);
-		i++;
+		str++;
 	}
 	return (0);
 }
 
-int	ft_s_trim_len(const char *s1, const char *set)
+char	*ft_strtrim(char const *s1, char const *set)
 {
-	int	i;
-	int	trim;
-
-	trim = 0;
-	i = 0;
-	while (s1[i])
-	{
-		if (ft_isinset(set, s1[i]))
-			trim++;
-		else
-			break ;
-		i++;
-	}
-	return (trim);
-}
-
-int	ft_e_trim_len(const char *s1, const char *set)
-{
-	int	len;
-	int	trim;
-
-	trim = 0;
-	len = ft_strlen(s1) - 1;
-	while (len >= 0)
-	{
-		if (ft_isinset(set, s1[len]))
-			trim++;
-		else
-			break ;
-		len--;
-	}
-	return (trim);
-}
-
-char	*ft_zerotrim(void)
-{
-	char	*trim;
-
-	trim = malloc(sizeof(char));
-	if (!trim)
-		return (0);
-	trim[0] = '\0';
-	return (trim);
-}
-
-char	*ft_strtrim(const char *s1, const char *set)
-{
-	int		s_trim;
-	int		e_trim;
-	int		i;
-	int		len;
-	char	*trim;
+	char	*dest;
+	size_t	dest_len;
+	size_t	s1_len;
+	size_t	i;
+	size_t	j;
 
 	i = 0;
-	s_trim = ft_s_trim_len(s1, set);
-	if (s_trim == (int)ft_strlen(s1))
-		return (ft_zerotrim());
-	e_trim = ft_e_trim_len(s1, set);
-	len = (ft_strlen(s1) + 1) - s_trim - e_trim;
-	trim = malloc(sizeof(char) * len);
-	if (!trim)
-		return (0);
-	while (i < len - 1)
-	{
-		trim[i] = s1[i + s_trim];
+	j = ft_strlen(s1);
+	s1_len = ft_strlen(s1);
+	if (!s1_len || !set)
+		return (ft_strdup(""));
+	while (is_set(s1[i], (char *)set))
 		i++;
-	}
-	trim[i] = '\0';
-	return (trim);
+	while (j > i && is_set(s1[j - 1], (char *)set))
+		j--;
+	dest_len = (s1_len - i) - (s1_len - j) + 1;
+	if (dest_len < 1)
+		return (ft_strdup(""));
+	dest = ft_calloc(dest_len, sizeof(char));
+	if (!dest)
+		return (NULL);
+	ft_strlcpy(dest, (char *)&s1[i], dest_len);
+	return (dest);
 }
 /*
 #include <stdio.h>
 
-int	main(int argc, char **argv)
+int	main(void)
 {
-	printf("%s\n", ft_strtrim(argv[1], argv[2]));
-	return (argc);
+	char	*str = "bababaabHello bab worldbabab!";
+	char	*trimmed = ft_strtrim(str, "ab");
+
+	printf("%s\n", trimmed);
+
+	return (0);
 }
 */

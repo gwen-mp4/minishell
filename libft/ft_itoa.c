@@ -3,68 +3,76 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: storck <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: gwen <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/11 14:24:34 by storck            #+#    #+#             */
-/*   Updated: 2025/11/14 13:26:20 by storck           ###   ########.fr       */
+/*   Created: 2025/11/08 15:16:32 by gwen              #+#    #+#             */
+/*   Updated: 2025/11/08 15:16:33 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "libft.h"
 
-int	ft_num_size(long int n)
+static int	itoa_len(int n)
 {
-	int	size;
+	int		len;
+	long	num;
 
-	if (n == 0)
-		return (1);
-	size = 0;
-	if (n < 0)
+	len = 0;
+	num = n;
+	if (num <= 0)
 	{
-		size++;
-		n *= -1;
+		len++;
+		num = -num;
 	}
-	while (n > 0)
+	while (num > 0)
 	{
-		size++;
-		n /= 10;
+		num /= 10;
+		len++;
 	}
-	return (size);
+	return (len);
 }
 
 char	*ft_itoa(int n)
 {
-	char	*num;
-	int		size;
-	long	nb;
+	int		len;
+	long	num;
+	char	*str;
 
-	nb = n;
-	size = ft_num_size(nb);
-	num = malloc(sizeof(char) * (size + 1));
-	if (!num)
-		return (0);
-	num[size--] = '\0';
-	if (nb == 0)
-		num[0] = '0';
-	if (nb < 0)
+	len = itoa_len(n);
+	num = n;
+	str = malloc((len + 1) * sizeof(char));
+	if (!str)
+		return (NULL);
+	str[len] = '\0';
+	if (num < 0)
+		num = -num;
+	if (n == 0)
+		str[0] = '0';
+	while (num > 0)
 	{
-		num[0] = '-';
-		nb *= -1;
+		str[--len] = (num % 10) + '0';
+		num /= 10;
 	}
-	while (nb > 0)
-	{
-		num[size--] = (nb % 10) + '0';
-		nb /= 10;
-	}
-	return (num);
+	if (n < 0)
+		str[0] = '-';
+	return (str);
 }
 /*
 #include <stdio.h>
+#include <limits.h>
 
 int	main(void)
 {
-	printf("%s\n", ft_itoa(-2));
+	int	n[] = {0, 123, -456, INT_MIN};
+	int	i;
+
+	for (i = 0; i < 4; i++)
+	{
+		char	*s = ft_itoa(n[i]);
+		printf("\"%d\" --> \"%s\"\n", n[i], s);
+		free(s);
+	}
+
 	return (0);
 }
 */

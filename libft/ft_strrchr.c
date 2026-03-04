@@ -3,52 +3,45 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: storck <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: gwen <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/10 15:49:10 by storck            #+#    #+#             */
-/*   Updated: 2025/11/14 12:48:34 by storck           ###   ########.fr       */
+/*   Created: 2025/11/07 13:36:22 by gwen              #+#    #+#             */
+/*   Updated: 2025/11/07 13:36:23 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
+
 char	*ft_strrchr(const char *s, int c)
 {
-	char	*tmp;
+	unsigned int	i;
+	char			true_char;
 
-	tmp = 0;
-	while (*s)
+	i = ft_strlen(s);
+	true_char = (char)c;
+	while (s[i] != true_char)
 	{
-		if (*s == (char)c)
-			tmp = (char *)s;
-		s++;
+		if (s[i] != true_char && i == 0)
+			return (NULL);
+		i--;
 	}
-	if ((char)c == '\0')
-		return ((char *)s);
-	return (tmp);
+	return ((char *)&s[i]);
 }
 /*
 #include <stdio.h>
 #include <string.h>
-
-int main()
+ 
+#define SIZE 40
+ 
+int main(void)
 {
-    // initializing string
-    char str[] = "GeesforGees";
-
-    // character to be searched
-    char chr = 'k';
-
-    // Storing pointer returned by
-    char* ptr = ft_strrchr(str, chr);
-
-    // getting the position of the character
-    if (ptr) {
-        printf("Last occurrence of %c in %s is at index %ld",
-               chr, str, ptr - str);
-    }
-    // condition for character not present
-    else {
-        printf("%c is not present in %s ", chr, str);
-    }
-    return 0;
+  char buffer1[SIZE] = "computer program";
+  char * ptr;
+  int    ch = 'p';
+ 
+  ptr = ft_strrchr( buffer1, ch );
+  printf( "The last occurrence of %c in '%s' is '%s'\n",
+            ch, buffer1, ptr );
+ 
 }
 */
