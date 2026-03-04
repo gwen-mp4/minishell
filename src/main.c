@@ -6,7 +6,7 @@
 /*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:54:48 by storck            #+#    #+#             */
-/*   Updated: 2026/03/04 16:43:34 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/04 17:00:34 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	main(int ac, char **av, char **env)
 			continue;
 		}
 		filter_var(data.cmd, &data);
-		//print_cmd(data.cmd, &data);
+		print_cmd(data.cmd, &data);
 		execution(data.cmd, &data);
 		//interpret(&data);
 		free(data.line);

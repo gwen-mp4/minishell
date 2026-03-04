@@ -186,3 +186,9 @@ If you can fix it
 -Fixed heredoc, now it works (perfectly? still need more hardcore test)
 -Fixed signals issues
 -Need to fix norm (a lot, i'm not kidding)
+
+**03/04/2026 17:00 by storck**:
+-Gestion des variables: ce que ca fait pour l'instatnt
+    -Si le av[0] d'un token de command contient un '=', cree une nouvelle variable dans data (il faut ajouter une securite pour empecher de creer plusieures variables avec le meme nom et plutot changer le content de la variable)
+    -remonte tout les mots dans av[] de un, free le dernier;
+-TODO: si $<NOM_D'UNE_VARIABLE> est lue ans une commane et est entre "", aller chercher le content de la variable et remplacer le $(...) par le content. (Doit etre fait avant que l'execution soit lancee).
