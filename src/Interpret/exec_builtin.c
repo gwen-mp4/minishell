@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: storck <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 09:31:41 by storck            #+#    #+#             */
-/*   Updated: 2026/02/27 09:31:48 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/04 11:26:47 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void    exec_builtin(t_cmd *cmd, char **arg, t_data *data)
     else if (strncmp(arg[0], "unset", ft_strlen(arg[0])) == 0)
         exec_unset(arg, data);
     else if (strncmp(arg[0], "env", ft_strlen(arg[0])) == 0)
-        exec_env();
+        exec_env(data);
     else if (strncmp(arg[0], "exit", ft_strlen(arg[0])) == 0)
         exec_exit(arg);
 }
