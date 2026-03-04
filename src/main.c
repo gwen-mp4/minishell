@@ -3,16 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:54:48 by storck            #+#    #+#             */
-/*   Updated: 2026/03/04 15:23:25 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/04 16:43:34 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 volatile sig_atomic_t	g_sig;
+
+// void	print_cmd(t_cmd *cmd, t_data *data)
+// {
+// 	int		i;
+// 	t_cmd	*tmp;
+// 	t_var	*tmp2;
+
+// 	tmp = cmd;
+// 	tmp2 = data->vars;
+// 	while (tmp)
+// 	{
+// 		i = 0;
+// 		while (tmp->av[i])
+// 		{
+// 			printf("[%d] : %s\n", i, tmp->av[i]);
+// 			i++;
+// 		}
+// 		tmp = tmp->next;
+// 	}
+// 	while (tmp2)
+// 	{
+// 		printf ("%s = %s\n", tmp2->name, tmp2->content);
+// 		tmp2 = tmp2->next;
+// 	}
+// }
 
 int	main(int ac, char **av, char **env)
 {
@@ -41,6 +66,8 @@ int	main(int ac, char **av, char **env)
 			free(data.line);
 			continue;
 		}
+		filter_var(data.cmd, &data);
+		//print_cmd(data.cmd, &data);
 		execution(data.cmd, &data);
 		//interpret(&data);
 		free(data.line);
