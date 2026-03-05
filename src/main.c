@@ -6,7 +6,7 @@
 /*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:54:48 by storck            #+#    #+#             */
-/*   Updated: 2026/03/05 10:37:33 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/05 13:55:15 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,9 @@ int	main(int ac, char **av, char **env)
 			free(data.line);
 			continue;
 		}
-		filter_var(data.cmd, &data);
+		//filter_var(data.cmd, &data);
 		//print_cmd(data.cmd, &data);
 		execution(data.cmd, &data);
-		//interpret(&data);
 		free(data.line);
 		clean_tokens(data.token);
 		free_cmds(data.cmd);

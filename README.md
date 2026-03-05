@@ -193,6 +193,8 @@ If you can fix it
     -remonte tout les mots dans av[] de un, free le dernier;
 -TODO: si $<NOM_D'UNE_VARIABLE> est lue ans une commane et est entre "", aller chercher le content de la variable et remplacer le $(...) par le content. (Doit etre fait avant que l'execution soit lancee).
 
-**05/03/2026 10:40 by gwen**:
+**05/03/2026 14:15 by gwen**:
 
 ### I forgot to write but to the functions to test if commands/tokens work well, I've moved them into *debug.c* file in _Utils_
+-Added SINGLE, DOUBLE, NO_QUOTE in cmd so you can work on expand ($) now
+-Need to fix heredoc when EOF and then SIGINT (and check parsing if still good while managing quote or not)

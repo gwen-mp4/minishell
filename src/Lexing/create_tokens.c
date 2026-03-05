@@ -6,7 +6,7 @@
 /*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:19:46 by storck            #+#    #+#             */
-/*   Updated: 2026/02/20 11:17:25 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/05 11:42:21 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /*Function that will create a token, if value is WORD,*/
 /*then duplicate it into token else NULL*/
-t_token  *create_token(t_type type, char *value)
+t_token	*create_token(t_type type, char *value, t_quote_type quote)
 {
     t_token  *token;
     
@@ -25,12 +25,15 @@ t_token  *create_token(t_type type, char *value)
     if (token->type == WORD && value)
         token->value = ft_strdup(value);
     else
+	{
         token->value = NULL;
+	}
+	token->quote_type = quote;
     token->next = NULL;
     return (token);
 }
 /*Adding the newly created token into the token list (**list)*/
-void    add_back_token(t_token **list, t_token *new)
+void	add_back_token(t_token **list, t_token *new)
 {
     t_token *tmp;
 

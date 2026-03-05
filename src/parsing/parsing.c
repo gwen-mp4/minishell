@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 12:19:41 by storck            #+#    #+#             */
-/*   Updated: 2026/02/24 10:56:16 by marvin           ###   ########.fr       */
+/*   Updated: 2026/03/05 13:27:49 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,19 @@ int	parsing_token_one(t_token **token, t_cmd **current, t_token *tokens_head)
 	tok = *token;
 	cur = *current;
 	if (tok->type == WORD)
-		add_arg_to_cmd(tok->value, cur);
+	{
+		if (!add_arg_to_cmd(tok->value, tok->quote_type, cur))
+			return (error_cleanup_parsing(*current, NULL),
+				clean_tokens(tokens_head), 0);
+	}
 	else if (is_redir(tok->type))
 	{
 		if (!tok->next || tok->next->type != WORD)
-		{
-			error_cleanup_parsing(*current, "newline");
-			clean_tokens(tokens_head);
-			return (0);
-		}
-		add_redir_to_cmd(tok->type, tok->next->value, cur);
+			return (error_cleanup_parsing(*current, "newline"),
+				clean_tokens(tokens_head), 0);
+		if (!add_redir_to_cmd(tok->type, tok->next->value, cur))
+			return (error_cleanup_parsing(*current, NULL),
+				clean_tokens(tokens_head), 0);
 		*token = tok->next;
 	}
 	return (1);

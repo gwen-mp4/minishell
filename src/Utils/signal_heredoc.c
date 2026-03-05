@@ -6,7 +6,7 @@
 /*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/04 15:13:56 by gwen              #+#    #+#             */
-/*   Updated: 2026/03/04 15:18:08 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/05 14:10:40 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,9 @@ void	signal_heredoc(void)
 {
 	struct sigaction	sa;
 
-	sigemptyset(&sa.sa_mask);
+	rl_done = 0;
 	rl_event_hook = sig_hook;
+	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = 0;
 	sa.sa_handler = sigint_heredoc;
 	sigaction(SIGINT, &sa, NULL);

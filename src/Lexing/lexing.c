@@ -6,7 +6,7 @@
 /*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 14:31:52 by gwen              #+#    #+#             */
-/*   Updated: 2026/02/20 14:21:36 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/05 13:56:57 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,26 +16,26 @@
 int handle_operator(char *input, int *i, t_token **tokens)
 {
     if (input[*i] == '|')
-        add_back_token(tokens, create_token(PIPE, "|"));
+        add_back_token(tokens, create_token(PIPE, "|", NO_QUOTE));
     else if (input[*i] == '<')
     {
         if (input[*i + 1] == '<')
         {
-            add_back_token(tokens, create_token(HEREDOC, "<<"));
+            add_back_token(tokens, create_token(HEREDOC, "<<", NO_QUOTE));
             (*i)++;
         }
         else
-            add_back_token(tokens, create_token(INPUT, "<"));
+            add_back_token(tokens, create_token(INPUT, "<", NO_QUOTE));
     }
     else if (input[*i] == '>')
     {
         if (input[*i + 1] == '>')
         {
-            add_back_token(tokens, create_token(APPEND, ">>"));
+            add_back_token(tokens, create_token(APPEND, ">>", NO_QUOTE));
             (*i)++;
         }
         else
-            add_back_token(tokens, create_token(OUTPUT, ">"));
+            add_back_token(tokens, create_token(OUTPUT, ">", NO_QUOTE));
     }
     (*i)++;
     return (*i);
@@ -43,12 +43,13 @@ int handle_operator(char *input, int *i, t_token **tokens)
 
 int handle_word(char *input, int *i, t_token **tokens)
 {
-    char *word;
+    char			*word;
+    t_quote_type	type;
     
-    word = read_word(input, i);
+    word = read_word(input, i, &type);
     if (!word)
         return (error_cleanup_lexing(*tokens, 0), -1);
-    add_back_token(tokens, create_token(WORD, word));
+    add_back_token(tokens, create_token(WORD, word, type));
     free(word);
     return (*i);
 }

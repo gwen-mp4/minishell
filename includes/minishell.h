@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 10:49:54 by storck            #+#    #+#             */
-/*   Updated: 2026/03/04 16:42:36 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/05 12:39:59 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,13 @@ typedef enum e_type
 	HEREDOC
 }	t_type;
 
+typedef enum e_quote_type
+{
+	NO_QUOTE,
+	SINGLE,
+	DOUBLE
+}	t_quote_type;
+
 typedef struct s_env
 {
 	char			*key;
@@ -66,14 +73,16 @@ typedef struct s_env
 typedef struct s_token
 {
 	t_type			type;
+	t_quote_type	quote_type;
 	char			*value;
 	struct s_token	*next;
 }	t_token;
 
 typedef struct s_quote
 {
-	int	sq;
-	int	dq;
+	int				sq;
+	int				dq;
+	t_quote_type	type;
 }	t_quote;
 
 typedef struct s_redir
@@ -87,6 +96,7 @@ typedef struct s_redir
 typedef struct s_cmd
 {
 	char			**av;
+	t_quote_type	*quote_type;
 	t_redir			*redirs;
 	struct s_cmd	*next;
 }	t_cmd;
@@ -120,11 +130,11 @@ typedef struct s_data
 /* parsing*/
 t_cmd	*parsing(t_token *token, t_data *data);
 t_cmd	*new_cmd(void);
-int		add_arg_to_cmd(char *word, t_cmd *cmd);
+int		add_arg_to_cmd(char *word, t_quote_type quote, t_cmd *cmd);
 int		add_redir_to_cmd(t_type type, char *filename, t_cmd *cmd);
 
 /*lexing*/
-char	*read_word(char *line, int *i);
+char	*read_word(char *line, int *i, t_quote_type *type);
 t_token	*lexer(char *input);
 
 /* utils */
@@ -175,7 +185,7 @@ int		file_write_process(char *outfile);
 
 /* create_tokens.c */
 void	add_back_token(t_token **list, t_token *new);
-t_token	*create_token(t_type type, char *value);
+t_token	*create_token(t_type type, char *value, t_quote_type quote);
 
 /* here_doc_process.c */
 int		file_heredoc_process(t_redir *heredoc);

@@ -15,14 +15,22 @@
 void	handle_quote(char c, t_quote *quote)
 {
 	if (c == '\'' && !quote->dq)
+	{
 		quote->sq = !quote->sq;
+		if (quote->sq)
+			quote->type = SINGLE;
+	}
 	else if (c == '"' && !quote->sq)
+	{
 		quote->dq = !quote->dq;
+		if (quote->dq)
+			quote->type = DOUBLE;
+	}
 }
 
 char	*ft_incremente(char *line, char *buf, int *i, t_quote *quote)
 {
-	int		j;
+	int	j;
 
 	j = 0;
 	while (line[*i])
@@ -45,18 +53,19 @@ char	*ft_incremente(char *line, char *buf, int *i, t_quote *quote)
 	return (buf);
 }
 
-/*Function that will read between quote and return an allocaed dest containing word with ft_substr*/
-char	*read_word(char *line, int *i)
+char	*read_word(char *line, int *i, t_quote_type *type)
 {
 	char	*buf;
 	t_quote	quote;
 
 	quote.sq = 0;
 	quote.dq = 0;
+	quote.type = NO_QUOTE;
 	buf = malloc(sizeof(char) * ft_strlen(line) + 1);
 	if (!buf)
 		return (NULL);
 	if (ft_incremente(line, buf, i, &quote) == NULL)
 		return (NULL);
+	*type = quote.type;
 	return (buf);
 }

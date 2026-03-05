@@ -34,6 +34,7 @@ void	free_redir(t_redir *redir)
 	while (redir)
 	{
 		next = redir->next;
+		free(redir->filename);
 		free(redir);
 		redir = next;
 	}
@@ -42,11 +43,22 @@ void	free_redir(t_redir *redir)
 void	free_cmds(t_cmd *cmd)
 {
 	t_cmd	*next;
+	int		i;
 
 	while (cmd)
 	{
 		next = cmd->next;
+		if (cmd->av)
+		{
+			i = 0;
+			while (cmd->av[i])
+			{
+				free(cmd->av[i]);
+				i++;
+			}
+		}
 		free(cmd->av);
+		free(cmd->quote_type);
 		free_redir(cmd->redirs);
 		free(cmd);
 		cmd = next;

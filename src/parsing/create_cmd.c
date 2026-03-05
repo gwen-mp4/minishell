@@ -21,6 +21,7 @@ t_cmd	*new_cmd(void)
 	if (!cmd)
 		return (NULL);
 	cmd->av = NULL;
+	cmd->quote_type = NULL;
 	cmd->redirs = NULL;
 	cmd->next = NULL;
 	return (cmd);

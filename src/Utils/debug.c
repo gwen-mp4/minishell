@@ -6,7 +6,7 @@
 /*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 11:33:27 by gwen              #+#    #+#             */
-/*   Updated: 2026/03/05 10:37:39 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/05 13:58:47 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,24 @@
 // 	return ("UNKNOWN");
 // }
 
+// const char	*token_quote(t_quote_type type)
+// {
+// 	if (type == NO_QUOTE)
+// 		return ("NO_QUOTE");
+// 	if (type == SINGLE)
+// 		return ("SINGLE");
+// 	if (type == DOUBLE)
+// 		return ("DOUBLE");
+// 	return ("UNKOWN");
+// }
+
 // //Funcion to test the token list.
 // void	check_list(t_token *token)
 // {
 // 	while (token)
 // 	{
-// 		printf("%s: %s\n", token_type_str(token->type), token->value);
+// 		printf("%s: %s - %s\n", token_type_str(token->type), token->value,
+// 			token_quote(token->quote_type));
 // 		token = token->next;
 // 	}
 // }
@@ -56,7 +68,8 @@
 // 			i = 0;
 // 			while (cmd->av[i])
 // 			{
-// 				printf("[%d] - %s\n", i, cmd->av[i]);
+// 				printf("[%d] - %s (%s)\n", i, cmd->av[i],
+// 					token_quote(cmd->quote_type[i]));
 // 				i++;
 // 			}
 // 		}
@@ -65,7 +78,8 @@
 // 		j = 0;
 // 		while (redir)
 // 		{
-// 			printf("[%d] - %s  %s\n", j, token_type_str(redir->type), redir->filename);
+// 			printf("[%d] - %s  %s\n", j, token_type_str(redir->type),
+// 				redir->filename);
 // 			j++;
 // 			redir = redir->next;
 // 		}

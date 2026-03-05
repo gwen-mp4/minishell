@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwen <marvin@42.fr>                        +#+  +:+       +#+        */
+/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 10:31:06 by gwen              #+#    #+#             */
-/*   Updated: 2026/02/19 10:31:09 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/05 13:54:00 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,26 +24,50 @@ static int	argv_len(char **argv)
 	return (i);
 }
 
-int	add_arg_to_cmd(char *word, t_cmd *cmd)
+static int	copy_cmd_arrays(t_cmd *cmd, char ***newav, t_quote_type **newqt,
+	int len)
 {
-	char	**new;
-	int		i;
-	int		len;
+	int	i;
 
-	len = argv_len(cmd->av);
-	new = malloc((len + 2) * sizeof(char *));
-	if (!new)
+	*newav = calloc(len + 2, sizeof(char *));
+	if (!*newav)
 		return (0);
+	*newqt = malloc((len + 2) * sizeof(t_quote_type));
+	if (!*newqt)
+		return (free(*newav), 0);
 	i = 0;
 	while (i < len)
 	{
-		new[i] = cmd->av[i];
+		(*newav)[i] = cmd->av[i];
+		if (cmd->quote_type)
+			(*newqt)[i] = cmd->quote_type[i];
 		i++;
 	}
-	new[len] = word;
-	new[len + 1] = NULL;
+	return (1);
+}
+
+int	add_arg_to_cmd(char *word, t_quote_type quote, t_cmd *cmd)
+{
+	char			**newav;
+	t_quote_type	*newqt;
+	int				len;
+
+	len = argv_len(cmd->av);
+	if (!copy_cmd_arrays(cmd, &newav, &newqt, len))
+		return (0);
+	newav[len] = ft_strdup(word);
+	if (!newav[len])
+	{
+		free(newav);
+		free(newqt);
+		return (0);
+	}
+	newav[len + 1] = NULL;
+	newqt[len] = quote;
 	free(cmd->av);
-	cmd->av = new;
+	free(cmd->quote_type);
+	cmd->av = newav;
+	cmd->quote_type = newqt;
 	return (1);
 }
 
@@ -62,7 +86,10 @@ t_redir	*new_redir(t_type type, char *filename)
 		redir->type = OUTPUT;
 	else if (type == HEREDOC)
 		redir->type = HEREDOC;
-	redir->filename = filename;
+	redir->filename = ft_strdup(filename);
+	if (!redir->filename)
+		return (free(redir), NULL);
+	redir->fd = -1;
 	redir->next = NULL;
 	return (redir);
 }

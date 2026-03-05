@@ -6,7 +6,7 @@
 /*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 11:58:17 by storck            #+#    #+#             */
-/*   Updated: 2026/03/04 16:14:27 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/05 14:12:24 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,17 @@ int	fill_doc(int fd, char *delim)
 {
 	char	*line;
 
-	if (!*delim || !delim)
+	if (!delim || !*delim)
 		return (perror("heredoc delimiter missing"), close(fd), EXIT_FAILURE);
 	while (1)
 	{
 		line = readline("heredoc>");
 		if (!line || g_sig == SIGINT)
+		{
+			rl_done = 0;
+			g_sig = 0;
 			return (free(line), close(fd), EXIT_FAILURE);
+		}
 		if ((ft_strlen(line) == ft_strlen(delim))
 			&& ft_strcmp(line, delim) == 0)
 		{
@@ -47,6 +51,7 @@ int	fill_doc(int fd, char *delim)
 		ft_putendl_fd(line, fd);
 		free(line);
 	}
+	rl_done = 0;
 	return (close(fd), EXIT_SUCCESS);
 }
 
@@ -59,6 +64,9 @@ int	heredoc_parent(pid_t pid, char *doc_name, int fd)
 	signal(SIGINT, SIG_IGN);
 	waitpid(pid, &status, 0);
 	setup_signal();
+	rl_done = 0;
+	rl_event_hook = NULL;
+	g_sig = 0;
 	if (!WIFEXITED(status) || WEXITSTATUS(status) != 0)
 		return (unlink(doc_name), free(doc_name), -1);
 	fd = open(doc_name, O_RDONLY);

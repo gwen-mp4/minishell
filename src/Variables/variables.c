@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   variables.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/04 15:02:36 by storck            #+#    #+#             */
-/*   Updated: 2026/03/04 16:37:26 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/05 13:38:14 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void    filter_var(t_cmd *cmd, t_data *data)
                 new_var(data, tmp->av[i]);
                 pull_back_av(tmp->av);
             }
-            else if (tmp->quote_type[i] != SINGLE && tmp->av[i][0] == '$')
+            else if (tmp->quote_type[i] != SINGLE && ft_strchr(tmp->av[i], '$'))
                 replace_var(tmp->av[i], data);
             i++;
         }

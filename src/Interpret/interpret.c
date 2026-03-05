@@ -6,7 +6,7 @@
 /*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 12:43:54 by storck            #+#    #+#             */
-/*   Updated: 2026/03/04 16:09:22 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/05 13:49:14 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ void	exec_cmd(t_cmd *cmd, char **env)
 {
 	char	*path;
 
+	if (!cmd || !cmd->av || !cmd->av[0])
+		return;
 	signal_child();
 	set_fds(cmd);
     // if (is_builtin(cmd->av[0]))
