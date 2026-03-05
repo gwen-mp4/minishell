@@ -12,6 +12,20 @@
 
 #include "../../includes/minishell.h"
 
+char    *get_var_content(char *var, t_data *data)
+{
+    t_var   *tmp;
+
+    tmp = data->vars;
+    while (tmp)
+    {
+        if (!ft_strncmp(tmp->name, var, ft_strlen(var)))
+            return (tmp->content);
+        tmp = tmp->next;
+    }
+    return (NULL);
+}
+
 t_var   *init_var(char *name, char *content)
 {
     t_var   *new;

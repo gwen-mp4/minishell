@@ -60,6 +60,17 @@ void    pull_back_av(char **av)
     free(av[i]);
 }
 
+void    replace_var(char *var, t_data *data)
+{
+    char *var_content;
+
+    var_content = get_var_content(var + 1, data);
+    if (!var_content)
+        return (var);
+    var = var_content;
+    return (var);
+}
+
 void    filter_var(t_cmd *cmd, t_data *data)
 {
     int     i;
@@ -76,6 +87,8 @@ void    filter_var(t_cmd *cmd, t_data *data)
                 new_var(data, tmp->av[i]);
                 pull_back_av(tmp->av);
             }
+            else if (tmp->quote_type[i] != SINGLE && tmp->av[i][0] == '$')
+                replace_var(tmp->av[i], data);
             i++;
         }
         tmp = tmp->next;

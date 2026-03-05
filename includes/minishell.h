@@ -216,7 +216,9 @@ void    update_envlst(char *key, char *value, t_data *data, bool create);
 void    filter_var(t_cmd *cmd, t_data *data);
 
 /* var_utils.c */
+char    *get_var_content(char *var, t_data *data);
 void    add_var(t_data *data, char *name, char *content);
+
 char	*extract_value(char *str);
 char	*extract_key(char *str);
 void	init_envlst(t_data *data);
