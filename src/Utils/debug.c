@@ -6,7 +6,7 @@
 /*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 11:33:27 by gwen              #+#    #+#             */
-/*   Updated: 2026/03/02 11:49:31 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/05 10:37:39 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,5 +70,30 @@
 // 			redir = redir->next;
 // 		}
 // 		cmd = cmd->next;
+// 	}
+// }
+
+// void	print_cmd(t_cmd *cmd, t_data *data)
+// {
+// 	int		i;
+// 	t_cmd	*tmp;
+// 	t_var	*tmp2;
+
+// 	tmp = cmd;
+// 	tmp2 = data->vars;
+// 	while (tmp)
+// 	{
+// 		i = 0;
+// 		while (tmp->av[i])
+// 		{
+// 			printf("[%d] : %s\n", i, tmp->av[i]);
+// 			i++;
+// 		}
+// 		tmp = tmp->next;
+// 	}
+// 	while (tmp2)
+// 	{
+// 		printf ("%s = %s\n", tmp2->name, tmp2->content);
+// 		tmp2 = tmp2->next;
 // 	}
 // }

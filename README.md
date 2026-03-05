@@ -192,3 +192,7 @@ If you can fix it
     -Si le av[0] d'un token de command contient un '=', cree une nouvelle variable dans data (il faut ajouter une securite pour empecher de creer plusieures variables avec le meme nom et plutot changer le content de la variable)
     -remonte tout les mots dans av[] de un, free le dernier;
 -TODO: si $<NOM_D'UNE_VARIABLE> est lue ans une commane et est entre "", aller chercher le content de la variable et remplacer le $(...) par le content. (Doit etre fait avant que l'execution soit lancee).
+
+**05/03/2026 10:40 by gwen**:
+
+### I forgot to write but to the functions to test if commands/tokens work well, I've moved them into *debug.c* file in _Utils_
