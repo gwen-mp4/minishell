@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   interpret.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 12:43:54 by storck            #+#    #+#             */
-/*   Updated: 2026/03/06 13:00:54 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/06 14:01:56 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,11 +101,13 @@ void	execution(t_cmd *cmd, t_data *data)
 	int		save_in;
 	int		save_out;
 
-	if (!cmd->av[0])
+	if (!cmd)
 		return ;
 	save_in = dup(STDIN_FILENO);
 	save_out = dup(STDOUT_FILENO);
 	if (prepare_heredoc(cmd) == EXIT_FAILURE)
+		return ;
+	if (!cmd->av || !cmd->av[0])
 		return ;
 	while (data->pipe_count > 0)
 	{
