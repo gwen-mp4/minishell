@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 10:31:06 by gwen              #+#    #+#             */
-/*   Updated: 2026/03/05 13:54:00 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/06 12:37:49 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ static int	copy_cmd_arrays(t_cmd *cmd, char ***newav, t_quote_type **newqt,
 {
 	int	i;
 
-	*newav = calloc(len + 2, sizeof(char *));
+	*newav = ft_calloc(len + 2, sizeof(char *));
 	if (!*newav)
 		return (0);
-	*newqt = malloc((len + 2) * sizeof(t_quote_type));
+	*newqt = ft_calloc((len + 2), sizeof(t_quote_type));
 	if (!*newqt)
 		return (free(*newav), 0);
 	i = 0;
@@ -41,6 +41,8 @@ static int	copy_cmd_arrays(t_cmd *cmd, char ***newav, t_quote_type **newqt,
 		(*newav)[i] = cmd->av[i];
 		if (cmd->quote_type)
 			(*newqt)[i] = cmd->quote_type[i];
+		else
+			(*newqt)[i] = NO_QUOTE;
 		i++;
 	}
 	return (1);
