@@ -6,7 +6,7 @@
 /*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 10:49:54 by storck            #+#    #+#             */
-/*   Updated: 2026/03/06 12:10:49 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/06 13:39:10 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,13 +228,5 @@ void    filter_var(t_cmd *cmd, t_data *data);
 /* var_utils.c */
 char    *get_var_content(char *var, t_data *data);
 void    add_var(t_data *data, char *name, char *content);
-
-char	*extract_value(char *str);
-char	*extract_key(char *str);
-void	init_envlst(t_data *data);
-bool	env_entry_exists(char *key, t_data *data);
-t_env	*envlst_new(char *key, char *value);
-void	envlst_back(t_env *new, t_data *data);
-void	update_envlst(char *key, char *value, t_data *data, bool create);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/04 10:00:47 by storck            #+#    #+#             */
-/*   Updated: 2026/03/06 11:00:44 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/06 14:55:46 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,19 @@ t_env	*envlst_new(char *key, char *value)
 	new = (t_env *)ft_calloc(1, sizeof(t_env));
 	if (!new)
 		return (NULL);
-	ft_memmove(new->key, key, ft_strlen(key));
+	// new->key = (char *)ft_calloc(1, sizeof(char));
+	// if (!new->key)
+	// 	return (NULL);
+	// new->value = (char *)ft_calloc(1, sizeof(char));
+	// if (!new->value)
+	// 	return (NULL);
+	//ft_memmove(new->key, key, ft_strlen(key));
+	new->key = key;
 	if (value)
-		ft_memmove(new->value, value, ft_strlen(value));
+		new->value = value;
+		//ft_memmove(new->value, value, ft_strlen(value));
+	else
+		new->value = NULL;
 	new->next = NULL;
 	return (new);
 }
