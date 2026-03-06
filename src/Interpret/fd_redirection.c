@@ -6,7 +6,7 @@
 /*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/25 10:31:45 by storck            #+#    #+#             */
-/*   Updated: 2026/03/06 11:35:42 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/06 13:00:47 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,19 @@ int	output_redirection(t_redir *redir)
 		return (EXIT_FAILURE);
 	redirect_fd(fd, STDOUT_FILENO);
 	return (fd);
+}
+
+void	set_fds(t_cmd *cmd)
+{
+	t_redir	*tmp;
+
+	tmp = cmd->redirs;
+	while (tmp)
+	{
+		if (tmp->type == INPUT || tmp->type == HEREDOC)
+			input_redirection(tmp);
+		if (tmp->type == OUTPUT || tmp->type == APPEND)
+			output_redirection(tmp);
+		tmp = tmp->next;
+	}
 }

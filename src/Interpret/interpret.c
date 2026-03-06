@@ -6,26 +6,11 @@
 /*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 12:43:54 by storck            #+#    #+#             */
-/*   Updated: 2026/03/06 12:47:26 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/06 13:00:54 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-void	set_fds(t_cmd *cmd)
-{
-	t_redir	*tmp;
-
-	tmp = cmd->redirs;
-	while (tmp)
-	{
-		if (tmp->type == INPUT || tmp->type == HEREDOC)
-			input_redirection(tmp);
-		if (tmp->type == OUTPUT || tmp->type == APPEND)
-			output_redirection(tmp);
-		tmp = tmp->next;
-	}
-}
 
 void	exec_cmd(t_cmd *cmd, char **env)
 {

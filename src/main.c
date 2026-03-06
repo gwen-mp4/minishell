@@ -6,7 +6,7 @@
 /*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:54:48 by storck            #+#    #+#             */
-/*   Updated: 2026/03/06 12:01:46 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/06 12:56:20 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ volatile sig_atomic_t	g_sig;
 t_cmd	*lexing_and_parsing(t_data *data)
 {
 	t_cmd	*ret;
+
 	data->token = lexer(data->line);
 	if (!data->token)
 	{
