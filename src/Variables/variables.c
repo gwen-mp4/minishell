@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   variables.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/04 15:02:36 by storck            #+#    #+#             */
-/*   Updated: 2026/03/05 13:38:14 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/06 10:23:46 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,15 @@ void    pull_back_av(char **av)
 
 void    replace_var(char *var, t_data *data)
 {
-    char *var_content;
+    char    *var_content;
+    int     len;
 
     var_content = get_var_content(var + 1, data);
     if (!var_content)
-        return (var);
-    var = var_content;
-    return (var);
+        return ;
+    len = ft_strlen(var_content);
+    memmove(var, var_content, len);
+    var[len] = '\0';
 }
 
 void    filter_var(t_cmd *cmd, t_data *data)

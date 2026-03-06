@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+         #
+#    By: storck <storck@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/11 15:53:54 by gwen              #+#    #+#              #
-#    Updated: 2026/03/05 13:17:45 by gwen             ###   ########.fr        #
+#    Updated: 2026/03/06 09:50:46 by storck           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,6 +46,8 @@ SRC = main.c \
 	Utils/signal_heredoc.c \
 	Utils/signal.c \
 	Utils/debug.c \
+	Variables/var_utils.c \
+	Variables/variables.c
 
 SRCS = $(addprefix $(SRC_DIR), $(SRC))
 
