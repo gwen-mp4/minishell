@@ -6,7 +6,7 @@
 /*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 12:43:54 by storck            #+#    #+#             */
-/*   Updated: 2026/03/06 10:27:46 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/06 12:47:26 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,9 @@ void	exec_cmd(t_cmd *cmd, char **env)
 	char	*path;
 
 	if (!cmd || !cmd->av || !cmd->av[0])
-		return;
+		return ;
 	signal_child();
 	set_fds(cmd);
-    // if (is_builtin(cmd->av[0]))
-    //    return (exec_builtin(cmd->av));
 	path = get_path(cmd->av[0], env);
 	if (!path)
 	{
@@ -54,7 +52,18 @@ void	exec_cmd(t_cmd *cmd, char **env)
 	}
 }
 
-void	do_pipe(t_cmd *cmd, char **env)
+void	find_way(t_cmd *cmd, char **env, t_data *data)
+{
+	if (is_builtin(cmd->av[0]))
+	{
+		exec_builtin(cmd, cmd->av, data);
+		exit(0);
+	}
+	else
+		exec_cmd(cmd, env);
+}
+
+void	do_pipe(t_cmd *cmd, char **env, t_data *data)
 {
 	pid_t	pid;
 	int		p_fd[2];
@@ -65,7 +74,7 @@ void	do_pipe(t_cmd *cmd, char **env)
 	{
 		close(p_fd[0]);
 		redirect_fd(p_fd[1], STDOUT_FILENO);
-		exec_cmd(cmd, env);
+		find_way(cmd, env, data);
 	}
 	else
 	{
@@ -115,15 +124,13 @@ void	execution(t_cmd *cmd, t_data *data)
 		return ;
 	while (data->pipe_count > 0)
 	{
-		do_pipe(cmd, data->env);
+		do_pipe(cmd, data->env, data);
 		data->pipe_count--;
 		cmd = cmd->next;
 	}
-	// if (is_builtin(cmd->av[0]))
-	//     exec_builtin(cmd, cmd->av, data);
 	pid = fork_process();
 	if (!pid)
-		exec_cmd(cmd, data->env);
+		find_way(cmd, data->env, data);
 	else
 		waitpid(pid, NULL, 0);
 	redirect_fd(save_in, STDIN_FILENO);

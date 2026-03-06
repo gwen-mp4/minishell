@@ -6,13 +6,31 @@
 /*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:54:48 by storck            #+#    #+#             */
-/*   Updated: 2026/03/06 09:48:57 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/06 12:01:46 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 volatile sig_atomic_t	g_sig;
+
+t_cmd	*lexing_and_parsing(t_data *data)
+{
+	t_cmd	*ret;
+	data->token = lexer(data->line);
+	if (!data->token)
+	{
+		free(data->line);
+		return (NULL);
+	}
+	ret = parsing(data->token, data);
+	if (!ret)
+	{
+		free(data->line);
+		return (NULL);
+	}
+	return (ret);
+}
 
 int	main(int ac, char **av, char **env)
 {
@@ -29,18 +47,9 @@ int	main(int ac, char **av, char **env)
 			break ;
 		if (*data.line)
 			add_history(data.line);
-		data.token = lexer(data.line);
-		if (!data.token)
-		{
-			free(data.line);
-			continue;
-		}
-		data.cmd = parsing(data.token, &data);
+		data.cmd = lexing_and_parsing(&data);
 		if (!data.cmd)
-		{
-			free(data.line);
-			continue;
-		}
+			continue ;
 		filter_var(data.cmd, &data);
 		execution(data.cmd, &data);
 		free(data.line);

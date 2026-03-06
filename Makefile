@@ -6,7 +6,7 @@
 #    By: storck <storck@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/11 15:53:54 by gwen              #+#    #+#              #
-#    Updated: 2026/03/06 09:50:46 by storck           ###   ########.fr        #
+#    Updated: 2026/03/06 12:12:21 by storck           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,15 @@ LIB = $(LIB_DIR)$(LIB_A)
 
 SRC_DIR = src/
 SRC = main.c \
+	Builtin/env_utils_1.c \
+	Builtin/env_utils_2.c \
+	Builtin/exec_cd.c \
+	Builtin/exec_echo.c \
+	Builtin/exec_env.c \
+	Builtin/exec_exit.c \
+	Builtin/exec_export.c \
+	Builtin/exec_pwd.c \
+	Builtin/exec_unset.c \
 	Lexing/create_tokens.c \
 	Lexing/lexing.c \
 	Lexing/quote.c \
@@ -32,6 +41,7 @@ SRC = main.c \
 	parsing/parsing.c \
 	parsing/parsing_utils.c \
 	Interpret/append_file_process.c \
+	Interpret/exec_builtin.c \
 	Interpret/fd_redirection.c \
 	Interpret/here_doc_process.c \
 	Interpret/interpret.c \
@@ -41,6 +51,7 @@ SRC = main.c \
 	Utils/utils.c \
 	Utils/init.c \
 	Utils/error.c \
+	Utils/error2.c \
 	Utils/free.c \
 	Utils/signal_child.c \
 	Utils/signal_heredoc.c \

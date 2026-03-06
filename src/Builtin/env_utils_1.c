@@ -6,67 +6,67 @@
 /*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/04 10:00:38 by storck            #+#    #+#             */
-/*   Updated: 2026/03/04 11:23:06 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/06 10:54:25 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char    *extract_value(char *str)
+char	*extract_value(char *str)
 {
-    int     i;
-    char    *ret;
+	int		i;
+	char	*ret;
 
-    i = 0;
-    ret = NULL;
-    while (str[i])
-    {
-        if (str[i] == '=')
-        {
-            i++;
-            ft_memmove(ret, &str[i], ft_strlen(str) - i);
-            return (ret);
-        }
-        i++;
-    }
-    return (NULL);
+	i = 0;
+	ret = NULL;
+	while (str[i])
+	{
+		if (str[i] == '=')
+		{
+			i++;
+			ft_memmove(ret, &str[i], ft_strlen(str) - i);
+			return (ret);
+		}
+		i++;
+	}
+	return (NULL);
 }
 
-char    *extract_key(char *str)
+char	*extract_key(char *str)
 {
-    int     i;
-    char    *ret;
+	int		i;
+	char	*ret;
 
-    i = 0;
-    ret = NULL;
-    while (str[i])
-    {
-        if (str[i] == '=')
-        {
-            ft_memmove(ret, str, i);
-            return (ret);
-        }
-        i++;
-    }
-    return (NULL);
+	i = 0;
+	ret = NULL;
+	while (str[i])
+	{
+		if (str[i] == '=')
+		{
+			ft_memmove(ret, str, i);
+			return (ret);
+		}
+		i++;
+	}
+	return (NULL);
 }
 
-void    init_envlst(t_data *data)
+void	init_envlst(t_data *data)
 {
-    int     i;
-    char    **enviro;
-    char    *key;
-    char    *value;
+	int		i;
+	char	**enviro;
+	char	*key;
+	char	*value;
 
-    i = 0;
-    enviro = data->env;
-    if (!enviro)
-        return ;
-    while (enviro[i])
-    {
-        key = extract_key(enviro[i]);
-        value = extract_value(enviro[i]);
-        update_envlst(key, value, data, true);
-        i++;
-    }
+	i = 0;
+	enviro = data->env;
+	if (!enviro)
+		return ;
+	while (enviro[i])
+	{
+		key = extract_key(enviro[i]);
+		value = extract_value(enviro[i]);
+		update_envlst(key, value, data, true);
+		i++;
+	}
 }

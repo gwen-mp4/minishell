@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 10:49:54 by storck            #+#    #+#             */
-/*   Updated: 2026/03/05 12:39:59 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/06 12:10:49 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,7 +208,7 @@ int		check_key(char *str);
 void	exec_cd(char *path);
 void	exec_echo(char **arg);
 void	exec_env(t_data *data);
-void	exec_exit(char **args);
+void	exec_exit(char **args, t_data *data);
 void	exec_export(char **args, t_data *data);
 void	exec_pwd(void);
 void	exec_unset(char **args, t_data *data);
