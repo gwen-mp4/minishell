@@ -6,25 +6,24 @@
 /*   By: gwen <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 10:32:03 by gwen              #+#    #+#             */
-/*   Updated: 2026/02/19 10:32:04 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/06 13:25:05 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-/*Only free *tokens and not **tokens because it's a chained list, so there's no malloc, otherwise it's segfault*/
-void    clean_tokens(t_token *tokens)
+void	clean_tokens(t_token *tokens)
 {
-    t_token *tmp;
+	t_token	*tmp;
 
-    tmp = tokens;
-    while (tmp)
-    {
-        tmp = tokens->next;
-        free(tokens->value);
-        free(tokens);
-        tokens = tmp;
-    }
+	tmp = tokens;
+	while (tmp)
+	{
+		tmp = tokens->next;
+		free(tokens->value);
+		free(tokens);
+		tokens = tmp;
+	}
 }
 
 void	free_redir(t_redir *redir)
