@@ -6,7 +6,7 @@
 /*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/04 10:00:38 by storck            #+#    #+#             */
-/*   Updated: 2026/03/06 10:54:25 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/06 14:58:04 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@ char	*extract_value(char *str)
 	char	*ret;
 
 	i = 0;
-	ret = NULL;
+	ret = ft_calloc(1, sizeof(char));
+	if (!ret)
+		return (NULL);
 	while (str[i])
 	{
 		if (str[i] == '=')
@@ -38,7 +40,9 @@ char	*extract_key(char *str)
 	char	*ret;
 
 	i = 0;
-	ret = NULL;
+	ret = ft_calloc(1, sizeof(char));
+	if (!ret)
+		return (NULL);
 	while (str[i])
 	{
 		if (str[i] == '=')
@@ -67,6 +71,7 @@ void	init_envlst(t_data *data)
 		key = extract_key(enviro[i]);
 		value = extract_value(enviro[i]);
 		update_envlst(key, value, data, true);
+		printf("TEST [%d]: %s = %s\n", i, key, value);
 		i++;
 	}
 }
