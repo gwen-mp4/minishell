@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc_process.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 11:58:17 by storck            #+#    #+#             */
-/*   Updated: 2026/03/05 14:12:24 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/06 13:04:07 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ int	heredoc_parent(pid_t pid, char *doc_name, int fd)
 	fd = open(doc_name, O_RDONLY);
 	unlink(doc_name);
 	free(doc_name);
-	close(fd);
 	return (fd);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal_heredoc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/04 15:13:56 by gwen              #+#    #+#             */
-/*   Updated: 2026/03/05 14:10:40 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/06 13:12:54 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,6 @@ static void	sigint_heredoc(int sig)
 {
 	(void) sig;
 	g_sig = SIGINT;
-	write(2, "\n", 1);
-	rl_replace_line("", 0);
-	rl_on_new_line();
 	rl_done = 1;
 }
 

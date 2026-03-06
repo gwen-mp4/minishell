@@ -204,3 +204,13 @@ If you can fix it
 
 -Attached the variable replacement process. Expand ($) should work fine now.
 -Going to fix norminette for the rest of the day.
+
+**06/03/2026 14:00 by gwen**:
+
+#### -Tested (maybe) all possibilities with heredoc and it works perfectly well, fixed signals and heredoc
+*for storck*:
+__# -Tested some command and some didn't pass, need to fix__
+        -_yes | head -n 5_ should end immediatly and print 5 y on a newline consecutively without any delay, that means maybe that a write-end pipe is still open somewhere and has to be closed.
+        -_sleep 1 | echo hello_ should immediatly display hello without sleeping 1sec, a pipe is not closed properly
+        -_yes | head -n 10000 | wc -l_ should display 10000 and not freeze
+    **TL:DR**: it's essentially not closed pipe
