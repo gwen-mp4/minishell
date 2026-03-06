@@ -188,6 +188,7 @@ If you can fix it
 -Need to fix norm (a lot, i'm not kidding)
 
 **03/04/2026 17:00 by storck**:
+
 -Gestion des variables: ce que ca fait pour l'instatnt
     -Si le av[0] d'un token de command contient un '=', cree une nouvelle variable dans data (il faut ajouter une securite pour empecher de creer plusieures variables avec le meme nom et plutot changer le content de la variable)
     -remonte tout les mots dans av[] de un, free le dernier;
@@ -198,3 +199,8 @@ If you can fix it
 ### I forgot to write but to the functions to test if commands/tokens work well, I've moved them into *debug.c* file in _Utils_
 -Added SINGLE, DOUBLE, NO_QUOTE in cmd so you can work on expand ($) now
 -Need to fix heredoc when EOF and then SIGINT (and check parsing if still good while managing quote or not)
+
+**03/06/2026 10:30 by storck**:
+
+-Attached the variable replacement process. Expand ($) should work fine now.
+-Going to fix norminette for the rest of the day.
