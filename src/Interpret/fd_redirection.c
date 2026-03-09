@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/25 10:31:45 by storck            #+#    #+#             */
-/*   Updated: 2026/03/06 14:01:31 by marvin           ###   ########.fr       */
+/*   Updated: 2026/03/09 12:38:13 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,17 @@ int	output_redirection(t_redir *redir)
 	return (fd);
 }
 
+void	find_way(t_cmd *cmd, char **env, t_data *data)
+{
+	if (is_builtin(cmd->av[0]))
+	{
+		exec_builtin(cmd, cmd->av, data);
+		exit(0);
+	}
+	else
+		exec_cmd(cmd, env);
+}
+
 void	set_fds(t_cmd *cmd)
 {
 	t_redir	*tmp;
@@ -48,9 +59,15 @@ void	set_fds(t_cmd *cmd)
 	while (tmp)
 	{
 		if (tmp->type == INPUT || tmp->type == HEREDOC)
-			input_redirection(tmp);
+		{
+			if (input_redirection(tmp) == EXIT_FAILURE)
+				exit (1);
+		}
 		if (tmp->type == OUTPUT || tmp->type == APPEND)
-			output_redirection(tmp);
+		{
+			if (output_redirection(tmp) == EXIT_FAILURE)
+				exit (1);
+		}
 		tmp = tmp->next;
 	}
 }

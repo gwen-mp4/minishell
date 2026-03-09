@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 10:49:54 by storck            #+#    #+#             */
-/*   Updated: 2026/03/09 11:22:59 by marvin           ###   ########.fr       */
+/*   Updated: 2026/03/09 12:50:40 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,18 +170,18 @@ char	*get_path(char *cmd, char **envp);
 char	**path_split(const char *s, char c);
 
 /* interpret.c */
-void	set_fds(t_cmd *cmd);
+void	exec_cmd(t_cmd *cmd, char **env);
 void	execution(t_cmd *cmd, t_data *data);
 
-/* interpret_pipe.c */
-int		pipe_exec_process(t_data *data, t_token *token);
-
 /* pipe_process.c */
-pid_t	fork_process(void);
-void	pipe_process(int p_fd[2]);
 void	redirect_fd(int old_fd, int new_fd);
 int		file_read_process(char *infile);
 int		file_write_process(char *outfile);
+
+/* utils_process.c*/
+pid_t	fork_process(void);
+void	pipe_process(int p_fd[2]);
+int		dup_process(int fd, int save_in);
 
 /* create_tokens.c */
 void	add_back_token(t_token **list, t_token *new);
@@ -189,6 +189,7 @@ t_token	*create_token(t_type type, char *value, t_quote_type quote);
 
 /* here_doc_process.c */
 int		file_heredoc_process(t_redir *heredoc);
+int		prepare_heredoc(t_cmd *cmd);
 
 /* append_file_process.c */
 int		file_append_process(char *outfile);
@@ -196,6 +197,8 @@ int		file_append_process(char *outfile);
 /* fd_redirection.c */
 int		input_redirection(t_redir *redir);
 int		output_redirection(t_redir *redir);
+void	find_way(t_cmd *cmd, char **env, t_data *data);
+void	set_fds(t_cmd *cmd);
 
 /* exec_builtin */
 int		is_builtin(char *str);
