@@ -214,3 +214,13 @@ __# -Tested some command and some didn't pass, need to fix__
         -_sleep 1 | echo hello_ should immediatly display hello without sleeping 1sec, a pipe is not closed properly
         -_yes | head -n 10000 | wc -l_ should display 10000 and not freeze
     **TL:DR**: it's essentially not closed pipe
+
+**09/03/2026 18:55 by gwen**:
+
+#### -Fixed sleep and yes problems, it was waitpid parent waiting for child problem (and not pipe closing problem)
+     -Fixed potential leaks issues in execution and zombies
+     -Changed strncmp (yes you did that) and ft_strncmp to ft_strcmp (that I've added the 05/03) to avoid error like "echo" still work if we write "ec"
+### -If you use ft_strncmp again, make sure that it's correct, otherwise use ft_strcmp
+# -Problem to fix:
+#   -The command "cd" doesn't work
+#   -filter_var has to be fixed asap cuz it segfault

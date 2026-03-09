@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 11:58:17 by storck            #+#    #+#             */
-/*   Updated: 2026/03/06 13:04:07 by marvin           ###   ########.fr       */
+/*   Updated: 2026/03/09 11:46:30 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,4 +100,30 @@ int	file_heredoc_process(t_redir *heredoc)
 	if (heredoc_parent(pid, doc_name, fd) < 0)
 		return (-1);
 	return (fd);
+}
+
+int	prepare_heredoc(t_cmd *cmd)
+{
+	t_cmd	*c;
+	t_redir	*r;
+	int		fd;
+
+	c = cmd;
+	while (c)
+	{
+		r = c->redirs;
+		while (r)
+		{
+			if (r->type == HEREDOC)
+			{
+				fd = file_heredoc_process(r);
+				if (fd < 0)
+					return (EXIT_FAILURE);
+				r->fd = fd;
+			}
+			r = r->next;
+		}
+		c = c->next;
+	}
+	return (EXIT_SUCCESS);
 }

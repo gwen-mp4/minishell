@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils_2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/04 10:00:47 by storck            #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2026/03/09 10:35:26 by storck           ###   ########.fr       */
+=======
+/*   Updated: 2026/03/09 10:38:54 by marvin           ###   ########.fr       */
+>>>>>>> gwen
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +69,7 @@ int	list_new_elem_str(t_list **new, char *elem)
 // {
 // 	t_env	*curr;
 
+<<<<<<< HEAD
 // 	if (!data->envlst)
 // 	{
 // 		data->envlst = new;
@@ -83,7 +88,7 @@ int	list_new_elem_str(t_list **new, char *elem)
 // 	envlst = data->envlst;
 // 	while (envlst)
 // 	{
-// 		if (!ft_strncmp(key, envlst->key, ft_strlen(key)))
+// 		if (!ft_strcmp(key, envlst->key))
 // 		{
 // 			if (value)
 // 				ft_memmove(envlst->value, value, ft_strlen(value));

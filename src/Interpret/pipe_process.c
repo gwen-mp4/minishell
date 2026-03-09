@@ -3,36 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_process.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: storck <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 15:27:33 by storck            #+#    #+#             */
-/*   Updated: 2026/02/13 15:27:36 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/09 12:02:59 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-pid_t	fork_process(void)
-{
-	pid_t	pid;
-
-	pid = fork();
-	if (pid == -1)
-	{
-		perror("fork");
-		exit(1);
-	}
-	return (pid);
-}
-
-void	pipe_process(int p_fd[2])
-{
-	if (pipe(p_fd) == -1)
-	{
-		perror("pipe");
-		exit(1);
-	}
-}
 
 void	redirect_fd(int old_fd, int new_fd)
 {

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: storck <storck@student.42.fr>              +#+  +:+       +#+         #
+#    By: marvin <marvin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/11 15:53:54 by gwen              #+#    #+#              #
-#    Updated: 2026/03/09 10:30:40 by storck           ###   ########.fr        #
+#    Updated: 2026/03/09 18:57:31 by marvin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,6 +47,7 @@ SRC = main.c \
 	Interpret/here_doc_process.c \
 	Interpret/interpret.c \
 	Interpret/pipe_process.c \
+	Interpret/utils_process.c \
 	Path/path_finding.c \
 	Path/path_split.c \
 	Utils/utils.c \
