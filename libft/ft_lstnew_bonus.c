@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew.c                                        :+:      :+:    :+:   */
+/*   ft_lstnew_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwen <marvin@42.fr>                        +#+  +:+       +#+        */
+/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/12 15:18:46 by gwen              #+#    #+#             */
-/*   Updated: 2025/11/12 15:18:59 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/09 12:15:39 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_list	*ft_lstnew(void *content)
 	dest = ft_calloc(1, sizeof(t_list));
 	if (!dest)
 		return (NULL);
-	dest->content = content;
+	dest->str = content;
 	dest->next = NULL;
 	return (dest);
 }

@@ -6,7 +6,7 @@
 /*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 10:49:54 by storck            #+#    #+#             */
-/*   Updated: 2026/03/06 13:39:10 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/09 12:13:19 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <curses.h>
 # include <dirent.h>
 # include <fcntl.h>
+# include <limits.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h>
@@ -122,7 +123,7 @@ typedef struct s_data
 	t_token	*token;
 	t_quote	*quote;
 	t_cmd	*cmd;
-	t_env	*envlst;
+	t_list	*envlst;
 	t_list	*trash;
 	t_var	*vars;
 }	t_data;
@@ -207,20 +208,26 @@ int		check_key(char *str);
 /* builtins */
 void	exec_cd(char *path);
 void	exec_echo(char **arg);
-void	exec_env(t_data *data);
+int		exec_env(t_list *env);
 void	exec_exit(char **args, t_data *data);
-void	exec_export(char **args, t_data *data);
+int		exec_export(char **args, t_list **env);
 void	exec_pwd(void);
-void	exec_unset(char **args, t_data *data);
+int		exec_unset(char **args, t_list **env);
 
 /* env_utils */
 char    *extract_value(char *str);
 char    *extract_key(char *str);
-void    init_envlst(t_data *data);
+int		init_envlst(t_data *data, char **env);
+int		list_new_elem_str(t_list **new, char *elem);
 bool    env_entry_exists(char *key, t_data *data);
 t_env   *envlst_new(char *key, char *value);
 void    envlst_back(t_env *new, t_data *data);
+int		append(t_list **list, char *elem);
 void    update_envlst(char *key, char *value, t_data *data, bool create);
+int 	len_list(t_list *lst);
+void    sort_array(char **arr, int len);
+char    **lst_to_arr(t_list *env);
+bool    null_env(t_data *data);
 
 /* variable.c */
 void    filter_var(t_cmd *cmd, t_data *data);

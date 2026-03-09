@@ -3,88 +3,138 @@
 /*                                                        :::      ::::::::   */
 /*   exec_export.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 12:31:48 by storck            #+#    #+#             */
-/*   Updated: 2026/03/06 12:56:31 by marvin           ###   ########.fr       */
+/*   Updated: 2026/03/09 11:54:27 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	error_export_msg(char *name)
+bool	export_no_args(t_list *env)
 {
-	ft_putstr_fd("minishell: export: `", 2);
-	ft_putstr_fd(name, 2);
-	ft_putstr_fd("': not a valid identifier\n", 2);
-	return (1);
-}
+	char	**arr;
+	int		i;
+	int		j;
 
-void	export_list(t_data *data)
-{
-	t_env	*lst;
-	size_t	i;
-
-	lst = data->envlst;
-	while (lst)
+	arr = lst_to_arr(env);
+	if (!arr)
+		return (false);
+	sort_array(arr, len_list(env));
+	i = 0;
+	while (arr[i])
 	{
-		if (lst->value != NULL && (ft_strncmp(lst->key, "_", 1) != 0))
-		{
-			printf("declare -x %s=\"", lst->key);
-			i = 0;
-			while ((lst->value)[i])
-			{
-				if ((lst->value)[i] == '$' || (lst->value)[i] == '"')
-					printf("\\%c", (lst->value)[i++]);
-				else
-					printf("%c", (lst->value)[i++]);
-			}
-			printf("\"\n");
-		}
-		else if (lst->value == NULL && (ft_strncmp(lst->key, "_", 1) != 0))
-			printf("declare -x %s\n", lst->key);
-		lst = lst->next;
+		ft_putstr_fd("declare -x ", 1);
+		j = 0;
+		while (arr[i][j] && arr[i][j] != '=')
+			printf("%c", arr[i][j++]);
+		if (arr[i][j] && arr[i][j] == '=')
+			printf("=\"%s\"\n", &arr[i][j + 1]);
+		else
+			printf("\n");
+		i++;
 	}
+	free(arr);
+	return (true);
 }
 
-int	check_key(char *str)
+bool	valid_identifier(char *str)
 {
 	int	i;
 
-	i = 1;
-	if (!ft_isalpha(*str) && *str != '_')
-		return (0);
+	i = 0;
+	if (!str[0] || (str[0] != '_' && !ft_isalpha(str[0])))
+		return (false);
 	while (str[i] && str[i] != '=')
 	{
 		if (!ft_isalnum(str[i]) && str[i] != '_')
-			return (0);
+			return (false);
 		i++;
 	}
-	return (1);
+	return (true);
 }
 
-void	exec_export(char **args, t_data *data)
+static int	exist(char *str, t_list *env)
 {
 	int		i;
-	int		status;
-	char	*key;
+	int		j;
+	t_list	*tmp;
 
-	status = 0;
-	i = 1;
-	if (!args[1])
-		return (export_list(data));
+	if (!env)
+		return (-1);
+	i = 0;
+	while (str[i] && str[i] != '=')
+		i++;
+	j = 0;
+	tmp = env;
+	if (!ft_strncmp(tmp->str, str, i) && (tmp->str[i] == '\0'
+		|| tmp->str[i] == '='))
+		return (j);
+	tmp = tmp->next;
+	j++;
+	while (tmp != env)
+	{
+		if (!ft_strncmp(tmp->str, str, i) && (tmp->str[i] = '\0'
+			|| tmp->str[i] == '='))
+			return (j);
+		j++;
+	}
+	return (-1);
+}
+
+bool	export(char *str, t_list **env)
+{
+	int		pos;
+	int		i;
+	char	*value;
+
+	pos = exist(str, (*env));
+	value = ft_strdup(str);
+	if (!value)
+		return (false);
+	if (pos >= 0)
+	{
+		i = 0;
+		while (i < pos)
+		{
+			*env = (*env)->next;
+			i++;
+		}
+		free ((*env)->str);
+		(*env)->str = value;
+	}
+	else if (pos == -1)
+	{
+		if (!append(env, value))
+			return (false);
+	}
+	return (true);
+}
+
+int	exec_export(char **args, t_list **env)
+{
+	int	exit_code;
+	int	i;
+
+	exit_code = 0;
+	i = 0;
+	if (!args || !args[i])
+	{
+		if (!env && !export_no_args(*env))
+			perror("malloc");
+		return (0);
+	}
 	while (args[i])
 	{
-		if (check_key(args[i]) == 0)
-			status = error_export_msg(args[i]);
-		else
+		if (!valid_identifier(args[i]))
 		{
-			key = extract_key(args[i]);
-			if (env_entry_exists(key, data))
-				update_envlst(key, extract_value(args[i]), data, false);
-			else
-				update_envlst(key, extract_value(args[i]), data, true);
+			ft_putendl_fd("export: invalid identifier", 2);
+			exit_code = 1;
 		}
+		else if (!export(args[i], env))
+			return (perror("malloc"), 1);
 		i++;
 	}
+	return (exit_code);
 }

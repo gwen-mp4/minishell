@@ -6,7 +6,7 @@
 /*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/04 10:00:38 by storck            #+#    #+#             */
-/*   Updated: 2026/03/06 14:58:04 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/09 12:29:03 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,23 +55,68 @@ char	*extract_key(char *str)
 	return (NULL);
 }
 
-void	init_envlst(t_data *data)
+int	append(t_list **list, char *elem)
+{
+	t_list	*new;
+
+	if (!list_new_elem_str(&new, elem))
+		return (0);
+	if (!(*list))
+	{
+		(*list) = new;
+		(*list)->next = *list;
+		(*list)->prev = *list;
+	}
+	else
+	{
+		new->prev = (*list)->prev;
+		new->next = (*list);
+		(*list)->prev->next = new;
+		(*list)->prev = new;
+	}
+	return (1);
+}
+
+int	free_list(t_list **list)
+{
+	t_list	*tmp;
+	t_list	*current;
+
+	if (!(*list))
+		return (0);
+	current = *list;
+	while (current->next != *list)
+	{
+		tmp = current;
+		current = current->next;
+		free(tmp->str);
+		free(tmp);
+	}
+	free(current->str);
+	free(current);
+	*list = NULL;
+	return (0);
+}
+
+int	init_envlst(t_data *data, char **env)
 {
 	int		i;
-	char	**enviro;
-	char	*key;
-	char	*value;
+	char	*tmp;
+	t_list	*list;
 
-	i = 0;
-	enviro = data->env;
-	if (!enviro)
-		return ;
-	while (enviro[i])
+	if (!(*env))
+		return (null_env(data));
+	i = -1;
+	list = NULL;
+	while (env[++i])
 	{
-		key = extract_key(enviro[i]);
-		value = extract_value(enviro[i]);
-		update_envlst(key, value, data, true);
-		printf("TEST [%d]: %s = %s\n", i, key, value);
-		i++;
+		tmp = ft_strdup(env[i]);
+		if (!tmp)
+			return (free_list(&list));
+		if (!append(&list, tmp))
+			return (free_list(&list));
 	}
+	data->envlst = list;
+	printf("%s\n", data->envlst->str);
+	return (1);
 }

@@ -6,80 +6,91 @@
 /*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/04 10:00:47 by storck            #+#    #+#             */
-/*   Updated: 2026/03/06 14:55:46 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/09 10:35:26 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-bool	env_entry_exists(char *key, t_data *data)
+int	list_new_elem_str(t_list **new, char *elem)
 {
-	t_env	*curr;
-
-	curr = data->envlst;
-	while (curr)
-	{
-		if (!strncmp(curr->key, key, ft_strlen(key)))
-			return (true);
-		curr = curr->next;
-	}
-	return (false);
+	(*new) = malloc(sizeof(t_list));
+	if (*new == NULL)
+		return (0);
+	(*new)->str = elem;
+	(*new)->next = NULL;
+	(*new)->prev = NULL;
+	return (1);
 }
 
-t_env	*envlst_new(char *key, char *value)
-{
-	t_env	*new;
+// bool	env_entry_exists(char *key, t_data *data)
+// {
+// 	t_env	*curr;
 
-	new = (t_env *)ft_calloc(1, sizeof(t_env));
-	if (!new)
-		return (NULL);
-	// new->key = (char *)ft_calloc(1, sizeof(char));
-	// if (!new->key)
-	// 	return (NULL);
-	// new->value = (char *)ft_calloc(1, sizeof(char));
-	// if (!new->value)
-	// 	return (NULL);
-	//ft_memmove(new->key, key, ft_strlen(key));
-	new->key = key;
-	if (value)
-		new->value = value;
-		//ft_memmove(new->value, value, ft_strlen(value));
-	else
-		new->value = NULL;
-	new->next = NULL;
-	return (new);
-}
+// 	curr = data->envlst;
+// 	while (curr)
+// 	{
+// 		if (!strncmp(curr->key, key, ft_strlen(key)))
+// 			return (true);
+// 		curr = curr->next;
+// 	}
+// 	return (false);
+// }
 
-void	envlst_back(t_env *new, t_data *data)
-{
-	t_env	*curr;
+// t_env	*envlst_new(char *key, char *value)
+// {
+// 	t_env	*new;
 
-	if (!data->envlst)
-	{
-		data->envlst = new;
-		return ;
-	}
-	curr = data->envlst;
-	while (curr && curr->next)
-		curr = curr->next;
-	curr->next = new;
-}
+// 	new = (t_env *)ft_calloc(1, sizeof(t_env));
+// 	if (!new)
+// 		return (NULL);
+// 	// new->key = (char *)ft_calloc(1, sizeof(char));
+// 	// if (!new->key)
+// 	// 	return (NULL);
+// 	// new->value = (char *)ft_calloc(1, sizeof(char));
+// 	// if (!new->value)
+// 	// 	return (NULL);
+// 	//ft_memmove(new->key, key, ft_strlen(key));
+// 	new->key = key;
+// 	if (value)
+// 		new->value = value;
+// 		//ft_memmove(new->value, value, ft_strlen(value));
+// 	else
+// 		new->value = NULL;
+// 	new->next = NULL;
+// 	return (new);
+// }
 
-void	update_envlst(char *key, char *value, t_data *data, bool create)
-{
-	t_env	*envlst;
+// void	envlst_back(t_env *new, t_data *data)
+// {
+// 	t_env	*curr;
 
-	envlst = data->envlst;
-	while (envlst)
-	{
-		if (!ft_strncmp(key, envlst->key, ft_strlen(key)))
-		{
-			if (value)
-				ft_memmove(envlst->value, value, ft_strlen(value));
-			return ;
-		}
-		envlst = envlst->next;
-	}
-	if (create)
-		envlst_back(envlst_new(key, value), data);
-}
+// 	if (!data->envlst)
+// 	{
+// 		data->envlst = new;
+// 		return ;
+// 	}
+// 	curr = data->envlst;
+// 	while (curr && curr->next)
+// 		curr = curr->next;
+// 	curr->next = new;
+// }
+
+// void	update_envlst(char *key, char *value, t_data *data, bool create)
+// {
+// 	t_env	*envlst;
+
+// 	envlst = data->envlst;
+// 	while (envlst)
+// 	{
+// 		if (!ft_strncmp(key, envlst->key, ft_strlen(key)))
+// 		{
+// 			if (value)
+// 				ft_memmove(envlst->value, value, ft_strlen(value));
+// 			return ;
+// 		}
+// 		envlst = envlst->next;
+// 	}
+// 	if (create)
+// 		envlst_back(envlst_new(key, value), data);
+// }

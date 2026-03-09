@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fd_redirection.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/25 10:31:45 by storck            #+#    #+#             */
-/*   Updated: 2026/03/06 14:01:31 by marvin           ###   ########.fr       */
+/*   Updated: 2026/03/09 12:12:55 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	input_redirection(t_redir *redir)
 {
 	int	fd;
 
+	fd = 0;
 	if (redir->type == INPUT)
 		fd = file_read_process(redir->filename);
 	else if (redir->type == HEREDOC)

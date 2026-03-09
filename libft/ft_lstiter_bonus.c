@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstiter.c                                       :+:      :+:    :+:   */
+/*   ft_lstiter_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwen <marvin@42.fr>                        +#+  +:+       +#+        */
+/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/12 17:10:20 by gwen              #+#    #+#             */
-/*   Updated: 2025/11/12 17:10:21 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/09 12:15:40 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	ft_lstiter(t_list *lst, void (*f)(void *))
 	tmp_list = lst;
 	while (tmp_list)
 	{
-		(*f)(tmp_list->content);
+		(*f)(tmp_list->str);
 		tmp_list = tmp_list->next;
 	}
 }

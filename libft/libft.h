@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 13:01:38 by gwen              #+#    #+#             */
-/*   Updated: 2026/03/04 14:43:08 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/09 10:32:38 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,9 @@
 
 typedef struct s_list
 {
-	void			*content;
+	char			*str;
 	struct s_list	*next;
+	struct s_list	*prev;
 }	t_list;
 
 int		ft_atoi(const char *str);

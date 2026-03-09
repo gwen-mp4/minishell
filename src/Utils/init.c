@@ -6,7 +6,7 @@
 /*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 13:12:18 by storck            #+#    #+#             */
-/*   Updated: 2026/03/06 15:00:53 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/09 12:13:44 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	init_data(t_data *data, int ac, char **av, char **env)
 	data->outfile = NULL;
 	data->env = env;
 	data->envlst = NULL;
-	//init_envlst(data);
+	init_envlst(data, env);
 	data->pipe_count = 0;
 	data->vars = NULL;
 	return (1);

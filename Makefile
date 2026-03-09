@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: marvin <marvin@student.42.fr>              +#+  +:+       +#+         #
+#    By: storck <storck@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/11 15:53:54 by gwen              #+#    #+#              #
-#    Updated: 2026/03/06 13:49:30 by marvin           ###   ########.fr        #
+#    Updated: 2026/03/09 10:30:40 by storck           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ SRC_DIR = src/
 SRC = main.c \
 	Builtin/env_utils_1.c \
 	Builtin/env_utils_2.c \
+	Builtin/env_utils_3.c \
 	Builtin/exec_cd.c \
 	Builtin/exec_echo.c \
 	Builtin/exec_env.c \
