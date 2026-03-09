@@ -43,7 +43,7 @@ void	exec_builtin(t_cmd *cmd, char **arg, t_data *data)
 	else if (strncmp(arg[0], "cd", ft_strlen(arg[0])) == 0)
 	{
 		printf("Entered cd\n");
-		exec_cd(arg[0]);
+		exec_cd(data, cmd->av);
 	}
 	else if (strncmp(arg[0], "pwd", ft_strlen(arg[0])) == 0)
 	{

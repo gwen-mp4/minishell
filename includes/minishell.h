@@ -206,7 +206,7 @@ void	exec_builtin(t_cmd *cmd, char **args, t_data *data);
 int		check_key(char *str);
 
 /* builtins */
-void	exec_cd(char *path);
+int		exec_cd(t_data *data, char **args);
 void	exec_echo(char **arg);
 int		exec_env(t_list *env);
 void	exec_exit(char **args, t_data *data);
