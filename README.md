@@ -215,7 +215,7 @@ __# -Tested some command and some didn't pass, need to fix__
         -_yes | head -n 10000 | wc -l_ should display 10000 and not freeze
     **TL:DR**: it's essentially not closed pipe
 
-**09/03/2026 11:45 by gwen**:
+**09/03/2026 18:55 by gwen**:
 
 #### -Fixed sleep and yes problems, it was waitpid parent waiting for child problem (and not pipe closing problem)
      -Fixed potential leaks issues in execution and zombies
