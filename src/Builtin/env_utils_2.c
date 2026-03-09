@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils_2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/04 10:00:47 by storck            #+#    #+#             */
-/*   Updated: 2026/03/06 14:55:46 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/09 10:38:54 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ bool	env_entry_exists(char *key, t_data *data)
 	curr = data->envlst;
 	while (curr)
 	{
-		if (!strncmp(curr->key, key, ft_strlen(key)))
+		if (!ft_strcmp(curr->key, key))
 			return (true);
 		curr = curr->next;
 	}
@@ -72,7 +72,7 @@ void	update_envlst(char *key, char *value, t_data *data, bool create)
 	envlst = data->envlst;
 	while (envlst)
 	{
-		if (!ft_strncmp(key, envlst->key, ft_strlen(key)))
+		if (!ft_strcmp(key, envlst->key))
 		{
 			if (value)
 				ft_memmove(envlst->value, value, ft_strlen(value));

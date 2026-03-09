@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:54:48 by storck            #+#    #+#             */
-/*   Updated: 2026/03/06 14:02:20 by marvin           ###   ########.fr       */
+/*   Updated: 2026/03/09 11:43:19 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	main(int ac, char **av, char **env)
 		data.cmd = lexing_and_parsing(&data);
 		if (!data.cmd)
 			continue ;
-		filter_var(data.cmd, &data);
+		//filter_var(data.cmd, &data);
 		execution(data.cmd, &data);
 		free(data.line);
 		clean_tokens(data.token);

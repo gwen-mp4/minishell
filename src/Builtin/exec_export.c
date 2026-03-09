@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 12:31:48 by storck            #+#    #+#             */
-/*   Updated: 2026/03/06 12:56:31 by marvin           ###   ########.fr       */
+/*   Updated: 2026/03/09 10:38:05 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	export_list(t_data *data)
 	lst = data->envlst;
 	while (lst)
 	{
-		if (lst->value != NULL && (ft_strncmp(lst->key, "_", 1) != 0))
+		if (lst->value != NULL && (ft_strcmp(lst->key, "_") != 0))
 		{
 			printf("declare -x %s=\"", lst->key);
 			i = 0;
@@ -41,7 +41,7 @@ void	export_list(t_data *data)
 			}
 			printf("\"\n");
 		}
-		else if (lst->value == NULL && (ft_strncmp(lst->key, "_", 1) != 0))
+		else if (lst->value == NULL && (ft_strcmp(lst->key, "_") != 0))
 			printf("declare -x %s\n", lst->key);
 		lst = lst->next;
 	}

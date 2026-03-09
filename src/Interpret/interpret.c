@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 12:43:54 by storck            #+#    #+#             */
-/*   Updated: 2026/03/06 14:01:56 by marvin           ###   ########.fr       */
+/*   Updated: 2026/03/09 11:22:30 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	exec_cmd(t_cmd *cmd, char **env)
 	char	*path;
 
 	if (!cmd || !cmd->av || !cmd->av[0])
-		return ;
+		exit (0);
 	signal_child();
 	set_fds(cmd);
 	path = get_path(cmd->av[0], env);
@@ -26,13 +26,11 @@ void	exec_cmd(t_cmd *cmd, char **env)
 		ft_putendl_fd("ERROR PATH", 2);
 		ft_putstr_fd(cmd->av[0], 2);
 		ft_putendl_fd(": command not found", 2);
-		//total free minishell
 		exit(127);
 	}
 	if (execve(path, cmd->av, env) == -1)
 	{
 		ft_putendl_fd("ERROR EXEC", 2);
-		//total free minishell
 		exit(1);
 	}
 }
@@ -65,7 +63,6 @@ void	do_pipe(t_cmd *cmd, char **env, t_data *data)
 	{
 		close(p_fd[1]);
 		redirect_fd(p_fd[0], STDIN_FILENO);
-		waitpid(pid, NULL, 0);
 	}
 }
 

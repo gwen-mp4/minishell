@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_unset.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 12:32:06 by storck            #+#    #+#             */
-/*   Updated: 2026/03/06 11:20:10 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/09 10:38:20 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	unset_helper(char *key, t_data *data)
 	current = data->envlst;
 	while (current)
 	{
-		if (!ft_strncmp(key, current->key, ft_strlen(key)))
+		if (!ft_strcmp(key, current->key))
 		{
 			if (prev)
 				prev->next = current->next;
