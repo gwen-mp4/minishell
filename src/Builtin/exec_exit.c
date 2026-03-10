@@ -6,34 +6,72 @@
 /*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 12:32:23 by storck            #+#    #+#             */
-/*   Updated: 2026/03/06 12:10:14 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/10 11:44:43 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+static int	ato_exit_code(char *str, int *err)
+{
+	unsigned long long	ret;
+	int					i;
+	int					j;
+	int					sign;
+
+	i = 0;
+	sign = 1;
+	ret = 0;
+	while ((str[i] >= 9 && str[i] <= 13) || str[i] == 32)
+		i++;
+	if (str[i] == '+' || str[i] == '-')
+	{
+		if (str[i] == '-')
+			sign = -1;
+		i++;
+	}
+	j = i;
+	while (str[i] >= '0' && str[i] <= '9')
+		ret = ret * 10 + (str[i++] - '0');
+	while ((str[i] >= 9 && str[i] <= 13) || str[i] == 32)
+		i++;
+	if (str[i] || i - j > 20 || ((sign == -1 && (ret - 1) > LONG_MAX)
+		|| (sign == 1 && (ret > LONG_MAX))))
+		*err = 1;
+	return ((int)((ret * sign) % 256));
+}
+
 void	exec_exit(char **args, t_data *data)
 {
-	int	status;
+	int	ret;
+	int	err;
 
-	status = 0;
-	status = data->exit_code;
+	ret = 0;
+	err = 0;
 	if (args[1])
 	{
-		if (args[2] && is_number(args[1]))
+		ret = ato_exit_code(args[1], &err);
+		if (err)
 		{
-			status = 1;
-			error_too_many_arguments(args[0]);
-			//clean&exit_minishell();
-			exit(status);
+			ft_putstr_fd("exit: ", 2);
+			ft_putstr_fd(args[1], 2);
+			ft_putendl_fd(": numeric argument required", 2);
+			free_data(data);
+			exit (2);
 		}
-		else
-		status = ft_atoi(args[1]);
 	}
-	while (status < 0)
-		status = 256 + status;
-	while (status > 255)
-		status = status - 256;
-	//clean&exit_minishell();
-	exit(status);
+	if (args[1] && args[2])
+	{
+		ft_putendl_fd("exit: too many arguments", 2);
+		data->exit_code = 1;
+		return ;
+	}
+	if (!args[1])
+	{
+		ret = data->exit_code;
+		free_data(data);
+		exit (ret);
+	}
+	free_data(data);
+	exit(ret);
 }

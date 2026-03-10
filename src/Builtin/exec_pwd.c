@@ -3,31 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pwd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: storck <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 10:41:02 by storck            #+#    #+#             */
-/*   Updated: 2026/03/06 11:16:44 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/10 10:29:57 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	exec_pwd(void)
+int	exec_pwd(void)
 {
-	char	buffer[BUFFER_SIZE + 1];
-	char	*buffer2;
-	int		large_buffer;
-
-	if (getcwd(buffer, BUFFER_SIZE) != NULL)
-		printf("%s\n", buffer);
+	char	buffer[PATH_MAX];
+	
+	if (getcwd(buffer, PATH_MAX))
+	{
+		ft_putendl_fd(buffer, 1);
+		return (0);
+	}
 	else
 	{
-		large_buffer = 4096;
-		buffer2 = malloc(sizeof(char) * (large_buffer + 1));
-		if (getcwd(buffer2, large_buffer) != NULL)
-			printf("%s\n", buffer2);
-		else
-			perror("getcwd: ");
-		free (buffer2);
+		perror("pwd");
+		return (1);
 	}
 }
