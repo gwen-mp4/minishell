@@ -224,3 +224,7 @@ __# -Tested some command and some didn't pass, need to fix__
 # -Problem to fix:
 #   -The command "cd" doesn't work
 #   -filter_var has to be fixed asap cuz it segfault
+
+**03/10/2026 16:45 by storck**:
+
+-Fixed all problems with builtins except an issue with nset that don't work on exported values. Will fix tomorrow.
