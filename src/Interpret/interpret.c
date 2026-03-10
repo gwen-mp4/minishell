@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   interpret.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 12:43:54 by storck            #+#    #+#             */
-/*   Updated: 2026/03/10 13:17:14 by marvin           ###   ########.fr       */
+/*   Updated: 2026/03/10 16:37:08 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,11 +111,17 @@ void	execution(t_cmd *cmd, t_data *data)
 		close(save_out);
 		return ;
 	}
-	if (data->pipe_count == 0 && is_builtin(cmd->av[0]))
+	if (data->pipe_count == 0 && is_builtin(cmd->av[0])
+		&& ft_strcmp(cmd->av[0], "echo") && ft_strcmp(cmd->av[0], "pwd"))
 	{
 		exec_builtin(cmd, cmd->av, data);
-		redirect_fd(save_in, STDIN_FILENO);
-		redirect_fd(save_out, STDIN_FILENO);
+		// redirect_fd(save_in, STDIN_FILENO);
+		// redirect_fd(save_out, STDOUT_FILENO);
+		// if (ft_strcmp(cmd->av[0], "cd") && ft_strcmp(cmd->av[0], "unset"))
+		// {
+		// 	redirect_fd(STDIN_FILENO, save_in);
+		// 	redirect_fd(STDOUT_FILENO, save_out);
+		// }
 		return ;
 	}
 	exec_last(cmd, data, save_in, save_out);

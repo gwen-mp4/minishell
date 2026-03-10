@@ -6,7 +6,7 @@
 /*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 11:02:03 by storck            #+#    #+#             */
-/*   Updated: 2026/03/10 10:22:38 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/10 16:31:13 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static void	update_pwd(t_data *data, char *arg)
 	pwd = ft_strjoin("PWD=", cwd);
 	if (!pwd)
 		return (perror("malloc"));
-	printf("%s\n", pwd);
+	//printf("%s\n", pwd);
 	export_ex(pwd, &data->envlst);
 	free(pwd);
 }
