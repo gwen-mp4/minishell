@@ -3,18 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 10:49:54 by storck            #+#    #+#             */
-<<<<<<< HEAD
-<<<<<<< HEAD
-/*   Updated: 2026/03/09 12:13:19 by storck           ###   ########.fr       */
-=======
-/*   Updated: 2026/03/09 12:50:40 by marvin           ###   ########.fr       */
->>>>>>> gwen
-=======
-/*   Updated: 2026/03/10 10:31:33 by storck           ###   ########.fr       */
->>>>>>> storck
+/*   Updated: 2026/03/10 12:20:06 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,7 +210,7 @@ int		check_key(char *str);
 
 /* builtins */
 int		exec_cd(t_data *data, char **args);
-void	exec_echo(char **arg);
+int		exec_echo(char **arg);
 int		exec_env(t_list *env);
 void	exec_exit(char **args, t_data *data);
 bool	export_ex(char *str, t_list **env);

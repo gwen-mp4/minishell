@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exec_echo.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 12:31:23 by storck            #+#    #+#             */
-/*   Updated: 2026/03/09 10:37:28 by marvin           ###   ########.fr       */
+/*   Updated: 2026/03/10 12:18:16 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	exec_echo(char **arg)
+int	exec_echo(char **arg)
 {
 	int	i;
 
@@ -29,5 +29,5 @@ void	exec_echo(char **arg)
 	}
 	if (ft_strcmp(arg[0], "-n") != 0)
 		ft_putchar_fd('\n', STDOUT_FILENO);
-	return ;
+	return (0);
 }
