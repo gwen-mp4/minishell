@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   interpret.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 12:43:54 by storck            #+#    #+#             */
-/*   Updated: 2026/03/10 11:49:40 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/10 13:07:24 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,16 +53,14 @@ void	do_pipe(t_cmd *cmd, t_data *data, pid_t *pids, int index)
 	}
 }
 
-static void	run_pipes(t_cmd **cmd, t_data *data)
+static pid_t	*run_pipes(t_cmd **cmd, t_data *data, int total)
 {
 	pid_t	*pids;
 	int		i;
-	int		count;
 
-	count = data->pipe_count;
-	pids = malloc(sizeof(pid_t) * count);
+	pids = malloc(sizeof(pid_t) * total);
 	if (!pids)
-		return ;
+		return (NULL);
 	i = 0;
 	while (data->pipe_count > 0)
 	{
@@ -70,24 +68,32 @@ static void	run_pipes(t_cmd **cmd, t_data *data)
 		data->pipe_count--;
 		*cmd = (*cmd)->next;
 	}
-	i = 0;
-	while (i < count)
-		waitpid(pids[i++], NULL, 0);
-	free(pids);
+	return (pids);
 }
 
 static void	exec_last(t_cmd *cmd, t_data *data, int save_in, int save_out)
 {
-	pid_t	pid;
+	pid_t	*pids;
+	int		total;
+	int		i;
 
-	run_pipes(&cmd, data);
-	pid = fork_process();
-	if (!pid)
+	total = data->pipe_count + 1;
+	pids = run_pipes(&cmd, data, total);
+	if (!pids)
+	{
+		close(save_in);
+		close(save_out);
+		return ;
+	}
+	pids[total - 1] = fork_process();
+	if (!pids[total - 1])
 		find_way(cmd, data->env, data);
-	else
-		waitpid(pid, NULL, 0);
 	redirect_fd(save_in, STDIN_FILENO);
 	redirect_fd(save_out, STDIN_FILENO);
+	i = 0;
+	while (i < total)
+		waitpid(pids[i++], NULL, 0);
+	free(pids);
 }
 
 void	execution(t_cmd *cmd, t_data *data)
