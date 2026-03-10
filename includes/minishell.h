@@ -6,18 +6,9 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 10:49:54 by storck            #+#    #+#             */
-<<<<<<< HEAD
-<<<<<<< HEAD
-/*   Updated: 2026/03/09 12:13:19 by storck           ###   ########.fr       */
-=======
-/*   Updated: 2026/03/09 12:50:40 by marvin           ###   ########.fr       */
->>>>>>> gwen
-=======
-/*   Updated: 2026/03/10 10:31:33 by storck           ###   ########.fr       */
->>>>>>> storck
+/*   Updated: 2026/03/10 11:53:05 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef MINISHELL_H
 # define MINISHELL_H

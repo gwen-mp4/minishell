@@ -39,41 +39,6 @@ int	is_builtin(char *str)
 void	exec_builtin(t_cmd *cmd, char **arg, t_data *data)
 {
 	set_fds(cmd);
-<<<<<<< HEAD
-	if (ft_strcmp(arg[0], "echo") == 0)
-	{
-		printf("Entered echo\n");
-		exec_echo(arg + 1);
-	}
-	else if (ft_strcmp(arg[0], "cd") == 0)
-	{
-		printf("Entered cd\n");
-		exec_cd(arg[0]);
-	}
-	else if (ft_strcmp(arg[0], "pwd") == 0)
-	{
-		printf("Entered pwd\n");
-		exec_pwd();
-	}
-	else if (ft_strcmp(arg[0], "export") == 0)
-	{
-		printf("Entered export\n");
-		exec_export(arg, &(data->envlst));
-	}
-	else if (ft_strcmp(arg[0], "unset") == 0)
-	{
-		printf("Entered unset\n");
-		exec_unset(arg, &(data->envlst));
-	}
-	else if (ft_strcmp(arg[0], "env") == 0)
-	{
-		printf("Entered env\n");
-		exec_env(data->envlst);
-	}
-	else if (ft_strcmp(arg[0], "exit") == 0)
-	{
-		printf("Entered exit\n");
-=======
 	if (strncmp(arg[0], "echo", ft_strlen(arg[0])) == 0)
 		exec_echo(arg + 1);
 	else if (strncmp(arg[0], "cd", ft_strlen(arg[0])) == 0)
@@ -87,6 +52,5 @@ void	exec_builtin(t_cmd *cmd, char **arg, t_data *data)
 	else if (strncmp(arg[0], "env", ft_strlen(arg[0])) == 0)
 		exec_env(data->envlst);
 	else if (strncmp(arg[0], "exit", ft_strlen(arg[0])) == 0)
->>>>>>> storck
 		exec_exit(arg, data);
 }
