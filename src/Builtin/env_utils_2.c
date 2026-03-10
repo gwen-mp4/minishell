@@ -6,11 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/04 10:00:47 by storck            #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2026/03/09 10:35:26 by storck           ###   ########.fr       */
-=======
-/*   Updated: 2026/03/09 10:38:54 by marvin           ###   ########.fr       */
->>>>>>> gwen
+/*   Updated: 2026/03/10 11:42:09 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +65,6 @@ int	list_new_elem_str(t_list **new, char *elem)
 // {
 // 	t_env	*curr;
 
-<<<<<<< HEAD
 // 	if (!data->envlst)
 // 	{
 // 		data->envlst = new;
