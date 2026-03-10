@@ -6,7 +6,7 @@
 /*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 12:32:06 by storck            #+#    #+#             */
-/*   Updated: 2026/03/09 12:11:13 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/10 11:32:28 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static void	check_env(t_list *tmp, t_list **env)
 		*env = NULL;
 }
 
-bool	unset(char *str, t_list **env)
+static bool	unset(char *str, t_list **env)
 {
 	int		pos;
 	int		i;
@@ -79,13 +79,13 @@ bool	unset(char *str, t_list **env)
 	pos = exist(str, *env);
 	if (pos == -1)
 		return (false);
-	tmp = *env;
+	tmp = (*env);
 	i = 0;
 	while (i++ < pos)
 		tmp = tmp->next;
+	free(tmp->str);
 	tmp->prev->next = tmp->next;
 	tmp->next->prev = tmp->prev;
-	free(tmp->str);
 	check_env(tmp, env);
 	free(tmp);
 	tmp = NULL;

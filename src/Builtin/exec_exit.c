@@ -6,7 +6,7 @@
 /*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 12:32:23 by storck            #+#    #+#             */
-/*   Updated: 2026/03/06 12:10:14 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/10 11:44:43 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ void	exec_exit(char **args, t_data *data)
 			ft_putstr_fd("exit: ", 2);
 			ft_putstr_fd(args[1], 2);
 			ft_putendl_fd(": numeric argument required", 2);
-			//total free & exit wit exit code = 2
+			free_data(data);
+			exit (2);
 		}
 	}
 	if (args[1] && args[2])
@@ -66,6 +67,11 @@ void	exec_exit(char **args, t_data *data)
 		return ;
 	}
 	if (!args[1])
-		//total free & exit with data exit code
-	//total free & exit wit exit code = ret
+	{
+		ret = data->exit_code;
+		free_data(data);
+		exit (ret);
+	}
+	free_data(data);
+	exit(ret);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   interpret.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 12:43:54 by storck            #+#    #+#             */
-/*   Updated: 2026/03/06 14:01:56 by marvin           ###   ########.fr       */
+/*   Updated: 2026/03/10 11:33:12 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,15 +111,23 @@ void	execution(t_cmd *cmd, t_data *data)
 		return ;
 	while (data->pipe_count > 0)
 	{
-		do_pipe(cmd, data->env, data);
+		if (is_builtin(cmd->av[0]))
+			exec_builtin(cmd, cmd->av, data);
+		else
+			do_pipe(cmd, data->env, data);
 		data->pipe_count--;
 		cmd = cmd->next;
 	}
-	pid = fork_process();
-	if (!pid)
-		find_way(cmd, data->env, data);
+	if (is_builtin(cmd->av[0]))
+		exec_builtin(cmd, cmd->av, data);
 	else
-		waitpid(pid, NULL, 0);
+	{
+		pid = fork_process();
+		if (!pid)
+			find_way(cmd, data->env, data);
+		else
+			waitpid(pid, NULL, 0);
+	}
 	redirect_fd(save_in, STDIN_FILENO);
 	redirect_fd(save_out, STDOUT_FILENO);
 }

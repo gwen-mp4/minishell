@@ -6,7 +6,7 @@
 /*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 12:31:48 by storck            #+#    #+#             */
-/*   Updated: 2026/03/09 11:54:27 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/10 10:22:12 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,11 +79,12 @@ static int	exist(char *str, t_list *env)
 			|| tmp->str[i] == '='))
 			return (j);
 		j++;
+		tmp = tmp->next;
 	}
 	return (-1);
 }
 
-bool	export(char *str, t_list **env)
+bool	export_ex(char *str, t_list **env)
 {
 	int		pos;
 	int		i;
@@ -121,18 +122,20 @@ int	exec_export(char **args, t_list **env)
 	i = 0;
 	if (!args || !args[i])
 	{
+		printf("ICI\n");
 		if (!env && !export_no_args(*env))
 			perror("malloc");
 		return (0);
 	}
 	while (args[i])
 	{
+		printf("NON, LA\n");
 		if (!valid_identifier(args[i]))
 		{
 			ft_putendl_fd("export: invalid identifier", 2);
 			exit_code = 1;
 		}
-		else if (!export(args[i], env))
+		else if (!export_ex(args[i], env))
 			return (perror("malloc"), 1);
 		i++;
 	}
