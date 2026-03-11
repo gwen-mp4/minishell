@@ -6,7 +6,7 @@
 /*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 12:31:23 by storck            #+#    #+#             */
-/*   Updated: 2026/03/11 13:32:31 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/11 13:47:38 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@ int	exec_echo(char **arg, t_quote_type *quote, t_data *data)
 	int	i;
 
 	i = 0;
+	if (!arg || !arg[0])
+	{
+		ft_putchar_fd('\n', STDOUT_FILENO);
+		return (0);
+	}
 	while (ft_strcmp(arg[i], "-n") == 0)
 		i++;
 	while (arg[i])
