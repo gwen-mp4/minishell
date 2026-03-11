@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_export.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 12:31:48 by storck            #+#    #+#             */
-/*   Updated: 2026/03/11 10:00:14 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/11 14:02:05 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,9 @@ int	exec_export(char **args, t_list **env)
 	{
 		if (!valid_identifier(args[i]))
 		{
-			ft_putendl_fd("export: invalid identifier", 2);
+			ft_putstr_fd("export: '", 2);
+			ft_putstr_fd(args[i], 2);
+			ft_putstr_fd("': invalid identifier\n", 2);
 			exit_code = 1;
 		}
 		else if (!export_ex(args[i], env))

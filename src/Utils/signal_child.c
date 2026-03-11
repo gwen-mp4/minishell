@@ -6,7 +6,7 @@
 /*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/04 15:14:05 by gwen              #+#    #+#             */
-/*   Updated: 2026/03/04 15:18:37 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/11 13:19:10 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,14 @@ static void	sigint_handler(int sig)
 	(void) sig;
 	g_sig = SIGINT;
 	write(2, "\n", 1);
+	rl_done = 1;
+}
+
+static void	sigquit_handler(int sig)
+{
+	(void) sig;
+	g_sig = SIGQUIT;
+	write(2, "Quit (core dumped)\n", 19);
 	rl_done = 1;
 }
 
@@ -34,6 +42,7 @@ void	signal_child(void)
 	sa.sa_flags = 0;
 	sa.sa_handler = sigint_handler;
 	sigaction(SIGINT, &sa, NULL);
+	sa.sa_handler = sigquit_handler;
 	sigaction(SIGQUIT, &sa, NULL);
 	sigaction(SIGTSTP, &sa, NULL);
 }

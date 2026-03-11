@@ -6,7 +6,7 @@
 /*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:54:48 by storck            #+#    #+#             */
-/*   Updated: 2026/03/11 10:33:33 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/11 13:52:51 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,12 @@ t_cmd	*lexing_and_parsing(t_data *data)
 
 	data->token = lexer(data->line);
 	if (!data->token)
-	{
-		free(data->line);
 		return (NULL);
-	}
 	ret = parsing(data->token, data);
 	if (!ret)
 	{
-		free(data->line);
+		clean_tokens(data->token);
+		data->token = NULL;
 		return (NULL);
 	}
 	return (ret);
@@ -50,11 +48,22 @@ int	main(int ac, char **av, char **env)
 			add_history(data.line);
 		data.cmd = lexing_and_parsing(&data);
 		if (!data.cmd)
+		{
+			free(data.line);
+			data.line = NULL;
 			continue ;
+		}
 		filter_var(data.cmd, &data);
 		execution(data.cmd, &data);
-		free_data(&data);
+		free(data.line);
+		data.line = NULL;
+		clean_tokens(data.token);
+		data.token = NULL;
+		free_cmds(data.cmd);
+		data.cmd = NULL;
 	}
 	rl_clear_history();
+	ft_putstr_fd("exit\n", STDERR_FILENO);
+	free_data(&data);
 	return (0);
 }
