@@ -6,7 +6,7 @@
 /*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/04 15:02:36 by storck            #+#    #+#             */
-/*   Updated: 2026/03/06 13:31:50 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/11 10:24:17 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ void	filter_var(t_cmd *cmd, t_data *data)
 	int		i;
 	t_cmd	*tmp;
 
+	if (!cmd->av || !cmd->av[0])
+		return ;
 	tmp = cmd;
 	while (tmp)
 	{
