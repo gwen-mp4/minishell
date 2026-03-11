@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 10:49:54 by storck            #+#    #+#             */
-/*   Updated: 2026/03/11 10:07:52 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/11 11:38:11 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,7 @@ int		init_data(t_data *data, int ac, char **av, char **env);
 
 /* error */
 int		error_cleanup_lexing(t_token *tokens, int status);
-int		error_cleanup_parsing(t_cmd *cmds, const char *error);
+int		error_cleanup_parsing(t_cmd *cmds, const char *error, t_token *token);
 void	error_command_not_found(const char *cmd);
 void	error_permission_denied(const char *file);
 void	error_no_such_file(const char *file);

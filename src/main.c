@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:54:48 by storck            #+#    #+#             */
-/*   Updated: 2026/03/10 16:26:40 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/11 10:33:33 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,7 @@ int	main(int ac, char **av, char **env)
 			continue ;
 		filter_var(data.cmd, &data);
 		execution(data.cmd, &data);
-		free(data.line);
-		clean_tokens(data.token);
-		free_cmds(data.cmd);
+		free_data(&data);
 	}
 	rl_clear_history();
 	return (0);

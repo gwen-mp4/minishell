@@ -72,5 +72,4 @@ void	free_data(t_data *data)
 	clean_tokens(data->token);
 	free_cmds(data->cmd);
 	free_list(&data->envlst);
-	//free(data);
 }
