@@ -6,7 +6,7 @@
 /*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/04 15:02:36 by storck            #+#    #+#             */
-/*   Updated: 2026/03/11 10:24:17 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/11 12:59:22 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,17 +60,21 @@ void	pull_back_av(char **av)
 	free(av[i]);
 }
 
-void	replace_var(char *var, t_data *data)
+void	replace_var(char **var, t_data *data)
 {
 	char	*var_content;
-	int		len;
+	//int		len;
 
-	var_content = get_var_content(var + 1, data);
+	var_content = get_var_content((*var) + 1, data);
 	if (!var_content)
+	{
+		//free(*var);
+		*var[0] = '\0';
 		return ;
-	len = ft_strlen(var_content);
-	memmove(var, var_content, len);
-	var[len] = '\0';
+	}
+	//len = ft_strlen(var_content);
+	free (*var);
+	*var = var_content;
 }
 
 void	filter_var(t_cmd *cmd, t_data *data)
@@ -81,18 +85,20 @@ void	filter_var(t_cmd *cmd, t_data *data)
 	if (!cmd->av || !cmd->av[0])
 		return ;
 	tmp = cmd;
-	while (tmp)
+	while (tmp && ft_strcmp(cmd->av[0], "export"))
 	{
 		i = 0;
 		while (tmp->av[i])
 		{
 			if (var_declaration(tmp->av[i]) && i == 0)
 			{
-				new_var(data, tmp->av[i]);
+				if (!export_ex(tmp->av[i], &data->envlst))
+					return (perror("malloc"));
+				//new_var(data, tmp->av[i]);
 				pull_back_av(tmp->av);
 			}
 			else if (tmp->quote_type[i] != SINGLE && ft_strchr(tmp->av[i], '$'))
-				replace_var(tmp->av[i], data);
+				replace_var(&tmp->av[i], data);
 			i++;
 		}
 		tmp = tmp->next;

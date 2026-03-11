@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/04 15:39:39 by storck            #+#    #+#             */
-/*   Updated: 2026/03/10 11:48:19 by marvin           ###   ########.fr       */
+/*   Updated: 2026/03/11 11:49:00 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,19 @@
 
 char	*get_var_content(char *var, t_data *data)
 {
-	t_var	*tmp;
+	t_list	*tmp;
+	char	*str;
 
-	tmp = data->vars;
-	while (tmp)
+	tmp = data->envlst->next;
+	while (tmp != data->envlst)
 	{
-		if (!ft_strcmp(tmp->name, var))
-			return (tmp->content);
+		if (!ft_strncmp(tmp->str, var, ft_strlen(var))
+			&& tmp->str[ft_strlen(var)] == '=')
+		{
+			str = ft_strdup(tmp->str + ft_strlen(var) + 1);
+			return (str);
+		}
+			//return (ft_strdup(tmp->str + ft_strlen(var) + 1);
 		tmp = tmp->next;
 	}
 	return (NULL);
