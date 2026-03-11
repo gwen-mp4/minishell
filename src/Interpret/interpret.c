@@ -6,7 +6,7 @@
 /*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 12:43:54 by storck            #+#    #+#             */
-/*   Updated: 2026/03/10 16:37:08 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/11 13:22:10 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	do_pipe(t_cmd *cmd, t_data *data, pid_t *pids, int index)
 	{
 		close(p_fd[0]);
 		redirect_fd(p_fd[1], STDOUT_FILENO);
-		find_way(cmd, data->env, data);
+		find_way(cmd, data->env, data, pids);
 	}
 	else
 	{
@@ -87,7 +87,7 @@ static void	exec_last(t_cmd *cmd, t_data *data, int save_in, int save_out)
 	}
 	pids[total - 1] = fork_process();
 	if (!pids[total - 1])
-		find_way(cmd, data->env, data);
+		find_way(cmd, data->env, data, pids);
 	redirect_fd(save_in, STDIN_FILENO);
 	redirect_fd(save_out, STDIN_FILENO);
 	i = 0;
