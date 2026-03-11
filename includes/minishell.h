@@ -6,7 +6,7 @@
 /*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 10:49:54 by storck            #+#    #+#             */
-/*   Updated: 2026/03/10 12:27:20 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/11 10:07:52 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,25 +218,26 @@ int		exec_pwd(void);
 int		exec_unset(char **args, t_list **env);
 
 /* env_utils */
-char    *extract_value(char *str);
-char    *extract_key(char *str);
+int		free_list(t_list **list);
+char	*extract_value(char *str);
+char	*extract_key(char *str);
 int		init_envlst(t_data *data, char **env);
 int		list_new_elem_str(t_list **new, char *elem);
-bool    env_entry_exists(char *key, t_data *data);
-t_env   *envlst_new(char *key, char *value);
-void    envlst_back(t_env *new, t_data *data);
+bool	env_entry_exists(char *key, t_data *data);
+t_env	*envlst_new(char *key, char *value);
+void	envlst_back(t_env *new, t_data *data);
 int		append(t_list **list, char *elem);
-void    update_envlst(char *key, char *value, t_data *data, bool create);
-int 	len_list(t_list *lst);
-void    sort_array(char **arr, int len);
-char    **lst_to_arr(t_list *env);
-bool    null_env(t_data *data);
+void	update_envlst(char *key, char *value, t_data *data, bool create);
+int		len_list(t_list *lst);
+void	sort_array(char **arr, int len);
+char	**lst_to_arr(t_list *env);
+bool	null_env(t_data *data);
 
 /* variable.c */
-void    filter_var(t_cmd *cmd, t_data *data);
+void	filter_var(t_cmd *cmd, t_data *data);
 
 /* var_utils.c */
-char    *get_var_content(char *var, t_data *data);
-void    add_var(t_data *data, char *name, char *content);
+char	*get_var_content(char *var, t_data *data);
+void	add_var(t_data *data, char *name, char *content);
 
 #endif

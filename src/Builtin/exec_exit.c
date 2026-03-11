@@ -6,7 +6,7 @@
 /*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 12:32:23 by storck            #+#    #+#             */
-/*   Updated: 2026/03/10 15:57:44 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/11 09:21:10 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,18 @@ static int	ato_exit_code(char *str, int *err)
 	while ((str[i] >= 9 && str[i] <= 13) || str[i] == 32)
 		i++;
 	if (str[i] || i - j > 20 || ((sign == -1 && (ret - 1) > LONG_MAX)
-		|| (sign == 1 && (ret > LONG_MAX))))
+			|| (sign == 1 && (ret > LONG_MAX))))
 		*err = 1;
 	return ((int)((ret * sign) % 256));
+}
+
+void	err_exit(t_data *data, char *str)
+{
+	ft_putstr_fd("exit: ", 2);
+	ft_putstr_fd(str, 2);
+	ft_putendl_fd(": numeric argument required", 2);
+	free_data(data);
+	exit (2);
 }
 
 void	exec_exit(char **args, t_data *data)
@@ -52,13 +61,7 @@ void	exec_exit(char **args, t_data *data)
 	{
 		ret = ato_exit_code(args[1], &err);
 		if (err)
-		{
-			ft_putstr_fd("exit: ", 2);
-			ft_putstr_fd(args[1], 2);
-			ft_putendl_fd(": numeric argument required", 2);
-			free_data(data);
-			exit (2);
-		}
+			err_exit(data, args[1]);
 	}
 	if (args[1] && args[2])
 	{

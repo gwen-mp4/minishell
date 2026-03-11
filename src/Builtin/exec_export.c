@@ -6,7 +6,7 @@
 /*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 12:31:48 by storck            #+#    #+#             */
-/*   Updated: 2026/03/10 12:27:36 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/11 10:00:14 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,14 +69,14 @@ static int	exist(char *str, t_list *env)
 	j = 0;
 	tmp = env;
 	if (!ft_strncmp(tmp->str, str, i) && (tmp->str[i] == '\0'
-		|| tmp->str[i] == '='))
+			|| tmp->str[i] == '='))
 		return (j);
 	tmp = tmp->next;
 	j++;
 	while (tmp != env)
 	{
-		if (!ft_strncmp(tmp->str, str, i) && (tmp->str[i] = '\0'
-			|| tmp->str[i] == '='))
+		if (!ft_strncmp(tmp->str, str, i) && (tmp->str[i] == '\0'
+				|| tmp->str[i] == '='))
 			return (j);
 		j++;
 		tmp = tmp->next;
@@ -122,14 +122,12 @@ int	exec_export(char **args, t_list **env)
 	i = 0;
 	if (!args || !args[i])
 	{
-		printf("ICI\n");
 		if (!env && !export_no_args(*env))
 			perror("malloc");
 		return (0);
 	}
 	while (args[i])
 	{
-		printf("NON, LA\n");
 		if (!valid_identifier(args[i]))
 		{
 			ft_putendl_fd("export: invalid identifier", 2);
