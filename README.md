@@ -228,3 +228,20 @@ __# -Tested some command and some didn't pass, need to fix__
 **03/10/2026 16:45 by storck**:
 
 -Fixed all problems with builtins except an issue with nset that don't work on exported values. Will fix tomorrow.
+
+**11/03/2026 12:15 by gwen**:
+
+-Improved displaying errors while parsing and lexing
+-Fixed double free and leaks
+## Commands I've test that didn't work
+echo            | cat -e    *it should display $ on a newline instead of a newline*
+echo -n -n      *it should not print anything, just a newline*
+echo -n -n Hola Que     *it should print __Hola Que__ instead of __-n Hola Que__*
+echo -nnnnnnnnnnn       *it should display a newine instead of __-nnnnnnnnnnn__, it should manage multiple n*
+echo -n -nnn -nnnn      *same thing as above*
+echo -n -nnn hola -nnnn     *same thing as above, it should display __hola -nnnn__ not on a newline*
+export      *export doesn't work*
+###     there're also other export errors display like **invalid option** and **event not found** that I'm not sure if we need to put it or not but I guess no because its not asked but just in case
+####    I've also improved the error display in **exec_export** by adding details in error
+###     I'm not sure if **!** is required in *export HOLA=bon!jour*
+## 304/739 tests done (at least half or 1/3 of tests are skipped because of $)

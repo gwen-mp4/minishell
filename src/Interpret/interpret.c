@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   interpret.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 12:43:54 by storck            #+#    #+#             */
-/*   Updated: 2026/03/11 13:22:10 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/11 14:34:29 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,9 @@ void	exec_cmd(t_cmd *cmd, char **env)
 	}
 	if (execve(path, cmd->av, env) == -1)
 	{
-		perror(cmd->av[0]);
-		exit(1);
+		ft_putstr_fd(cmd->av[0], 2);
+		ft_putendl_fd(": Is a directory", 2);
+		exit(126);
 	}
 }
 
@@ -90,9 +91,11 @@ static void	exec_last(t_cmd *cmd, t_data *data, int save_in, int save_out)
 		find_way(cmd, data->env, data, pids);
 	redirect_fd(save_in, STDIN_FILENO);
 	redirect_fd(save_out, STDIN_FILENO);
+	signal_child();
 	i = 0;
 	while (i < total)
 		waitpid(pids[i++], NULL, 0);
+	setup_signal();
 	free(pids);
 }
 
