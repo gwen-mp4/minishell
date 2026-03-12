@@ -6,7 +6,7 @@
 /*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/04 15:02:36 by storck            #+#    #+#             */
-/*   Updated: 2026/03/11 12:59:22 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/12 11:34:44 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,10 @@ void	replace_var(char **var, t_data *data)
 	char	*var_content;
 	//int		len;
 
-	var_content = get_var_content((*var) + 1, data);
+	if ((*var)[1] == '?')
+		var_content = exit_code_to_str(data->exit_code, *var + 2);
+	else
+		var_content = get_var_content((*var) + 1, data);
 	if (!var_content)
 	{
 		//free(*var);

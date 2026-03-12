@@ -6,7 +6,7 @@
 /*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 10:49:54 by storck            #+#    #+#             */
-/*   Updated: 2026/03/11 13:37:27 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/12 11:36:33 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -237,6 +237,7 @@ bool	null_env(t_data *data);
 void	filter_var(t_cmd *cmd, t_data *data);
 
 /* var_utils.c */
+char	*exit_code_to_str(int code, char *rest);
 void	replace_var(char **var, t_data *data);
 char	*get_var_content(char *var, t_data *data);
 void	add_var(t_data *data, char *name, char *content);
