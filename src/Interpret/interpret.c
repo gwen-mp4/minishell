@@ -6,13 +6,13 @@
 /*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 12:43:54 by storck            #+#    #+#             */
-/*   Updated: 2026/03/12 11:01:12 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/12 13:02:22 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	exec_cmd(t_cmd *cmd, char **env)
+void	exec_cmd(t_cmd *cmd, char **env, t_data *data)
 {
 	char	*path;
 
@@ -25,13 +25,17 @@ void	exec_cmd(t_cmd *cmd, char **env)
 	{
 		ft_putstr_fd(cmd->av[0], 2);
 		ft_putendl_fd(": command not found", 2);
-		exit(127);
+		data->exit_code = 127;
+		return ;
+		//exit(127);
 	}
 	if (execve(path, cmd->av, env) == -1)
 	{
 		ft_putstr_fd(cmd->av[0], 2);
 		ft_putendl_fd(": Is a directory", 2);
-		exit(126);
+		data->exit_code = 126;
+		return ;
+		//exit(126);
 	}
 }
 
@@ -45,7 +49,7 @@ void	do_pipe(t_cmd *cmd, t_data *data, pid_t *pids, int index)
 	{
 		close(p_fd[0]);
 		redirect_fd(p_fd[1], STDOUT_FILENO);
-		find_way(cmd, data->env, data, pids);
+		find_way(cmd, data, pids);
 	}
 	else
 	{
@@ -88,7 +92,7 @@ static void	exec_last(t_cmd *cmd, t_data *data, int save_in, int save_out)
 	}
 	pids[total - 1] = fork_process();
 	if (!pids[total - 1])
-		find_way(cmd, data->env, data, pids);
+		find_way(cmd, data, pids);
 	redirect_fd(save_in, STDIN_FILENO);
 	redirect_fd(save_out, STDIN_FILENO);
 	signal_child();

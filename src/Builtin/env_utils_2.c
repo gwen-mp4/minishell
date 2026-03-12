@@ -6,7 +6,7 @@
 /*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/04 10:00:47 by storck            #+#    #+#             */
-/*   Updated: 2026/03/10 12:27:31 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/12 13:14:18 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,58 @@ int	list_new_elem_str(t_list **new, char *elem)
 	(*new)->next = NULL;
 	(*new)->prev = NULL;
 	return (1);
+}
+
+int	env_len(char **env)
+{
+	int	i;
+
+	if (!env && !env[0])
+		return (0);
+	i = 0;
+	while (env[i] && env[i][0] != '\0')
+		i++;
+	return (i);
+}
+
+void	free_env(char **env, int end)
+{
+	int	i;
+
+	i = 0;
+	if (end == -1)
+		end = env_len(env);
+	while (i < end)
+	{
+		free (env[i]);
+		i++;
+	}
+	free (env);
+}
+
+char	**regen_env(t_list *envlst)
+{
+	int		i;
+	int		len;
+	char	**env;
+	t_list	*tmp;
+	
+	tmp = envlst;
+	len = len_list(envlst);
+	env = (char **)malloc(sizeof(char *) * (len + 1));
+	if (!env)
+		return (NULL);
+	i = 0;
+	while (i < len)
+	{
+		env[i] = ft_strdup(tmp->str);
+		if (!env[i])
+			return (free_env(env, i), NULL);
+		tmp = tmp->next;
+		i++;
+	}
+	env[i] = NULL;
+	return (env);
 }
 
 // bool	env_entry_exists(char *key, t_data *data)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path_finding.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: storck <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 12:00:42 by storck            #+#    #+#             */
-/*   Updated: 2026/02/13 12:00:46 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/12 12:26:58 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ char	**paths(char **envp)
 	int		i;
 
 	i = 0;
+	path = NULL;
 	while (envp[i])
 	{
 		if (ft_strnstr(envp[i], "PATH", 4))
@@ -74,6 +75,8 @@ char	*get_path(char *cmd, char **envp)
 	}
 	i = -1;
 	my_paths = paths(envp);
+	if (!my_paths)
+		return (NULL);
 	while (my_paths[++i])
 	{
 		good_path = build_my_path(my_paths[i], cmd);

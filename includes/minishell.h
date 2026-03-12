@@ -6,7 +6,7 @@
 /*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 10:49:54 by storck            #+#    #+#             */
-/*   Updated: 2026/03/12 11:36:33 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/12 13:14:30 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,7 +170,7 @@ char	*get_path(char *cmd, char **envp);
 char	**path_split(const char *s, char c);
 
 /* interpret.c */
-void	exec_cmd(t_cmd *cmd, char **env);
+void	exec_cmd(t_cmd *cmd, char **env, t_data *data);
 void	execution(t_cmd *cmd, t_data *data);
 
 /* pipe_process.c */
@@ -197,7 +197,7 @@ int		file_append_process(char *outfile);
 /* fd_redirection.c */
 int		input_redirection(t_redir *redir);
 int		output_redirection(t_redir *redir);
-void	find_way(t_cmd *cmd, char **env, t_data *data, pid_t *pids);
+void	find_way(t_cmd *cmd, t_data *data, pid_t *pids);
 void	set_fds(t_cmd *cmd);
 
 /* exec_builtin */
@@ -218,6 +218,8 @@ int		exec_pwd(void);
 int		exec_unset(char **args, t_list **env);
 
 /* env_utils */
+void	free_env(char **env, int end);
+char	**regen_env(t_list *envlst);
 int		free_list(t_list **list);
 char	*extract_value(char *str);
 char	*extract_key(char *str);
