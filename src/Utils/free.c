@@ -16,6 +16,8 @@ void	clean_tokens(t_token *tokens)
 {
 	t_token	*tmp;
 
+	if (!tokens)
+		return ;
 	tmp = tokens;
 	while (tmp)
 	{
