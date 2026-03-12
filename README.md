@@ -267,3 +267,4 @@ mkdir a --> mkdir a/b --> cd a/b --> rm -r ../../a --> echo $PWD --> echo $OLDPW
 mkdir a --> cd a --> rm -r ../a --> echo $PWD --> echo $OLDPWD      *same as above, echo $PWD show nothing but $OLDPWD is okay*
 ### chmod 000 minishell     *there're 2 errors: **no such file or directory** and **command not found**, maybe change it to one by **permission denied**, i think you've created functions for that situation right?*
 All tested, now going to use differents testers to see if it's right
+And all segfault are managed from CTRL+D and redirections

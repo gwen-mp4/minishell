@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 10:43:38 by storck            #+#    #+#             */
-/*   Updated: 2026/03/11 11:37:37 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/12 16:45:56 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	error_cleanup_lexing(t_token *tokens, int status)
 
 int	error_cleanup_parsing(t_cmd *cmds, const char *error, t_token *token)
 {
+	(void)token;
 	if (cmds)
 		free_cmds(cmds);
 	if (error)
@@ -37,7 +38,6 @@ int	error_cleanup_parsing(t_cmd *cmds, const char *error, t_token *token)
 		ft_putstr_fd((char *)error, STDERR_FILENO);
 		ft_putstr_fd("'\n", STDERR_FILENO);
 	}
-	clean_tokens(token);
 	return (2);
 }
 
