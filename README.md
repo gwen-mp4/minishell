@@ -249,4 +249,7 @@ export      *export doesn't work*
 **12/03/2026 11:15 by gwen**:
 
 ## Commands I've test that didn't work
-unset 
+### If testing, make sure to exit minishell and then relaunch if you've unset real export
+unset PATH --> ls       *it should display **ls: command not found** because we've unset PATH*
+unset PATH --> cat Makefile *it should display **cat: command not found***
+unset PWD --> cd $PWD --> pwd       *it should go to $PWD but displays **No such file or directory** instead so pwd doesn't displays what wanted: /home/$USER*
