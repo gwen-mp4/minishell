@@ -6,7 +6,7 @@
 /*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 12:31:48 by storck            #+#    #+#             */
-/*   Updated: 2026/03/12 10:46:33 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/12 11:08:41 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,9 +122,8 @@ int	exec_export(char **args, t_list **env)
 	i = 0;
 	if (!args[1])
 	{
-		// if (!env && !export_no_args(*env))
-		// 	perror("malloc");
-		exec_env(*env);
+		if (!export_no_args(*env) && !env)
+			perror("malloc");
 		return (0);
 	}
 	while (args[i])
