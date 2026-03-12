@@ -234,13 +234,13 @@ __# -Tested some command and some didn't pass, need to fix__
 -Improved displaying errors while parsing and lexing
 -Fixed double free and leaks
 ## Commands I've test that didn't work
-echo            | cat -e    *it should display $ on a newline instead of a newline*
-echo -n -n      *it should not print anything, just a newline*
-echo -n -n Hola Que     *it should print __Hola Que__ instead of __-n Hola Que__*
-echo -nnnnnnnnnnn       *it should display a newine instead of __-nnnnnnnnnnn__, it should manage multiple n*
-echo -n -nnn -nnnn      *same thing as above*
-echo -n -nnn hola -nnnn     *same thing as above, it should display __hola -nnnn__ not on a newline*
-export      *export doesn't work*
+#### echo            | cat -e    *it should display $ on a newline instead of a newline*
+#### echo -n -n      *it should not print anything, just a newline*
+#### echo -n -n Hola Que     *it should print __Hola Que__ instead of __-n Hola Que__*
+#### echo -nnnnnnnnnnn       *it should display a newine instead of __-nnnnnnnnnnn__, it should manage multiple n*
+#### echo -n -nnn -nnnn      *same thing as above*
+#### echo -n -nnn hola -nnnn     *same thing as above, it should display __hola -nnnn__ not on a newline*
+#### export      *export doesn't work*
 ###     there're also other export errors display like **invalid option** and **event not found** that I'm not sure if we need to put it or not but I guess no because its not asked but just in case
 ####    I've also improved the error display in **exec_export** by adding details in error
 ###     I'm not sure if **!** is required in *export HOLA=bon!jour*
@@ -249,12 +249,13 @@ export      *export doesn't work*
 **12/03/2026 11:15 by gwen**:
 
 -Segfault when CTRL+D without writting any prompt
+-Problem when freeing (clean_tokens), try *echo hola|||cat*, *echo hola > > bonjour*
 ## Commands I've test that didn't work
 ### If testing, make sure to exit minishell and then relaunch if you've unset real export
-#### Code color, if **yellow**, it's optional, otherwise (base color) it's mandatory
-unset PATH --> ls       *it should display **ls: command not found** because we've unset PATH*
-unset PATH --> cat Makefile *it should display **cat: command not found***
-unset PWD --> cd $PWD --> pwd       *it should go to $PWD but displays **No such file or directory** instead so pwd doesn't displays what wanted: /home/$USER*
+#### Code color, if **yellow**, it's optional, otherwise (base color) it's mandatory, **green** if it's solved
+#### unset PATH --> ls       *it should display **ls: command not found** because we've unset PATH*
+#### unset PATH --> cat Makefile *it should display **cat: command not found***
+### unset PWD --> cd $PWD --> pwd       *it should go to $PWD but displays **No such file or directory** instead so pwd doesn't displays what wanted: /home/$USER*
 ### pwd -p      *it's an invalid option*
 ### pwd --p     *same as above*
 ### pwd ---p    *same as above*
@@ -265,3 +266,4 @@ cd $HOME/       *same as above, i think it's because it doesn't manage the slash
 mkdir a --> mkdir a/b --> cd a/b --> rm -r ../../a --> echo $PWD --> echo $OLDPWD       *it should display the actual pwd path when doing echo $PWD, for example: **/home/$USER/minishell/a/b** but there's nothing, echo $OLDPWD is okay*
 mkdir a --> cd a --> rm -r ../a --> echo $PWD --> echo $OLDPWD      *same as above, echo $PWD show nothing but $OLDPWD is okay*
 ### chmod 000 minishell     *there're 2 errors: **no such file or directory** and **command not found**, maybe change it to one by **permission denied**, i think you've created functions for that situation right?*
+All tested, now going to use differents testers to see if it's right
