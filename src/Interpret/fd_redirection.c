@@ -6,7 +6,7 @@
 /*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/25 10:31:45 by storck            #+#    #+#             */
-/*   Updated: 2026/03/11 13:27:18 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/12 10:51:31 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	find_way(t_cmd *cmd, char **env, t_data *data, pid_t *pids)
 	if (is_builtin(cmd->av[0]))
 	{
 		exec_builtin(cmd, cmd->av, data);
-		if (!ft_strcmp(cmd->av[0], "echo") || !ft_strcmp(cmd->av[0], "pwd"))
+		if (ft_strcmp(cmd->av[0], "exit"))
 		{
 			free_data(data);
 			free(pids);

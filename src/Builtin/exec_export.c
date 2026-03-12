@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_export.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 12:31:48 by storck            #+#    #+#             */
-/*   Updated: 2026/03/11 14:34:16 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/12 10:46:33 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,10 +120,11 @@ int	exec_export(char **args, t_list **env)
 
 	exit_code = 0;
 	i = 0;
-	if (!args || !args[i])
+	if (!args[1])
 	{
-		if (!env && !export_no_args(*env))
-			perror("malloc");
+		// if (!env && !export_no_args(*env))
+		// 	perror("malloc");
+		exec_env(*env);
 		return (0);
 	}
 	while (args[i])
@@ -139,6 +140,5 @@ int	exec_export(char **args, t_list **env)
 			return (perror("malloc"), 1);
 		i++;
 	}
-	exec_env(*env);
 	return (exit_code);
 }
