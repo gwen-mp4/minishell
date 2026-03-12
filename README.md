@@ -245,3 +245,8 @@ export      *export doesn't work*
 ####    I've also improved the error display in **exec_export** by adding details in error
 ###     I'm not sure if **!** is required in *export HOLA=bon!jour*
 ## 304/739 tests done (at least half or 1/3 of tests are skipped because of $)
+
+**12/03/2026 11:15 by gwen**:
+
+## Commands I've test that didn't work
+unset 
