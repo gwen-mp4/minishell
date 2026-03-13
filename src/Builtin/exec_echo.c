@@ -6,7 +6,7 @@
 /*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 12:31:23 by storck            #+#    #+#             */
-/*   Updated: 2026/03/13 15:01:29 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/13 17:04:11 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,10 @@ int	exec_echo(char **arg, t_quote_type *quote, t_data *data)
 	while (arg[i])
 	{
 		tmp = ft_strchr(arg[i], '$');
-		if (quote[i] != SINGLE && tmp && tmp[1] != '\0')
+		if (quote[i] != SINGLE && tmp && tmp[1] != '\0' && tmp[1] != ':' && tmp[1] != ' ' && tmp[1] != '=')
 			replace_var(&arg[i], data);
 		ft_putstr_fd(arg[i], STDOUT_FILENO);
-		if (arg[i + 1] != NULL)
+		if (arg[i][0] != '\0' && arg[i + 1] != NULL)
 			ft_putchar_fd(' ', STDOUT_FILENO);
 		i++;
 	}

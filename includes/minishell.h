@@ -6,7 +6,7 @@
 /*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 10:49:54 by storck            #+#    #+#             */
-/*   Updated: 2026/03/13 14:20:15 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/13 17:31:15 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,7 +214,7 @@ int		exec_echo(char **arg, t_quote_type *quote, t_data *data);
 int		exec_env(t_list *env);
 void	exec_exit(char **args, t_data *data);
 bool	export_ex(char *str, t_list **env);
-int		exec_export(char **args, t_list **env);
+int		exec_export(char **args, t_list **env, t_data *data);
 int		exec_pwd(char **arg);
 bool	unset(char *str, t_list **env);
 int		exec_unset(char **args, t_list **env);
@@ -241,6 +241,7 @@ bool	null_env(t_data *data);
 void	filter_var(t_cmd *cmd, t_data *data);
 
 /* var_utils.c */
+int 	get_eq_pos(char *str);
 char	*exit_code_to_str(int code, char *rest);
 void	replace_var(char **var, t_data *data);
 char	*get_var_content(char *var, t_data *data);

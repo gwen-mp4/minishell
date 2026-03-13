@@ -6,7 +6,7 @@
 /*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 12:31:48 by storck            #+#    #+#             */
-/*   Updated: 2026/03/13 12:33:39 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/13 17:44:05 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,15 @@ bool	export_no_args(t_list *env)
 	return (true);
 }
 
-bool	valid_identifier(char *str)
+bool	valid_identifier(char *str, t_data *data)
 {
-	int	i;
+	int		i;
+	char	*check;
 
 	i = 0;
+	check = ft_strchr(str, '$');
+	if (check && check[1] == '?')
+		replace_var(&str, data);
 	if (!str[0] || (str[0] != '_' && !ft_isalpha(str[0])))
 		return (false);
 	while (str[i] && str[i] != '=')
@@ -113,7 +117,7 @@ bool	export_ex(char *str, t_list **env)
 	return (true);
 }
 
-int	exec_export(char **args, t_list **env)
+int	exec_export(char **args, t_list **env, t_data *data)
 {
 	int	exit_code;
 	int	i;
@@ -128,11 +132,13 @@ int	exec_export(char **args, t_list **env)
 	}
 	while (args[i])
 	{
-		if (!valid_identifier(args[i]))
+		if (args[i][0] == '$' && args[i][1] != '?' && !ft_strchr(args[i], '='))
+			return (exec_env(data->envlst), data->exit_code);
+		if (!valid_identifier(args[i], data))
 		{
 			ft_putstr_fd("export: '", 2);
 			ft_putstr_fd(args[i], 2);
-			ft_putstr_fd("': invalid identifier\n", 2);
+			ft_putstr_fd("': not a valid identifier\n", 2);
 			exit_code = 1;
 		}
 		else if (!export_ex(args[i], env))

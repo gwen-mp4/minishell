@@ -6,7 +6,7 @@
 /*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/04 15:39:39 by storck            #+#    #+#             */
-/*   Updated: 2026/03/13 11:22:00 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/13 16:44:56 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,12 @@ char	*scalp(char **var)
 
 char	*get_var_content(char *var, t_data *data)
 {
+	int		len;
 	t_list	*tmp;
 	char	*str;
 	char	*rest;
 	char	*head;
+	char	*full_str;
 
 	rest = NULL;
 	tmp = data->envlst->next;
@@ -75,15 +77,17 @@ char	*get_var_content(char *var, t_data *data)
 		rest = scalp(&var);
 	while (tmp != data->envlst)
 	{
-		if (!ft_strncmp(tmp->str, var, ft_strlen(var))
-			&& tmp->str[ft_strlen(var)] == '=')
+		len = get_eq_pos(tmp->str);
+		if (!ft_strncmp(tmp->str, var, len)
+			&& tmp->str[len] == '=')
 		{
-			head = ft_strdup(tmp->str + ft_strlen(var) + 1);
+			head = ft_strdup(tmp->str + len + 1);
 			if (rest)
 				str = ft_strjoin(head, rest);
 			else
 				str = ft_strdup(head);
-			return (free(rest), free(head), str);
+			full_str = ft_strjoin(str, var + len);
+			return (free(rest), free(head), free(str), full_str);
 		}
 		tmp = tmp->next;
 	}

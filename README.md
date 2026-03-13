@@ -273,16 +273,16 @@ And all segfault are managed from CTRL+D and redirections
 
 -Added exit code, now have to do for signals
 ## Tests that didn't pass
-echo $      *it should print the dollar sign but there's nothing*
-echo $?$    *it should print the exit code with the dollar sign at the end*
-echo $:$= | cat -e      *it should display $:$=$*
-echo " $ " | cat -e     *it should display as it should, test with bash*
-echo $USER$HOME     *it should display what it should be but there's nothing (manage multiple dollar sign in a row)*
-echo $HOME%     *it should display home with % at the end*
-echo [$HOME]    *it should display home)*
+~~echo $~~      *it should print the dollar sign but there's nothing*
+~~echo $?$~~    *it should print the exit code with the dollar sign at the end*
+~~echo $:$= | cat -e~~      *it should display $:$=$*
+~~echo " $ " | cat -e~~     *it should display as it should, test with bash*
+~~echo $USER$HOME~~     *it should display what it should be but there's nothing (manage multiple dollar sign in a row)*
+~~echo $HOME%~~     *it should display home with % at the end*
+~~echo [$HOME]~~    *it should display home)*
 echo [$TERM4    *it should display '[' but there's nothing*
 echo [$TERM4]   *it should display '[]' but there's nothing*
-echo "$"""      *it should display the dollar sign, take the single quote version as a reference*
+~~echo "$"""~~      *it should display the dollar sign, take the single quote version as a reference*
 echo $"HOME"    *it should not display the actual home but $HOME, take the single quote version as a reference*
 echo $""HOME    *same as above*
 echo "$HO"ME    *it should print __ME__ but it prints the actual home*
@@ -291,9 +291,9 @@ echo "'$HO''ME'"    *it should print __'''ME'__ but there's nothing*
 echo ''$HOME    *it should print the actual home*
 echo $"HO""ME"  *it should not display the actual home but $HOME, take the single quote version as a reference*
 echo "$"HOME    *it should not display the actual home but $HOME, take the single quote version as a reference*
-echo $=HOME     *it should display what it should be*
+~~echo $=HOME~~     *it should display what it should be*
 echo $"HOLA"    *it should display $HOLA, but there's nothing, take single quote as a reference*
-echo $DONTEXIST Hola    *there's a space before Hola, there should be no space*
+~~echo $DONTEXIST Hola~~    *there's a space before Hola, there should be no space*
 echo "$DONTEXIST"Makefile   *it should display __Makefile__ (not the real)*
 echo "$DONTEXIST""Makefile"     *same as above*
 $?$?        *it should display __00: command not found__*
@@ -303,6 +303,10 @@ $?$?        *it should display __00: command not found__*
 "$HOMEdskjhfkdshfsd"    *it should print __command not found__ error instead of __Is a directory__*
 \$DONTEXIST      *(there's backslash to ignore dollar command in README.md) it should print nothing*
 $LESS$VAR       *it should print __-R: command not found__*
-export $DONTEXIST       *it should print the export list*
-export $?       *it should print __'0': invalid identifier__*
-export HO$?LA=bonjour  --> env		*it should print __HO(exit_code)LA=bonjour__*
+~~export $DONTEXIST~~       *it should print the export list*
+~~export $?~~       *it should print __'0': invalid identifier__*
+~~export HO$?LA=bonjour  --> env~~		*it should print __HO(exit_code)LA=bonjour__*
+
+**13/03/2026 17:45 by storck**:
+
+Fixed ab bunch of errors (those in ~~dash~~). The ones left might require touching the lexing and parsing because of quotes.

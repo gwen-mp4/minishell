@@ -6,7 +6,7 @@
 /*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/04 15:02:36 by storck            #+#    #+#             */
-/*   Updated: 2026/03/13 14:48:06 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/13 17:24:33 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,8 @@ void	replace_var(char **var, t_data *data)
 	head = ft_substr(*var, 0, i);
 	if (i > 0 && !head)
 		return ;
-	if ((*var)[1] == '?')
-		var_content = exit_code_to_str(data->exit_code, *var + 2);
+	if ((*var)[i + 1] == '?')
+		var_content = exit_code_to_str(data->exit_code, *var + i + 2);
 	else
 		var_content = get_var_content((*var) + i + 1, data);
 	if (!var_content)
@@ -108,8 +108,11 @@ void	filter_var(t_cmd *cmd, t_data *data)
 					return (perror("malloc"));
 				pull_back_av(tmp->av);
 			}
-			else if (tmp->quote_type[i] != SINGLE && str && str[1] != '\0')
+			else if (tmp->quote_type[i] != SINGLE && str && str[1] != '\0' && str[1] != ':' && str[1] != ' ' && str[1] != '=')
+			{
 				replace_var(&tmp->av[i], data);
+				continue ;
+			}
 			i++;
 		}
 		tmp = tmp->next;
