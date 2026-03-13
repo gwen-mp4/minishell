@@ -268,3 +268,41 @@ __# -Tested some command and some didn't pass, need to fix__
 ### chmod 000 minishell     *there're 2 errors: **no such file or directory** and **command not found**, maybe change it to one by **permission denied**, i think you've created functions for that situation right?*
 All tested, now going to use differents testers to see if it's right
 And all segfault are managed from CTRL+D and redirections
+
+**13/03/2026 14:45 by gwen**:
+
+-Added exit code, now have to do for signals
+## Tests that didn't pass
+echo $      *it should print the dollar sign but there's nothing*
+echo $?$    *it should print the exit code with the dollar sign at the end*
+echo $:$= | cat -e      *it should display $:$=$*
+echo " $ " | cat -e     *it should display as it should, test with bash*
+echo $USER$HOME     *it should display what it should be but there's nothing (manage multiple dollar sign in a row)*
+echo $HOME%     *it should display home with % at the end*
+echo [$HOME]    *it should display home)*
+echo [$TERM4    *it should display '[' but there's nothing*
+echo [$TERM4]   *it should display '[]' but there's nothing*
+echo "$"""      *it should display the dollar sign, take the single quote version as a reference*
+echo $"HOME"    *it should not display the actual home but $HOME, take the single quote version as a reference*
+echo $""HOME    *same as above*
+echo "$HO"ME    *it should print __ME__ but it prints the actual home*
+echo "$HO""ME"  *same as above*
+echo "'$HO''ME'"    *it should print __'''ME'__ but there's nothing*
+echo ''$HOME    *it should print the actual home*
+echo $"HO""ME"  *it should not display the actual home but $HOME, take the single quote version as a reference*
+echo "$"HOME    *it should not display the actual home but $HOME, take the single quote version as a reference*
+echo $=HOME     *it should display what it should be*
+echo $"HOLA"    *it should display $HOLA, but there's nothing, take single quote as a reference*
+echo $DONTEXIST Hola    *there's a space before Hola, there should be no space*
+echo "$DONTEXIST"Makefile   *it should display __Makefile__ (not the real)*
+echo "$DONTEXIST""Makefile"     *same as above*
+$?$?        *it should display __00: command not found__*
+?$HOME      *it should print __command not found__ as error and not __No such file or directory__*
+\$       *(there's backslash to ignore dollar command in README.md but it's just a dollar sign) it should print __command not found__ as error and not __Is a directory__*
+\$HOMEdskjhfkdshfsd      *(there's backslash to ignore dollar command in README.md) it should print nothing*
+"$HOMEdskjhfkdshfsd"    *it should print __command not found__ error instead of __Is a directory__*
+\$DONTEXIST      *(there's backslash to ignore dollar command in README.md) it should print nothing*
+$LESS$VAR       *it should print __-R: command not found__*
+export $DONTEXIST       *it should print the export list*
+export $?       *it should print __'0': invalid identifier__*
+export HO$?LA=bonjour  --> env		*it should print __HO(exit_code)LA=bonjour__*
