@@ -6,7 +6,7 @@
 /*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:54:48 by storck            #+#    #+#             */
-/*   Updated: 2026/03/13 14:29:42 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/13 15:00:01 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,5 @@ int	main(int ac, char **av, char **env)
 	}
 	rl_clear_history();
 	ft_putstr_fd("exit\n", STDERR_FILENO);
-	free_data(&data);
-	return (0);
+	return (free_data(&data), 0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fd_redirection.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/25 10:31:45 by storck            #+#    #+#             */
-/*   Updated: 2026/03/13 12:17:29 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/13 15:00:59 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	output_redirection(t_redir *redir)
 void	find_way(t_cmd *cmd, t_data *data, pid_t *pids)
 {
 	char	**env;
-	
+
 	if (is_builtin(cmd->av[0]))
 	{
 		exec_builtin(cmd, cmd->av, data);

@@ -6,7 +6,7 @@
 /*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/04 10:00:47 by storck            #+#    #+#             */
-/*   Updated: 2026/03/12 13:14:18 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/13 15:01:49 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	**regen_env(t_list *envlst)
 	int		len;
 	char	**env;
 	t_list	*tmp;
-	
+
 	tmp = envlst;
 	len = len_list(envlst);
 	env = (char **)malloc(sizeof(char *) * (len + 1));
