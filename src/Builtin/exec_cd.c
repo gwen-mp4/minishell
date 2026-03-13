@@ -6,7 +6,7 @@
 /*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 11:02:03 by storck            #+#    #+#             */
-/*   Updated: 2026/03/13 14:23:39 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/13 14:25:20 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,9 +99,7 @@ int	exec_cd(t_data *data, char **args)
 	{
 		if (errno == EACCES)
 			error_permission_denied(path);
-			error_permission_denied(path);
 		else
-			error_no_such_file(path);
 			error_no_such_file(path);
 		return (1);
 	}
