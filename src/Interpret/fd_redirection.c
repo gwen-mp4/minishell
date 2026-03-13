@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fd_redirection.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/25 10:31:45 by storck            #+#    #+#             */
-/*   Updated: 2026/03/12 13:15:34 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/13 12:17:29 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int	output_redirection(t_redir *redir)
 void	find_way(t_cmd *cmd, t_data *data, pid_t *pids)
 {
 	char	**env;
+	
 	if (is_builtin(cmd->av[0]))
 	{
 		exec_builtin(cmd, cmd->av, data);
@@ -58,7 +59,7 @@ void	find_way(t_cmd *cmd, t_data *data, pid_t *pids)
 	if (!env)
 		return (perror("malloc: "));
 	else
-		exec_cmd(cmd, env, data);
+		exec_cmd(cmd, env);
 	free_env(env, -1);
 	free_data(data);
 	free(pids);

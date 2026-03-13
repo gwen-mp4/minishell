@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path_finding.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 12:00:42 by storck            #+#    #+#             */
-/*   Updated: 2026/03/12 12:26:58 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/13 12:54:48 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,7 @@ char	*get_path(char *cmd, char **envp)
 	if (ft_strchr(cmd, '/') && access(cmd, X_OK) == 0)
 		return (ft_strdup(cmd));
 	else if (ft_strchr(cmd, '/'))
-	{
-		ft_putstr_fd(cmd, 2);
-		ft_putendl_fd(": no such file or directory", 2);
-		return (0);
-	}
+		return (NULL);
 	i = -1;
 	my_paths = paths(envp);
 	if (!my_paths)

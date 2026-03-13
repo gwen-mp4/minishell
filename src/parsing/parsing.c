@@ -6,7 +6,7 @@
 /*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 12:19:41 by storck            #+#    #+#             */
-/*   Updated: 2026/03/11 11:42:17 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/13 11:16:36 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ static const char	*get_token_str(t_token *token)
 	return ("");
 }
 
-int	parsing_token_one(t_token **token, t_cmd **current, t_token *tokens_head)
+int	parsing_token_one(t_token **token, t_cmd **current, t_token *tokens_head,
+		t_data *data)
 {
 	t_token		*tok;
 	t_cmd		*cur;
@@ -42,17 +43,19 @@ int	parsing_token_one(t_token **token, t_cmd **current, t_token *tokens_head)
 	if (tok->type == WORD)
 	{
 		if (!add_arg_to_cmd(tok->value, tok->quote_type, cur))
-			return (error_cleanup_parsing(*current, NULL, tokens_head), 0);
+			return (error_cleanup_parsing(*current, NULL, tokens_head, data),
+				0);
 	}
 	else if (is_redir(tok->type))
 	{
 		if (!tok->next || tok->next->type != WORD)
 		{
 			err = get_token_str(tok->next);
-			return (error_cleanup_parsing(*current, err, tokens_head), 0);
+			return (error_cleanup_parsing(*current, err, tokens_head, data), 0);
 		}
 		if (!add_redir_to_cmd(tok->type, tok->next->value, cur))
-			return (error_cleanup_parsing(*current, NULL, tokens_head), 0);
+			return (error_cleanup_parsing(*current, NULL, tokens_head, data),
+				0);
 		*token = tok->next;
 	}
 	return (1);
@@ -73,7 +76,7 @@ int	parsing_token_two(t_token **token, t_cmd **current,
 		if (!tok->next || tok->next->type == PIPE)
 		{
 			err = get_token_str(tok->next);
-			error_cleanup_parsing(*current, err, tokens_head);
+			error_cleanup_parsing(*current, err, tokens_head, data);
 			return (0);
 		}
 		(*current)->next = new_cmd();
@@ -94,7 +97,8 @@ t_cmd	*parsing(t_token *token, t_data *data)
 	if (!token)
 		return (NULL);
 	if (token->type == PIPE)
-		return (error_cleanup_parsing(NULL, get_token_str(token), token), NULL);
+		return (error_cleanup_parsing(NULL, get_token_str(token), token, data),
+			NULL);
 	head = new_cmd();
 	if (!head)
 		return (NULL);
@@ -102,7 +106,7 @@ t_cmd	*parsing(t_token *token, t_data *data)
 	current = head;
 	while (token)
 	{
-		if (!parsing_token_one(&token, &current, tokens_head))
+		if (!parsing_token_one(&token, &current, tokens_head, data))
 			return (NULL);
 		if (!parsing_token_two(&token, &current, tokens_head, data))
 			return (NULL);

@@ -3,14 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   exec_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 09:31:41 by storck            #+#    #+#             */
-/*   Updated: 2026/03/11 13:20:07 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/13 12:57:23 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+void	exec_cmd(t_cmd *cmd, char **env)
+{
+	char	*path;
+
+	if (!cmd || !cmd->av || !cmd->av[0])
+		exit (0);
+	signal_child();
+	set_fds(cmd);
+	path = get_path(cmd->av[0], env);
+	if (!path && ft_strchr(cmd->av[0], '/'))
+	{
+		error_no_such_file(cmd->av[0]);
+		exit (1);
+	}
+	if (!path)
+	{
+		error_command_not_found(cmd->av[0]);
+		exit (127);
+	}
+	if (execve(path, cmd->av, env) == -1)
+	{
+		error_is_a_directory(cmd->av[0]);
+		exit (1);
+	}
+}
 
 int	is_builtin(char *str)
 {

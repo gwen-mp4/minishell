@@ -6,7 +6,7 @@
 /*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 14:31:52 by gwen              #+#    #+#             */
-/*   Updated: 2026/03/06 13:11:59 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/13 11:06:46 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,20 +41,20 @@ int	handle_operator(char *input, int *i, t_token **tokens)
 	return (*i);
 }
 
-int	handle_word(char *input, int *i, t_token **tokens)
+int	handle_word(char *input, int *i, t_token **tokens, t_data *data)
 {
 	char			*word;
 	t_quote_type	type;
 
 	word = read_word(input, i, &type);
 	if (!word)
-		return (error_cleanup_lexing(*tokens, 0), -1);
+		return (error_cleanup_lexing(*tokens, 0, data), -1);
 	add_back_token(tokens, create_token(WORD, word, type));
 	free(word);
 	return (*i);
 }
 
-t_token	*lexer(char *input)
+t_token	*lexer(char *input, t_data *data)
 {
 	t_token	*tokens;
 	int		i;
@@ -75,7 +75,7 @@ t_token	*lexer(char *input)
 		}
 		else
 		{
-			i = handle_word(input, &i, &tokens);
+			i = handle_word(input, &i, &tokens, data);
 			if (i == -1)
 				return (NULL);
 		}

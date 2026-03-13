@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 10:49:54 by storck            #+#    #+#             */
-/*   Updated: 2026/03/12 13:14:30 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/13 12:44:07 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ int		add_redir_to_cmd(t_type type, char *filename, t_cmd *cmd);
 
 /*lexing*/
 char	*read_word(char *line, int *i, t_quote_type *type);
-t_token	*lexer(char *input);
+t_token	*lexer(char *input, t_data *data);
 
 /* utils */
 int		is_space(char c);
@@ -154,14 +154,14 @@ void	signal_child(void);
 int		init_data(t_data *data, int ac, char **av, char **env);
 
 /* error */
-int		error_cleanup_lexing(t_token *tokens, int status);
-int		error_cleanup_parsing(t_cmd *cmds, const char *error, t_token *token);
+void	error_cleanup_lexing(t_token *tokens, int status, t_data *data);
+void	error_cleanup_parsing(t_cmd *cmds, const char *error, t_token *token,
+			t_data *data);
 void	error_command_not_found(const char *cmd);
 void	error_permission_denied(const char *file);
 void	error_no_such_file(const char *file);
-
-/* error2.c */
 void	error_too_many_arguments(const char *cmd);
+void	error_is_a_directory(const char *cmd);
 
 /* path_finding.c */
 char	*get_path(char *cmd, char **envp);
@@ -170,10 +170,10 @@ char	*get_path(char *cmd, char **envp);
 char	**path_split(const char *s, char c);
 
 /* interpret.c */
-void	exec_cmd(t_cmd *cmd, char **env, t_data *data);
 void	execution(t_cmd *cmd, t_data *data);
 
 /* pipe_process.c */
+void	do_pipe(t_cmd *cmd, t_data *data, pid_t *pids, int index);
 void	redirect_fd(int old_fd, int new_fd);
 int		file_read_process(char *infile);
 int		file_write_process(char *outfile);
@@ -201,6 +201,7 @@ void	find_way(t_cmd *cmd, t_data *data, pid_t *pids);
 void	set_fds(t_cmd *cmd);
 
 /* exec_builtin */
+void	exec_cmd(t_cmd *cmd, char **env);
 int		is_builtin(char *str);
 void	exec_builtin(t_cmd *cmd, char **args, t_data *data);
 
