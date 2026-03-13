@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 11:02:03 by storck            #+#    #+#             */
-/*   Updated: 2026/03/13 14:00:56 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/13 14:17:02 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,9 +98,9 @@ int	exec_cd(t_data *data, char **args)
 	if (chdir(path) == -1)
 	{
 		if (errno == EACCES)
-			error_permission_denied(path);
+			error_permission_denied(path, -1);
 		else
-			error_no_such_file(path);
+			error_no_such_file(path, -1);
 		return (1);
 	}
 	update_pwd(data, path);

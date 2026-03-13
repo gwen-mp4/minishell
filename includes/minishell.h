@@ -6,7 +6,7 @@
 /*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 10:49:54 by storck            #+#    #+#             */
-/*   Updated: 2026/03/13 14:00:13 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/13 14:12:23 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,11 +157,11 @@ int		init_data(t_data *data, int ac, char **av, char **env);
 void	error_cleanup_lexing(t_token *tokens, int status, t_data *data);
 void	error_cleanup_parsing(t_cmd *cmds, const char *error, t_token *token,
 			t_data *data);
-void	error_command_not_found(const char *cmd, int exit_code);
-void	error_permission_denied(const char *file, int exit_code);
-void	error_no_such_file(const char *file, int exit_code);
-void	error_too_many_arguments(const char *cmd, int exit_code);
-void	error_is_a_directory(const char *cmd, int exit_code);
+void	error_command_not_found(const char *cmd);
+void	error_permission_denied(const char *file);
+void	error_no_such_file(const char *file);
+void	error_too_many_arguments(const char *cmd);
+void	error_is_a_directory(const char *cmd);
 
 /* path_finding.c */
 char	*get_path(char *cmd, char **envp);
@@ -215,8 +215,7 @@ int		exec_env(t_list *env);
 void	exec_exit(char **args, t_data *data);
 bool	export_ex(char *str, t_list **env);
 int		exec_export(char **args, t_list **env);
-int		exec_pwd(char **arg);
-bool	unset(char *str, t_list **env);
+int		exec_pwd(void);
 int		exec_unset(char **args, t_list **env);
 
 /* env_utils */

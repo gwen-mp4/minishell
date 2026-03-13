@@ -6,7 +6,7 @@
 /*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 09:31:41 by storck            #+#    #+#             */
-/*   Updated: 2026/03/13 13:59:53 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/13 14:15:43 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,7 @@ void	exec_cmd(t_cmd *cmd, char **env)
 	}
 	if (execve(path, cmd->av, env) == -1)
 	{
-		if (errno == EACCES)
-			error_is_a_directory(cmd->av[0]);
+		error_is_a_directory(cmd->av[0]);
 		exit (1);
 	}
 }
@@ -67,7 +66,7 @@ void	exec_builtin(t_cmd *cmd, char **arg, t_data *data)
 	else if (strncmp(arg[0], "cd", ft_strlen(arg[0])) == 0)
 		data->exit_code = exec_cd(data, cmd->av);
 	else if (strncmp(arg[0], "pwd", ft_strlen(arg[0])) == 0)
-		data->exit_code = exec_pwd(arg);
+		data->exit_code = exec_pwd();
 	else if (strncmp(arg[0], "export", ft_strlen(arg[0])) == 0)
 		data->exit_code = exec_export(arg, &(data->envlst));
 	else if (strncmp(arg[0], "unset", ft_strlen(arg[0])) == 0)
