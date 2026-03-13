@@ -6,7 +6,7 @@
 /*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 10:43:38 by storck            #+#    #+#             */
-/*   Updated: 2026/03/13 13:40:43 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/13 13:58:27 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,24 +42,29 @@ void	error_cleanup_parsing(t_cmd *cmds, const char *error, t_token *token,
 	data->exit_code = 2;
 }
 
-void	error_command_not_found(const char *cmd)
+void	error_command_not_found(const char *cmd, int exit_code)
 {
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	ft_putstr_fd((char *)cmd, STDERR_FILENO);
 	ft_putstr_fd(": command not found\n", STDERR_FILENO);
+	if (exit_code != -1)
+		exit (exit_code);
 }
 
-void	error_permission_denied(const char *file)
+void	error_permission_denied(const char *file, int exit_code)
 {
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	ft_putstr_fd((char *)file, STDERR_FILENO);
 	ft_putstr_fd(": Permission denied\n", STDERR_FILENO);
-	//data->exit_code = 126;
+	if (exit_code != -1)
+		exit (exit_code);
 }
 
-void	error_no_such_file(const char *file)
+void	error_no_such_file(const char *file, int exit_code)
 {
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	ft_putstr_fd((char *)file, STDERR_FILENO);
 	ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
+	if (exit_code != -1)
+		exit (exit_code);
 }

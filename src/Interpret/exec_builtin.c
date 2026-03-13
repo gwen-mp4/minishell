@@ -6,7 +6,7 @@
 /*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 09:31:41 by storck            #+#    #+#             */
-/*   Updated: 2026/03/13 13:12:34 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/13 13:59:53 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	exec_cmd(t_cmd *cmd, char **env)
 	if (!path && ft_strchr(cmd->av[0], '/'))
 	{
 		error_no_such_file(cmd->av[0]);
-		exit (1);
+		exit (127);
 	}
 	if (!path)
 	{
@@ -33,7 +33,8 @@ void	exec_cmd(t_cmd *cmd, char **env)
 	}
 	if (execve(path, cmd->av, env) == -1)
 	{
-		error_is_a_directory(cmd->av[0]);
+		if (errno == EACCES)
+			error_is_a_directory(cmd->av[0]);
 		exit (1);
 	}
 }

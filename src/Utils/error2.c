@@ -12,17 +12,21 @@
 
 #include "../../includes/minishell.h"
 
-void	error_too_many_arguments(const char *cmd)
+void	error_too_many_arguments(const char *cmd, int exit_code)
 {
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	ft_putstr_fd((char *)cmd, STDERR_FILENO);
 	ft_putstr_fd(": too many arguments\n", STDERR_FILENO);
+	if (exit_code != -1)
+		exit (exit_code);
 	//data->exit_code = 1;
 }
 
-void	error_is_a_directory(const char *cmd)
+void	error_is_a_directory(const char *cmd, int exit_code)
 {
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	ft_putstr_fd((char *)cmd, STDERR_FILENO);
 	ft_putstr_fd(": Is a directory\n", STDERR_FILENO);
+	if (exit_code != -1)
+		exit (exit_code);
 }
