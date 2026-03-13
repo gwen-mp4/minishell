@@ -6,7 +6,7 @@
 /*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/04 15:02:36 by storck            #+#    #+#             */
-/*   Updated: 2026/03/12 11:34:44 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/13 11:10:33 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,21 +63,28 @@ void	pull_back_av(char **av)
 void	replace_var(char **var, t_data *data)
 {
 	char	*var_content;
-	//int		len;
+	char	*head;
+	int		i;
 
+	i = 0;
+	while ((*var)[i] != '$')
+		i++;
+	head = ft_substr(*var, 0, i);
+	if (i > 0 && !head)
+		return ;
 	if ((*var)[1] == '?')
 		var_content = exit_code_to_str(data->exit_code, *var + 2);
 	else
-		var_content = get_var_content((*var) + 1, data);
+		var_content = get_var_content((*var) + i + 1, data);
 	if (!var_content)
 	{
-		//free(*var);
 		*var[0] = '\0';
-		return ;
+		return (free(head));
 	}
-	//len = ft_strlen(var_content);
 	free (*var);
-	*var = var_content;
+	*var = ft_strjoin(head, var_content);
+	free (head);
+	free (var_content);
 }
 
 void	filter_var(t_cmd *cmd, t_data *data)
@@ -97,7 +104,6 @@ void	filter_var(t_cmd *cmd, t_data *data)
 			{
 				if (!export_ex(tmp->av[i], &data->envlst))
 					return (perror("malloc"));
-				//new_var(data, tmp->av[i]);
 				pull_back_av(tmp->av);
 			}
 			else if (tmp->quote_type[i] != SINGLE && ft_strchr(tmp->av[i], '$'))

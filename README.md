@@ -256,15 +256,15 @@ __# -Tested some command and some didn't pass, need to fix__
 #### unset PATH --> ls       *it should display **ls: command not found** because we've unset PATH*
 #### unset PATH --> cat Makefile *it should display **cat: command not found***
 ### unset PWD --> cd $PWD --> pwd       *it should go to $PWD but displays **No such file or directory** instead so pwd doesn't displays what wanted: /home/$USER*
-### pwd -p      *it's an invalid option*
-### pwd --p     *same as above*
-### pwd ---p    *same as above*
-### cd src obj      *it should display an error that says **too many arguments** when there's more than 1 argument in cd*
-cd $HOME/goinfre    *it displays **No such file or directory** but it should **go to $HOME and go to goinfre***
-cd "$PWD/src"       *it displays **No such file or directory** but it should **go to src***
-cd $HOME/       *same as above, i think it's because it doesn't manage the slash '/'*
-mkdir a --> mkdir a/b --> cd a/b --> rm -r ../../a --> echo $PWD --> echo $OLDPWD       *it should display the actual pwd path when doing echo $PWD, for example: **/home/$USER/minishell/a/b** but there's nothing, echo $OLDPWD is okay*
-mkdir a --> cd a --> rm -r ../a --> echo $PWD --> echo $OLDPWD      *same as above, echo $PWD show nothing but $OLDPWD is okay*
+~~### pwd -p      *it's an invalid option*~~
+~~### pwd --p     *same as above*~~
+~~### pwd ---p    *same as above*~~
+~~### cd src obj      *it should display an error that says **too many arguments** when there's more than 1 argument in cd*~~
+~~cd $HOME/goinfre~~    *it displays **No such file or directory** but it should **go to $HOME and go to goinfre***
+~~cd "$PWD/src"~~       *it displays **No such file or directory** but it should **go to src***
+~~cd $HOME/~~       *same as above, i think it's because it doesn't manage the slash '/'*
+~~mkdir a --> mkdir a/b --> cd a/b --> rm -r ../../a --> echo $PWD --> echo $OLDPWD~~      *it should display the actual pwd path when doing echo $PWD, for example: **/home/$USER/minishell/a/b** but there's nothing, echo $OLDPWD is okay*
+~~mkdir a --> cd a --> rm -r ../a --> echo $PWD --> echo $OLDPWD~~      *same as above, echo $PWD show nothing but $OLDPWD is okay*
 ### chmod 000 minishell     *there're 2 errors: **no such file or directory** and **command not found**, maybe change it to one by **permission denied**, i think you've created functions for that situation right?*
 All tested, now going to use differents testers to see if it's right
 And all segfault are managed from CTRL+D and redirections

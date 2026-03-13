@@ -6,7 +6,7 @@
 /*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/04 15:39:39 by storck            #+#    #+#             */
-/*   Updated: 2026/03/12 11:35:45 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/13 11:22:00 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,23 +41,53 @@ char	*exit_code_to_str(int code, char *rest)
 	return (res);
 }
 
+char	*scalp(char **var)
+{
+	char	*rest;
+	int		i;
+
+	rest = ft_strdup(ft_strchr(*var, '/'));
+	if (!rest)
+		return (NULL);
+	i = 0;
+	while ((*var)[i])
+	{
+		if ((*var)[i] == '/')
+		{
+			(*var)[i] = '\0';
+			break ;
+		}
+		i++;
+	}
+	return (rest);
+}
+
 char	*get_var_content(char *var, t_data *data)
 {
 	t_list	*tmp;
 	char	*str;
+	char	*rest;
+	char	*head;
 
+	rest = NULL;
 	tmp = data->envlst->next;
+	if (ft_strchr(var, '/'))
+		rest = scalp(&var);
 	while (tmp != data->envlst)
 	{
 		if (!ft_strncmp(tmp->str, var, ft_strlen(var))
 			&& tmp->str[ft_strlen(var)] == '=')
 		{
-			str = ft_strdup(tmp->str + ft_strlen(var) + 1);
-			return (str);
+			head = ft_strdup(tmp->str + ft_strlen(var) + 1);
+			if (rest)
+				str = ft_strjoin(head, rest);
+			else
+				str = ft_strdup(head);
+			return (free(rest), free(head), str);
 		}
-			//return (ft_strdup(tmp->str + ft_strlen(var) + 1);
 		tmp = tmp->next;
 	}
+	free(rest);
 	return (NULL);
 }
 

@@ -6,7 +6,7 @@
 /*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 10:49:54 by storck            #+#    #+#             */
-/*   Updated: 2026/03/12 13:14:30 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/13 12:39:18 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,7 +214,8 @@ int		exec_env(t_list *env);
 void	exec_exit(char **args, t_data *data);
 bool	export_ex(char *str, t_list **env);
 int		exec_export(char **args, t_list **env);
-int		exec_pwd(void);
+int		exec_pwd(char **arg);
+bool	unset(char *str, t_list **env);
 int		exec_unset(char **args, t_list **env);
 
 /* env_utils */

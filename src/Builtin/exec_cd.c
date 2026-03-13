@@ -6,7 +6,7 @@
 /*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 11:02:03 by storck            #+#    #+#             */
-/*   Updated: 2026/03/10 16:31:13 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/13 12:59:02 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	update_oldpwd(t_data *data)
 	len = len_list(tmp);
 	while (len--)
 	{
-		if (!ft_strncmp(tmp->str, "PWD=", 3))
+		if (!ft_strncmp(tmp->str, "PWD=", 4))
 			test = tmp->str;
 		tmp = tmp->next;
 	}
@@ -44,6 +44,7 @@ static void	update_oldpwd(t_data *data)
 		test = ft_strjoin("OLD", test);
 		if (!test)
 			return (perror("malloc"));
+		unset("OLDPWD", &data->envlst);
 		export_ex(test, &data->envlst);
 	}
 	free(test);
@@ -63,7 +64,7 @@ static void	update_pwd(t_data *data, char *arg)
 	pwd = ft_strjoin("PWD=", cwd);
 	if (!pwd)
 		return (perror("malloc"));
-	//printf("%s\n", pwd);
+	unset("PWD", &data->envlst);
 	export_ex(pwd, &data->envlst);
 	free(pwd);
 }
@@ -83,5 +84,7 @@ int	exec_cd(t_data *data, char **args)
 			perror(args[1]);
 		return (res);
 	}
+	else if (count_arg(args) > 2)
+		ft_putendl_fd("Minishell: cd: too many arguments", 2);
 	return (1);
 }

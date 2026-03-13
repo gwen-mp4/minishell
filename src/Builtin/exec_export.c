@@ -6,7 +6,7 @@
 /*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 12:31:48 by storck            #+#    #+#             */
-/*   Updated: 2026/03/12 11:08:41 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/13 12:33:39 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ bool	export_ex(char *str, t_list **env)
 		i = 0;
 		while (i < pos)
 		{
-			*env = (*env)->next;
+			(*env) = (*env)->next;
 			i++;
 		}
 		free ((*env)->str);
