@@ -6,7 +6,7 @@
 /*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 12:31:23 by storck            #+#    #+#             */
-/*   Updated: 2026/03/12 09:44:21 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/13 14:51:04 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int	is_option_n(char *str)
 {
 	int	i;
 
+	if (!str)
+		return (0);
 	if (ft_strncmp(str, "-n", 2))
 		return(0);
 	i = 2;
@@ -28,7 +30,8 @@ int	is_option_n(char *str)
 
 int	exec_echo(char **arg, t_quote_type *quote, t_data *data)
 {
-	int	i;
+	int		i;
+	char	*tmp;
 
 	i = 0;
 	if (!arg || !arg[0])
@@ -40,7 +43,8 @@ int	exec_echo(char **arg, t_quote_type *quote, t_data *data)
 		i++;
 	while (arg[i])
 	{
-		if (quote[i] != SINGLE && ft_strchr(arg[i], '$'))
+		tmp = ft_strchr(arg[i], '$');
+		if (quote[i] != SINGLE && tmp && tmp[1] != '\0')
 				replace_var(&arg[i], data);
 		ft_putstr_fd(arg[i], STDOUT_FILENO);
 		if (arg[i + 1] != NULL)

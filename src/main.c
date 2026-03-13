@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:54:48 by storck            #+#    #+#             */
-/*   Updated: 2026/03/13 12:33:50 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/13 14:29:42 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,18 @@ t_cmd	*lexing_and_parsing(t_data *data)
 	return (ret);
 }
 
+void	do_line(t_data data)
+{
+	filter_var(data.cmd, &data);
+	execution(data.cmd, &data);
+	free(data.line);
+	data.line = NULL;
+	clean_tokens(data.token);
+	data.token = NULL;
+	free_cmds(data.cmd);
+	data.cmd = NULL;
+}
+
 int	main(int ac, char **av, char **env)
 {
 	t_data	data;
@@ -53,14 +65,7 @@ int	main(int ac, char **av, char **env)
 			data.line = NULL;
 			continue ;
 		}
-		filter_var(data.cmd, &data);
-		execution(data.cmd, &data);
-		free(data.line);
-		data.line = NULL;
-		clean_tokens(data.token);
-		data.token = NULL;
-		free_cmds(data.cmd);
-		data.cmd = NULL;
+		do_line(data);
 	}
 	rl_clear_history();
 	ft_putstr_fd("exit\n", STDERR_FILENO);
