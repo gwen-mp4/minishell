@@ -6,7 +6,7 @@
 /*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 10:43:38 by storck            #+#    #+#             */
-/*   Updated: 2026/03/13 12:57:35 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/13 13:40:43 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,5 @@ void	error_no_such_file(const char *file)
 {
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	ft_putstr_fd((char *)file, STDERR_FILENO);
-	ft_putstr_fd(": No such file or directory ha\n", STDERR_FILENO);
-	//data->exit_code = 1;
+	ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
 }

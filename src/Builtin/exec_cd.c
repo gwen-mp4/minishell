@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 11:02:03 by storck            #+#    #+#             */
-/*   Updated: 2026/03/13 12:59:02 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/13 13:50:29 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,20 +71,24 @@ static void	update_pwd(t_data *data, char *arg)
 
 int	exec_cd(t_data *data, char **args)
 {
-	int	res;
+	char	*path;
 
-	if (count_arg(args) == 2)
+	if (count_arg(args) > 2)
+		return (error_too_many_arguments(args[0]), 1);
+	if (count_arg(args) == 1)
+		path = get_env(); //create a function that get the home
+	else
+		path = args[1];
+	if (!path)
+		return (ft_putendl_fd("cd: HOME not set", 2), 1);
+	if (chdir(path) == -1)
 	{
-		res = chdir(args[1]);
-		if (res == 0)
-			update_pwd(data, args[1]);
-		if (res == -1)
-			res *= -1;
-		if (res == 1)
-			perror(args[1]);
-		return (res);
+		if (errno == EACCES)
+			error_permission_denied(path);
+		else
+			error_no_such_file(path);
+		return (1);
 	}
-	else if (count_arg(args) > 2)
-		ft_putendl_fd("Minishell: cd: too many arguments", 2);
-	return (1);
+	update_pwd(data, path);
+	return (0);
 }
