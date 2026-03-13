@@ -6,7 +6,7 @@
 /*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 11:02:03 by storck            #+#    #+#             */
-/*   Updated: 2026/03/13 13:50:29 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/13 14:04:44 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,9 @@ int	exec_cd(t_data *data, char **args)
 	char	*path;
 
 	if (count_arg(args) > 2)
-		return (error_too_many_arguments(args[0]), 1);
-	if (count_arg(args) == 1)
-		path = get_env(); //create a function that get the home
+		return (error_too_many_arguments(args[0], -1), 1);
+	// if (count_arg(args) == 1)
+	// 	path = get_env(); //create a function that get the home
 	else
 		path = args[1];
 	if (!path)
@@ -84,9 +84,9 @@ int	exec_cd(t_data *data, char **args)
 	if (chdir(path) == -1)
 	{
 		if (errno == EACCES)
-			error_permission_denied(path);
+			error_permission_denied(path, -1);
 		else
-			error_no_such_file(path);
+			error_no_such_file(path, -1);
 		return (1);
 	}
 	update_pwd(data, path);
