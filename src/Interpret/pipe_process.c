@@ -3,14 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_process.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 15:27:33 by storck            #+#    #+#             */
-/*   Updated: 2026/03/09 12:02:59 by marvin           ###   ########.fr       */
+/*   Updated: 2026/03/13 12:24:46 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+void	do_pipe(t_cmd *cmd, t_data *data, pid_t *pids, int index)
+{
+	int		p_fd[2];
+
+	pipe_process(p_fd);
+	pids[index] = fork_process();
+	if (!pids[index])
+	{
+		close(p_fd[0]);
+		redirect_fd(p_fd[1], STDOUT_FILENO);
+		find_way(cmd, data, pids);
+	}
+	else
+	{
+		close(p_fd[1]);
+		redirect_fd(p_fd[0], STDIN_FILENO);
+	}
+}
 
 void	redirect_fd(int old_fd, int new_fd)
 {

@@ -6,7 +6,7 @@
 /*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:54:48 by storck            #+#    #+#             */
-/*   Updated: 2026/03/11 13:52:51 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/13 12:33:50 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_cmd	*lexing_and_parsing(t_data *data)
 {
 	t_cmd	*ret;
 
-	data->token = lexer(data->line);
+	data->token = lexer(data->line, data);
 	if (!data->token)
 		return (NULL);
 	ret = parsing(data->token, data);

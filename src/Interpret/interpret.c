@@ -3,58 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   interpret.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 12:43:54 by storck            #+#    #+#             */
-/*   Updated: 2026/03/12 13:02:22 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/13 12:33:32 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	exec_cmd(t_cmd *cmd, char **env, t_data *data)
+static int	get_exit_code(int status)
 {
-	char	*path;
-
-	if (!cmd || !cmd->av || !cmd->av[0])
-		exit (0);
-	signal_child();
-	set_fds(cmd);
-	path = get_path(cmd->av[0], env);
-	if (!path)
-	{
-		ft_putstr_fd(cmd->av[0], 2);
-		ft_putendl_fd(": command not found", 2);
-		data->exit_code = 127;
-		return ;
-		//exit(127);
-	}
-	if (execve(path, cmd->av, env) == -1)
-	{
-		ft_putstr_fd(cmd->av[0], 2);
-		ft_putendl_fd(": Is a directory", 2);
-		data->exit_code = 126;
-		return ;
-		//exit(126);
-	}
+	if (WIFEXITED(status))
+		return (WEXITSTATUS(status));
+	if (WIFSIGNALED(status))
+		return (128 + WTERMSIG(status));
+	return (1);
 }
 
-void	do_pipe(t_cmd *cmd, t_data *data, pid_t *pids, int index)
+static void	wait_all(pid_t	*pids, int total, t_data *data)
 {
-	int		p_fd[2];
+	int	status;
+	int	i;
 
-	pipe_process(p_fd);
-	pids[index] = fork_process();
-	if (!pids[index])
+	i = 0;
+	while (i < total)
 	{
-		close(p_fd[0]);
-		redirect_fd(p_fd[1], STDOUT_FILENO);
-		find_way(cmd, data, pids);
-	}
-	else
-	{
-		close(p_fd[1]);
-		redirect_fd(p_fd[0], STDIN_FILENO);
+		waitpid(pids[i], &status, 0);
+		if (i == total - 1)
+			data->exit_code = get_exit_code(status);
+		i++;
 	}
 }
 
@@ -80,7 +58,6 @@ static void	exec_last(t_cmd *cmd, t_data *data, int save_in, int save_out)
 {
 	pid_t	*pids;
 	int		total;
-	int		i;
 
 	total = data->pipe_count + 1;
 	pids = run_pipes(&cmd, data, total);
@@ -94,11 +71,8 @@ static void	exec_last(t_cmd *cmd, t_data *data, int save_in, int save_out)
 	if (!pids[total - 1])
 		find_way(cmd, data, pids);
 	redirect_fd(save_in, STDIN_FILENO);
-	redirect_fd(save_out, STDIN_FILENO);
-	signal_child();
-	i = 0;
-	while (i < total)
-		waitpid(pids[i++], NULL, 0);
+	redirect_fd(save_out, STDOUT_FILENO);
+	wait_all(pids, total, data);
 	setup_signal();
 	free(pids);
 }
@@ -118,17 +92,11 @@ void	execution(t_cmd *cmd, t_data *data)
 		close(save_out);
 		return ;
 	}
-	if (data->pipe_count == 0 && is_builtin(cmd->av[0])
-		&& ft_strcmp(cmd->av[0], "echo") && ft_strcmp(cmd->av[0], "pwd"))
+	if (data->pipe_count == 0 && is_builtin(cmd->av[0]))
 	{
 		exec_builtin(cmd, cmd->av, data);
-		// redirect_fd(save_in, STDIN_FILENO);
-		// redirect_fd(save_out, STDOUT_FILENO);
-		// if (ft_strcmp(cmd->av[0], "cd") && ft_strcmp(cmd->av[0], "unset"))
-		// {
-		// 	redirect_fd(STDIN_FILENO, save_in);
-		// 	redirect_fd(STDOUT_FILENO, save_out);
-		// }
+		redirect_fd(save_in, STDIN_FILENO);
+		redirect_fd(save_out, STDOUT_FILENO);
 		return ;
 	}
 	exec_last(cmd, data, save_in, save_out);
