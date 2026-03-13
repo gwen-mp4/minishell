@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 11:02:03 by storck            #+#    #+#             */
-/*   Updated: 2026/03/13 13:50:29 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/13 14:00:56 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,20 @@ static void	update_pwd(t_data *data, char *arg)
 	free(pwd);
 }
 
+char	*get_home(t_list *env)
+{
+	t_list	*tmp;
+
+	tmp = env->next;
+	while (tmp != env)
+	{
+		if (!ft_strncmp(tmp->str, "HOME=", 5))
+			return (&(tmp->str[5]));
+		tmp = tmp->next;
+	}
+	return (NULL);
+}
+
 int	exec_cd(t_data *data, char **args)
 {
 	char	*path;
@@ -76,7 +90,7 @@ int	exec_cd(t_data *data, char **args)
 	if (count_arg(args) > 2)
 		return (error_too_many_arguments(args[0]), 1);
 	if (count_arg(args) == 1)
-		path = get_env(); //create a function that get the home
+		path = get_home(data->envlst);
 	else
 		path = args[1];
 	if (!path)
