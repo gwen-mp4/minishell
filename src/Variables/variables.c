@@ -6,7 +6,7 @@
 /*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/04 15:02:36 by storck            #+#    #+#             */
-/*   Updated: 2026/03/13 17:24:33 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/16 10:30:20 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,29 +91,26 @@ void	filter_var(t_cmd *cmd, t_data *data)
 {
 	int		i;
 	t_cmd	*tmp;
-	char	*str;
 
 	if (!cmd->av || !cmd->av[0])
 		return ;
 	tmp = cmd;
 	while (tmp && ft_strcmp(cmd->av[0], "export"))
 	{
-		i = 0;
-		while (tmp->av[i])
+		i = -1;
+		while (tmp->av[++i])
 		{
-			str = ft_strchr(tmp->av[i], '$');
 			if (var_declaration(tmp->av[i]) && i == 0)
 			{
 				if (!export_ex(tmp->av[i], &data->envlst))
 					return (perror("malloc"));
 				pull_back_av(tmp->av);
 			}
-			else if (tmp->quote_type[i] != SINGLE && str && str[1] != '\0' && str[1] != ':' && str[1] != ' ' && str[1] != '=')
+			else if (do_replace(tmp->av[i], tmp->quote_type[i]))
 			{
 				replace_var(&tmp->av[i], data);
 				continue ;
 			}
-			i++;
 		}
 		tmp = tmp->next;
 	}

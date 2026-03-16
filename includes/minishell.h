@@ -6,7 +6,7 @@
 /*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 10:49:54 by storck            #+#    #+#             */
-/*   Updated: 2026/03/13 17:31:15 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/16 10:52:59 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,6 +162,7 @@ void	error_permission_denied(const char *file);
 void	error_no_such_file(const char *file);
 void	error_too_many_arguments(const char *cmd);
 void	error_is_a_directory(const char *cmd);
+void	error_invalid_identifier(char *str);
 
 /* path_finding.c */
 char	*get_path(char *cmd, char **envp);
@@ -241,7 +242,9 @@ bool	null_env(t_data *data);
 void	filter_var(t_cmd *cmd, t_data *data);
 
 /* var_utils.c */
-int 	get_eq_pos(char *str);
+int		get_eq_pos(char *str);
+char	*return_content(char *rest, char *var, char *tmp_str, int len);
+int		do_replace(char *cmd_str, t_quote_type type);
 char	*exit_code_to_str(int code, char *rest);
 void	replace_var(char **var, t_data *data);
 char	*get_var_content(char *var, t_data *data);

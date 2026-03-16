@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 10:43:38 by storck            #+#    #+#             */
-/*   Updated: 2026/03/13 14:14:17 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/16 10:45:52 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ void	error_permission_denied(const char *file)
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	ft_putstr_fd((char *)file, STDERR_FILENO);
 	ft_putstr_fd(": Permission denied\n", STDERR_FILENO);
-	//data->exit_code = 126;
 }
 
 void	error_no_such_file(const char *file)

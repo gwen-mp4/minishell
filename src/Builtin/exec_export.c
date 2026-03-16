@@ -6,7 +6,7 @@
 /*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 12:31:48 by storck            #+#    #+#             */
-/*   Updated: 2026/03/13 17:44:05 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/16 10:40:48 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,9 +136,7 @@ int	exec_export(char **args, t_list **env, t_data *data)
 			return (exec_env(data->envlst), data->exit_code);
 		if (!valid_identifier(args[i], data))
 		{
-			ft_putstr_fd("export: '", 2);
-			ft_putstr_fd(args[i], 2);
-			ft_putstr_fd("': not a valid identifier\n", 2);
+			error_invalid_identifier(args[i]);
 			exit_code = 1;
 		}
 		else if (!export_ex(args[i], env))
