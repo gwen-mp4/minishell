@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/04 15:02:36 by storck            #+#    #+#             */
-/*   Updated: 2026/03/17 12:57:00 by marvin           ###   ########.fr       */
+/*   Updated: 2026/03/17 15:54:21 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,17 @@ static void	process_export_args(t_cmd *cmd, t_data *data)
 	}
 }
 
+static void	process_redir_args(t_redir *redir, t_data *data)
+{
+	while (redir)
+	{
+		while (do_replace(redir->filename))
+			replace_var(&redir->filename, data);
+		strip_quotes(&redir->filename);
+		redir = redir->next;
+	}
+}
+
 /*Function that will check for anything to expand if export or not*/
 void	filter_var(t_cmd *cmd, t_data *data)
 {
@@ -71,6 +82,8 @@ void	filter_var(t_cmd *cmd, t_data *data)
 			process_export_args(tmp, data);
 		else
 			process_cmd_args(tmp, data);
+		if (tmp->redirs)
+			process_redir_args(tmp->redirs, data);
 		tmp = tmp->next;
 	}
 }

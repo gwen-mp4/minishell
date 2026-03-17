@@ -15,17 +15,9 @@
 void	handle_quote(char c, t_quote *quote)
 {
 	if (c == '\'' && !quote->dq)
-	{
 		quote->sq = !quote->sq;
-		if (quote->sq)
-			quote->type = SINGLE;
-	}
 	else if (c == '"' && !quote->sq)
-	{
 		quote->dq = !quote->dq;
-		if (quote->dq)
-			quote->type = DOUBLE;
-	}
 }
 
 char	*ft_incremente(char *line, char *buf, int *i, t_quote *quote)
@@ -56,7 +48,6 @@ char	*read_word(char *line, int *i)
 
 	quote.sq = 0;
 	quote.dq = 0;
-	quote.type = NO_QUOTE;
 	buf = malloc(sizeof(char) * ft_strlen(line) + 1);
 	if (!buf)
 		return (NULL);
