@@ -33,8 +33,11 @@ void	exec_cmd(t_cmd *cmd, char **env)
 	}
 	if (execve(path, cmd->av, env) == -1)
 	{
-		error_is_a_directory(cmd->av[0]);
-		exit (1);
+		if (opendir(cmd->av[0]))
+		{
+			error_is_a_directory(cmd->av[0]);
+			exit (126);
+		}
 	}
 }
 
@@ -60,7 +63,7 @@ int	is_builtin(char *str)
 
 void	exec_builtin(t_cmd *cmd, char **arg, t_data *data)
 {
-	//set_fds(cmd);
+	set_fds(cmd);
 	if (strncmp(arg[0], "echo", ft_strlen(arg[0])) == 0)
 		data->exit_code = exec_echo(arg + 1, data);
 	else if (strncmp(arg[0], "cd", ft_strlen(arg[0])) == 0)
