@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 09:31:41 by storck            #+#    #+#             */
-/*   Updated: 2026/03/16 10:52:53 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/16 23:38:56 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	exec_builtin(t_cmd *cmd, char **arg, t_data *data)
 {
 	set_fds(cmd);
 	if (strncmp(arg[0], "echo", ft_strlen(arg[0])) == 0)
-		data->exit_code = exec_echo(arg + 1, cmd->quote_type + 1, data);
+		data->exit_code = exec_echo(arg + 1, data);
 	else if (strncmp(arg[0], "cd", ft_strlen(arg[0])) == 0)
 		data->exit_code = exec_cd(data, cmd->av);
 	else if (strncmp(arg[0], "pwd", ft_strlen(arg[0])) == 0)

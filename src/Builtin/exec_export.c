@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_export.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 12:31:48 by storck            #+#    #+#             */
-/*   Updated: 2026/03/16 10:40:48 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/17 12:29:47 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ int	exec_export(char **args, t_list **env, t_data *data)
 	int	i;
 
 	exit_code = 0;
-	i = 0;
+	i = 1;
 	if (!args[1])
 	{
 		if (!export_no_args(*env) && !env)
@@ -132,8 +132,6 @@ int	exec_export(char **args, t_list **env, t_data *data)
 	}
 	while (args[i])
 	{
-		if (args[i][0] == '$' && args[i][1] != '?' && !ft_strchr(args[i], '='))
-			return (exec_env(data->envlst), data->exit_code);
 		if (!valid_identifier(args[i], data))
 		{
 			error_invalid_identifier(args[i]);

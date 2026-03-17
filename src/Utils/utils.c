@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 15:08:54 by gwen              #+#    #+#             */
-/*   Updated: 2026/03/05 13:59:38 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/17 11:10:17 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,9 @@ int	is_number(char *num)
 		return (1);
 	else
 		return (0);
+}
+
+int	is_expandable(char c)
+{
+	return (c == '?' || ft_isalnum((int)c) || c == '_');
 }

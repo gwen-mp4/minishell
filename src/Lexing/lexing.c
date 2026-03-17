@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexing.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 14:31:52 by gwen              #+#    #+#             */
-/*   Updated: 2026/03/13 11:06:46 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/16 23:34:08 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,26 +16,26 @@
 int	handle_operator(char *input, int *i, t_token **tokens)
 {
 	if (input[*i] == '|')
-		add_back_token(tokens, create_token(PIPE, "|", NO_QUOTE));
+		add_back_token(tokens, create_token(PIPE, "|"));
 	else if (input[*i] == '<')
 	{
 		if (input[*i + 1] == '<')
 		{
-			add_back_token(tokens, create_token(HEREDOC, "<<", NO_QUOTE));
+			add_back_token(tokens, create_token(HEREDOC, "<<"));
 			(*i)++;
 		}
 		else
-			add_back_token(tokens, create_token(INPUT, "<", NO_QUOTE));
+			add_back_token(tokens, create_token(INPUT, "<"));
 	}
 	else if (input[*i] == '>')
 	{
 		if (input[*i + 1] == '>')
 		{
-			add_back_token(tokens, create_token(APPEND, ">>", NO_QUOTE));
+			add_back_token(tokens, create_token(APPEND, ">>"));
 			(*i)++;
 		}
 		else
-			add_back_token(tokens, create_token(OUTPUT, ">", NO_QUOTE));
+			add_back_token(tokens, create_token(OUTPUT, ">"));
 	}
 	(*i)++;
 	return (*i);
@@ -44,12 +44,11 @@ int	handle_operator(char *input, int *i, t_token **tokens)
 int	handle_word(char *input, int *i, t_token **tokens, t_data *data)
 {
 	char			*word;
-	t_quote_type	type;
 
-	word = read_word(input, i, &type);
+	word = read_word(input, i);
 	if (!word)
 		return (error_cleanup_lexing(*tokens, 0, data), -1);
-	add_back_token(tokens, create_token(WORD, word, type));
+	add_back_token(tokens, create_token(WORD, word));
 	free(word);
 	return (*i);
 }

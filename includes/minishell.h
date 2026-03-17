@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 10:49:54 by storck            #+#    #+#             */
-/*   Updated: 2026/03/16 10:52:59 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/17 14:30:07 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,6 @@ typedef enum e_type
 	HEREDOC
 }	t_type;
 
-typedef enum e_quote_type
-{
-	NO_QUOTE,
-	SINGLE,
-	DOUBLE
-}	t_quote_type;
-
 typedef struct s_env
 {
 	char			*key;
@@ -73,7 +66,6 @@ typedef struct s_env
 typedef struct s_token
 {
 	t_type			type;
-	t_quote_type	quote_type;
 	char			*value;
 	struct s_token	*next;
 }	t_token;
@@ -82,7 +74,6 @@ typedef struct s_quote
 {
 	int				sq;
 	int				dq;
-	t_quote_type	type;
 }	t_quote;
 
 typedef struct s_redir
@@ -96,7 +87,6 @@ typedef struct s_redir
 typedef struct s_cmd
 {
 	char			**av;
-	t_quote_type	*quote_type;
 	t_redir			*redirs;
 	struct s_cmd	*next;
 }	t_cmd;
@@ -130,11 +120,11 @@ typedef struct s_data
 /* parsing*/
 t_cmd	*parsing(t_token *token, t_data *data);
 t_cmd	*new_cmd(void);
-int		add_arg_to_cmd(char *word, t_quote_type quote, t_cmd *cmd);
+int		add_arg_to_cmd(char *word, t_cmd *cmd);
 int		add_redir_to_cmd(t_type type, char *filename, t_cmd *cmd);
 
 /*lexing*/
-char	*read_word(char *line, int *i, t_quote_type *type);
+char	*read_word(char *line, int *i);
 t_token	*lexer(char *input, t_data *data);
 
 /* utils */
@@ -142,6 +132,7 @@ int		is_space(char c);
 int		is_operator(char c);
 int		is_redir(t_type type);
 int		is_number(char *num);
+int		is_expandable(char c);
 void	clean_tokens(t_token *tokens);
 void	free_cmds(t_cmd *cmd);
 void	free_data(t_data *data);
@@ -162,7 +153,7 @@ void	error_permission_denied(const char *file);
 void	error_no_such_file(const char *file);
 void	error_too_many_arguments(const char *cmd);
 void	error_is_a_directory(const char *cmd);
-void	error_invalid_identifier(char *str);
+void	error_invalid_identifier(const char *str);
 
 /* path_finding.c */
 char	*get_path(char *cmd, char **envp);
@@ -186,7 +177,7 @@ int		dup_process(int fd, int save_in);
 
 /* create_tokens.c */
 void	add_back_token(t_token **list, t_token *new);
-t_token	*create_token(t_type type, char *value, t_quote_type quote);
+t_token	*create_token(t_type type, char *value);
 
 /* here_doc_process.c */
 int		file_heredoc_process(t_redir *heredoc);
@@ -211,7 +202,7 @@ int		check_key(char *str);
 
 /* builtins */
 int		exec_cd(t_data *data, char **args);
-int		exec_echo(char **arg, t_quote_type *quote, t_data *data);
+int		exec_echo(char **arg, t_data *data);
 int		exec_env(t_list *env);
 void	exec_exit(char **args, t_data *data);
 bool	export_ex(char *str, t_list **env);
@@ -244,10 +235,17 @@ void	filter_var(t_cmd *cmd, t_data *data);
 /* var_utils.c */
 int		get_eq_pos(char *str);
 char	*return_content(char *rest, char *var, char *tmp_str, int len);
-int		do_replace(char *cmd_str, t_quote_type type);
+int		do_replace(char *cmd_str);
 char	*exit_code_to_str(int code, char *rest);
 void	replace_var(char **var, t_data *data);
 char	*get_var_content(char *var, t_data *data);
 void	add_var(t_data *data, char *name, char *content);
+int		var_name_len(char *s);
+void	strip_quotes(char **str);
+void	pull_back_av(char **av);
+void	new_var(t_data *data, char *str);
+int		var_declaration(char *str);
+int		find_dollar(char *str);
+void	remove_av_at(char **av, int i);
 
 #endif

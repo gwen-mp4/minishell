@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/04 15:39:39 by storck            #+#    #+#             */
-/*   Updated: 2026/03/16 10:15:01 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/17 11:21:01 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,9 @@ char	*get_var_content(char *var, t_data *data)
 	while (tmp != data->envlst)
 	{
 		len = get_eq_pos(tmp->str);
-		if (!ft_strncmp(tmp->str, var, len)
+		if (len == -1)
+			return (free(rest), NULL);
+		if ((int)ft_strlen(var) == len && !ft_strncmp(tmp->str, var, len)
 			&& tmp->str[len] == '=')
 			return (return_content(rest, var, tmp->str, len));
 		tmp = tmp->next;

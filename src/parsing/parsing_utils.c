@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 10:31:06 by gwen              #+#    #+#             */
-/*   Updated: 2026/03/06 12:37:49 by marvin           ###   ########.fr       */
+/*   Updated: 2026/03/16 23:42:29 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,52 +24,38 @@ static int	argv_len(char **argv)
 	return (i);
 }
 
-static int	copy_cmd_arrays(t_cmd *cmd, char ***newav, t_quote_type **newqt,
-	int len)
+static int	copy_cmd_arrays(t_cmd *cmd, char ***newav, int len)
 {
 	int	i;
 
 	*newav = ft_calloc(len + 2, sizeof(char *));
 	if (!*newav)
 		return (0);
-	*newqt = ft_calloc((len + 2), sizeof(t_quote_type));
-	if (!*newqt)
-		return (free(*newav), 0);
 	i = 0;
 	while (i < len)
 	{
 		(*newav)[i] = cmd->av[i];
-		if (cmd->quote_type)
-			(*newqt)[i] = cmd->quote_type[i];
-		else
-			(*newqt)[i] = NO_QUOTE;
 		i++;
 	}
 	return (1);
 }
 
-int	add_arg_to_cmd(char *word, t_quote_type quote, t_cmd *cmd)
+int	add_arg_to_cmd(char *word, t_cmd *cmd)
 {
 	char			**newav;
-	t_quote_type	*newqt;
 	int				len;
 
+	if (!word || !cmd)
+		return (0);
 	len = argv_len(cmd->av);
-	if (!copy_cmd_arrays(cmd, &newav, &newqt, len))
+	if (!copy_cmd_arrays(cmd, &newav, len))
 		return (0);
 	newav[len] = ft_strdup(word);
 	if (!newav[len])
-	{
-		free(newav);
-		free(newqt);
-		return (0);
-	}
+		return (free(newav), 0);
 	newav[len + 1] = NULL;
-	newqt[len] = quote;
 	free(cmd->av);
-	free(cmd->quote_type);
 	cmd->av = newav;
-	cmd->quote_type = newqt;
 	return (1);
 }
 

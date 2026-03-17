@@ -280,29 +280,29 @@ And all segfault are managed from CTRL+D and redirections
 ~~echo $USER$HOME~~     *it should display what it should be but there's nothing (manage multiple dollar sign in a row)*
 ~~echo $HOME%~~     *it should display home with % at the end*
 ~~echo [$HOME]~~    *it should display home)*
-echo [$TERM4    *it should display '[' but there's nothing*
-echo [$TERM4]   *it should display '[]' but there's nothing*
+~~echo [$TERM4~~    *it should display '[' but there's nothing*
+~~echo [$TERM4]~~   *it should display '[]' but there's nothing*
 ~~echo "$"""~~      *it should display the dollar sign, take the single quote version as a reference*
-echo $"HOME"    *it should not display the actual home but $HOME, take the single quote version as a reference*
-echo $""HOME    *same as above*
-echo "$HO"ME    *it should print __ME__ but it prints the actual home*
-echo "$HO""ME"  *same as above*
-echo "'$HO''ME'"    *it should print __'''ME'__ but there's nothing*
-echo ''$HOME    *it should print the actual home*
-echo $"HO""ME"  *it should not display the actual home but $HOME, take the single quote version as a reference*
-echo "$"HOME    *it should not display the actual home but $HOME, take the single quote version as a reference*
+~~echo $"HOME"~~    *it should not display the actual home but $HOME, take the single quote version as a reference*
+~~echo $""HOME~~    *same as above*
+~~echo "$HO"ME~~    *it should print __ME__ but it prints the actual home*
+~~echo "$HO""ME"~~  *same as above*
+~~echo "'$HO''ME'"~~    *it should print __'''ME'__ but there's nothing*
+~~echo ''$HOME~~    *it should print the actual home*
+~~echo $"HO""ME"~~  *it should not display the actual home but $HOME, take the single quote version as a reference*
+~~echo "$"HOME~~    *it should not display the actual home but $HOME, take the single quote version as a reference*
 ~~echo $=HOME~~     *it should display what it should be*
-echo $"HOLA"    *it should display $HOLA, but there's nothing, take single quote as a reference*
+~~echo $"HOLA"~~    *it should display $HOLA, but there's nothing, take single quote as a reference*
 ~~echo $DONTEXIST Hola~~    *there's a space before Hola, there should be no space*
-echo "$DONTEXIST"Makefile   *it should display __Makefile__ (not the real)*
-echo "$DONTEXIST""Makefile"     *same as above*
-$?$?        *it should display __00: command not found__*
-?$HOME      *it should print __command not found__ as error and not __No such file or directory__*
-\$       *(there's backslash to ignore dollar command in README.md but it's just a dollar sign) it should print __command not found__ as error and not __Is a directory__*
-\$HOMEdskjhfkdshfsd      *(there's backslash to ignore dollar command in README.md) it should print nothing*
-"$HOMEdskjhfkdshfsd"    *it should print __command not found__ error instead of __Is a directory__*
-\$DONTEXIST      *(there's backslash to ignore dollar command in README.md) it should print nothing*
-$LESS$VAR       *it should print __-R: command not found__*
+~~echo "$DONTEXIST"Makefile~~   *it should display __Makefile__ (not the real)*
+~~echo "$DONTEXIST""Makefile"~~     *same as above*
+~~$?$?~~        *it should display __00: command not found__*
+~~?$HOME~~      *it should print __command not found__ as error and not __No such file or directory__*
+~~\$~~       *(there's backslash to ignore dollar command in README.md but it's just a dollar sign) it should print __command not found__ as error and not __Is a directory__*
+~~\$HOMEdskjhfkdshfsd~~      *(there's backslash to ignore dollar command in README.md) it should print nothing*
+~~"$HOMEdskjhfkdshfsd"~~    *it should print __command not found__ error instead of __Is a directory__*
+~~\$DONTEXIST~~      *(there's backslash to ignore dollar command in README.md) it should print nothing*
+~~$LESS$VAR~~       *it should print __-R: command not found__*
 ~~export $DONTEXIST~~       *it should print the export list*
 ~~export $?~~       *it should print __'0': invalid identifier__*
 ~~export HO$?LA=bonjour  --> env~~		*it should print __HO(exit_code)LA=bonjour__*
@@ -310,3 +310,24 @@ $LESS$VAR       *it should print __-R: command not found__*
 **13/03/2026 17:45 by storck**:
 
 Fixed ab bunch of errors (those in ~~dash~~). The ones left might require touching the lexing and parsing because of quotes.
+
+**16/03/2026 23:30 by gwen**:
+
+So i checked how the bash works, in reality, in lexing, it copies all the prompt, including the quotes, so i just let the lexing copies the quotes too, so you have to manage the '$' sign in the expander and remove it after (before execution, that's how bash works)
+You've said that it should look like this:
+av[0] = $HO
+av[1] = ME
+but in reality, it should be like this:
+av[0] = "$HO""ME"
+as i wrote earlier, bash remove the quotes after expanding before execution.
+
+**17/03/2026 14:00 by gwen**:
+
+-Changed the whole thing for lexing, parsing and variables, changed echo and export too, now it works!
+-Removed unused t_quote_type because it's useless now, the program manages all in expanding before execution
+-Added signals for SIGINT and SIGQUIT
+*I've used a tester (the first one that appears on a search fire fire emoji) and there's some errors, some minors (that will be set as ### (3 hashtags) before the test and some more important, tests come from the tester, not me, so you have to adjust the prompt)*
+### cd $PWD     *exit code should be 1 but it's 0 and it should print **many arguments** but there's nothing*
+echo <"./test_files/infile" "bonjour       42"      *the output should be **bonjour       42** but it indicates error and it quits the minishell?*
+cat <"./test_files/file name with spaces"       *it should do nothing because the file is empty but it says no such file or directory, maybe it doesn't manage spaces?*
+in short, i let you see by yourself using the tester but it's generally the redirections that doesn't works (except heredoc)

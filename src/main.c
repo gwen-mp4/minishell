@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:54:48 by storck            #+#    #+#             */
-/*   Updated: 2026/03/13 15:00:01 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/17 14:33:56 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,16 @@ t_cmd	*lexing_and_parsing(t_data *data)
 	return (ret);
 }
 
-void	do_line(t_data data)
+void	do_line(t_data *data)
 {
-	filter_var(data.cmd, &data);
-	execution(data.cmd, &data);
-	free(data.line);
-	data.line = NULL;
-	clean_tokens(data.token);
-	data.token = NULL;
-	free_cmds(data.cmd);
-	data.cmd = NULL;
+	filter_var(data->cmd, data);
+	execution(data->cmd, data);
+	free(data->line);
+	data->line = NULL;
+	clean_tokens(data->token);
+	data->token = NULL;
+	free_cmds(data->cmd);
+	data->cmd = NULL;
 }
 
 int	main(int ac, char **av, char **env)
@@ -56,6 +56,11 @@ int	main(int ac, char **av, char **env)
 		data.line = readline("$> ");
 		if (!data.line)
 			break ;
+		if (g_sig == SIGINT)
+		{
+			data.exit_code = 130;
+			g_sig = 0;
+		}
 		if (*data.line)
 			add_history(data.line);
 		data.cmd = lexing_and_parsing(&data);
@@ -65,9 +70,9 @@ int	main(int ac, char **av, char **env)
 			data.line = NULL;
 			continue ;
 		}
-		do_line(data);
+		do_line(&data);
 	}
 	rl_clear_history();
-	ft_putstr_fd("exit\n", STDERR_FILENO);
+	ft_putstr_fd("exit\n", STDOUT_FILENO);
 	return (free_data(&data), 0);
 }

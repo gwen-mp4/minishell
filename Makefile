@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: storck <storck@student.42.fr>              +#+  +:+       +#+         #
+#    By: marvin <marvin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/11 15:53:54 by gwen              #+#    #+#              #
-#    Updated: 2026/03/13 15:59:38 by storck           ###   ########.fr        #
+#    Updated: 2026/03/16 22:52:57 by marvin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,12 +55,15 @@ SRC = main.c \
 	Utils/error.c \
 	Utils/error2.c \
 	Utils/free.c \
+	Utils/free2.c \
 	Utils/signal_child.c \
 	Utils/signal_heredoc.c \
 	Utils/signal.c \
 	Utils/debug.c \
 	Variables/var_utils.c \
 	Variables/var_utils_2.c \
+	Variables/var_utils_3.c \
+	Variables/var_utils_4.c \
 	Variables/variables.c
 
 SRCS = $(addprefix $(SRC_DIR), $(SRC))

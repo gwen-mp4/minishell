@@ -37,15 +37,11 @@ char	*ft_incremente(char *line, char *buf, int *i, t_quote *quote)
 	{
 		if ((line[*i] == '\'' && !quote->dq)
 			|| (line[*i] == '"' && !quote->sq))
-		{
 			handle_quote(line[*i], quote);
-			(*i)++;
-		}
 		else if (!quote->sq && !quote->dq
 			&& (is_space(line[*i]) || is_operator(line[*i])))
 			break ;
-		else
-			buf[j++] = line[(*i)++];
+		buf[j++] = line[(*i)++];
 	}
 	if (quote->sq || quote->dq)
 		return (free(buf), NULL);
@@ -53,7 +49,7 @@ char	*ft_incremente(char *line, char *buf, int *i, t_quote *quote)
 	return (buf);
 }
 
-char	*read_word(char *line, int *i, t_quote_type *type)
+char	*read_word(char *line, int *i)
 {
 	char	*buf;
 	t_quote	quote;
@@ -66,6 +62,5 @@ char	*read_word(char *line, int *i, t_quote_type *type)
 		return (NULL);
 	if (ft_incremente(line, buf, i, &quote) == NULL)
 		return (NULL);
-	*type = quote.type;
 	return (buf);
 }

@@ -26,9 +26,9 @@ void	error_is_a_directory(const char *cmd)
 	ft_putstr_fd(": Is a directory\n", STDERR_FILENO);
 }
 
-void	error_invalid_identifier(char *str)
+void	error_invalid_identifier(const char *str)
 {
-	ft_putstr_fd("export: '", 2);
-	ft_putstr_fd(str, 2);
-	ft_putstr_fd("': not a valid identifier\n", 2);
+	ft_putstr_fd("export: '", STDERR_FILENO);
+	ft_putstr_fd((char *)str, STDERR_FILENO);
+	ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
 }

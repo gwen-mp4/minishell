@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_tokens.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:19:46 by storck            #+#    #+#             */
-/*   Updated: 2026/03/06 13:10:42 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/16 21:04:10 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /*Function that will create a token, if value is WORD,*/
 /*then duplicate it into token else NULL*/
-t_token	*create_token(t_type type, char *value, t_quote_type quote)
+t_token	*create_token(t_type type, char *value)
 {
 	t_token	*token;
 
@@ -26,7 +26,6 @@ t_token	*create_token(t_type type, char *value, t_quote_type quote)
 		token->value = ft_strdup(value);
 	else
 		token->value = NULL;
-	token->quote_type = quote;
 	token->next = NULL;
 	return (token);
 }

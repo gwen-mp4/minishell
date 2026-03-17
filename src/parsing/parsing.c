@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 12:19:41 by storck            #+#    #+#             */
-/*   Updated: 2026/03/13 11:16:36 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/16 23:39:53 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	parsing_token_one(t_token **token, t_cmd **current, t_token *tokens_head,
 	cur = *current;
 	if (tok->type == WORD)
 	{
-		if (!add_arg_to_cmd(tok->value, tok->quote_type, cur))
+		if (!add_arg_to_cmd(tok->value, cur))
 			return (error_cleanup_parsing(*current, NULL, tokens_head, data),
 				0);
 	}
@@ -65,11 +65,9 @@ int	parsing_token_two(t_token **token, t_cmd **current,
 	t_token *tokens_head, t_data *data)
 {
 	t_token		*tok;
-	t_cmd		*cur;
 	const char	*err;
 
 	tok = *token;
-	cur = *current;
 	if (tok->type == PIPE)
 	{
 		data->pipe_count++;
@@ -80,9 +78,9 @@ int	parsing_token_two(t_token **token, t_cmd **current,
 			return (0);
 		}
 		(*current)->next = new_cmd();
-		if (!cur->next)
+		if (!(*current)->next)
 			return (0);
-		*current = cur->next;
+		*current = (*current)->next;
 	}
 	return (1);
 }

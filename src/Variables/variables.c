@@ -3,115 +3,74 @@
 /*                                                        :::      ::::::::   */
 /*   variables.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/04 15:02:36 by storck            #+#    #+#             */
-/*   Updated: 2026/03/16 10:30:20 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/17 12:57:00 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	var_declaration(char *str)
+/*Function that will set the export OR replace the variable and removing the quotes*/
+/*and remove null string in the case if $DONTEXIST so that there're no problems*/
+static void	process_cmd_args(t_cmd *cmd, t_data *data)
 {
 	int	i;
 
 	i = 0;
-	while (str[i])
+	while (cmd->av[i])
 	{
-		if (str[i] == '=')
-			return (i);
-		i++;
+		if (var_declaration(cmd->av[i]) && i == 0)
+		{
+			if (!export_ex(cmd->av[i], &data->envlst))
+				return (perror("malloc"));
+			pull_back_av(cmd->av);
+		}
+		else
+		{
+			while (do_replace(cmd->av[i]))
+				replace_var(&cmd->av[i], data);
+			if (!cmd->av[i][0])
+				remove_av_at(cmd->av, i);
+			else
+				strip_quotes(&cmd->av[i++]);
+		}
 	}
-	return (0);
 }
 
-void	new_var(t_data *data, char *str)
-{
-	char	*var_name;
-	char	*var_content;
-	int		i;
-
-	var_name = malloc(sizeof(char));
-	if (!var_name)
-		return ;
-	var_content = malloc(sizeof(char));
-	if (!var_content)
-		return ;
-	i = var_declaration(str);
-	memmove(var_name, str, i);
-	memmove(var_content, &str[i + 1], ft_strlen(str) - (i));
-	var_name[i] = 0;
-	var_content[ft_strlen(str) - i] = 0;
-	add_var(data, var_name, var_content);
-}
-
-void	pull_back_av(char **av)
+/*Function that will do basically do the same thing as above but except i starts at 1*/
+/*because we don't take export as argument*/
+static void	process_export_args(t_cmd *cmd, t_data *data)
 {
 	int	i;
 
 	i = 1;
-	while (av[i])
+	while (cmd->av[i])
 	{
-		av[i - 1] = av[i];
-		i++;
+		while (do_replace(cmd->av[i]))
+			replace_var(&cmd->av[i], data);
+		if (!cmd->av[i][0])
+			remove_av_at(cmd->av, i);
+		else
+			strip_quotes(&cmd->av[i++]);
 	}
-	av[i - 1] = NULL;
-	free(av[i]);
 }
 
-void	replace_var(char **var, t_data *data)
-{
-	char	*var_content;
-	char	*head;
-	int		i;
-
-	i = 0;
-	while ((*var)[i] != '$')
-		i++;
-	head = ft_substr(*var, 0, i);
-	if (i > 0 && !head)
-		return ;
-	if ((*var)[i + 1] == '?')
-		var_content = exit_code_to_str(data->exit_code, *var + i + 2);
-	else
-		var_content = get_var_content((*var) + i + 1, data);
-	if (!var_content)
-	{
-		*var[0] = '\0';
-		return (free(head));
-	}
-	free (*var);
-	*var = ft_strjoin(head, var_content);
-	free (head);
-	free (var_content);
-}
-
+/*Function that will check for anything to expand if export or not*/
 void	filter_var(t_cmd *cmd, t_data *data)
 {
-	int		i;
 	t_cmd	*tmp;
 
-	if (!cmd->av || !cmd->av[0])
+	if (!cmd || !cmd->av || !cmd->av[0])
 		return ;
 	tmp = cmd;
-	while (tmp && ft_strcmp(cmd->av[0], "export"))
+	while (tmp && tmp->av && tmp->av[0])
 	{
-		i = -1;
-		while (tmp->av[++i])
-		{
-			if (var_declaration(tmp->av[i]) && i == 0)
-			{
-				if (!export_ex(tmp->av[i], &data->envlst))
-					return (perror("malloc"));
-				pull_back_av(tmp->av);
-			}
-			else if (do_replace(tmp->av[i], tmp->quote_type[i]))
-			{
-				replace_var(&tmp->av[i], data);
-				continue ;
-			}
-		}
+		if (ft_strcmp(tmp->av[0], "export") == 0)
+			process_export_args(tmp, data);
+		else
+			process_cmd_args(tmp, data);
 		tmp = tmp->next;
 	}
 }
