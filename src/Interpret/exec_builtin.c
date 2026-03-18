@@ -6,7 +6,7 @@
 /*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 09:31:41 by storck            #+#    #+#             */
-/*   Updated: 2026/03/18 14:46:09 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/18 15:14:15 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,19 @@ void	no_path(char *str)
 	if (!ft_strncmp(str, "./", 2))
 	{
 		error_permission_denied(str);
+		free(str);
 		exit (126);
 	}
 	else if (ft_strchr(str, '/'))
 	{
 		error_no_such_file(str);
+		free(str);
 		exit (127);
 	}
 	else
 	{
 		error_command_not_found(str);
+		free(str);
 		exit (127);
 	}
 }
@@ -34,17 +37,20 @@ void	no_path(char *str)
 void	exec_cmd(t_cmd *cmd, char **env, t_data *data, pid_t *pids)
 {
 	char	*path;
+	char	*name;
 
 	if (!cmd || !cmd->av || !cmd->av[0])
 		exit (0);
 	set_fds(cmd);
+	name = ft_strdup(cmd->av[0]);
 	path = get_path(cmd->av[0], env);
 	if (!path)
 	{
 		free_find_way(data, pids, NULL);
 		free_env(env, -1);
-		no_path(cmd->av[0]);
+		no_path(name);
 	}
+	free(name);
 	if (execve(path, cmd->av, env) == -1)
 	{
 		if (opendir(cmd->av[0]))
