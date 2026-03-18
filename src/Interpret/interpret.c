@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   interpret.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 12:43:54 by storck            #+#    #+#             */
-/*   Updated: 2026/03/17 14:25:08 by marvin           ###   ########.fr       */
+/*   Updated: 2026/03/18 11:44:31 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,13 @@ static void	wait_all(pid_t	*pids, int total, t_data *data)
 	{
 		waitpid(pids[i], &status, 0);
 		if (i == total - 1)
+		{
 			data->exit_code = get_exit_code(status);
+			if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+				ft_putstr_fd("\n", STDERR_FILENO);
+			else if (WIFSIGNALED(status) && WTERMSIG(status) == SIGQUIT)
+				ft_putendl_fd("Quit (core dumped)", STDERR_FILENO);
+		}
 		i++;
 	}
 }
@@ -75,6 +81,8 @@ static void	exec_last(t_cmd *cmd, t_data *data, int save_in, int save_out)
 	pids[total - 1] = fork_process();
 	if (!pids[total - 1])
 		find_way(cmd, data, pids);
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 	redirect_fd(save_in, STDIN_FILENO);
 	redirect_fd(save_out, STDOUT_FILENO);
 	wait_all(pids, total, data);
@@ -91,7 +99,7 @@ void	execution(t_cmd *cmd, t_data *data)
 		return ;
 	save_in = dup_process(STDIN_FILENO, -1);
 	save_out = dup_process(STDOUT_FILENO, save_in);
-	if (prepare_heredoc(cmd) == EXIT_FAILURE || !cmd->av || !cmd->av[0])
+	if (prepare_heredoc(cmd, data) == EXIT_FAILURE || !cmd->av || !cmd->av[0])
 	{
 		close(save_in);
 		close(save_out);

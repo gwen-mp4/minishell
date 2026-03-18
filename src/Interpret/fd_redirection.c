@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fd_redirection.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/25 10:31:45 by storck            #+#    #+#             */
-/*   Updated: 2026/03/16 10:53:10 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/18 11:38:36 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ void	find_way(t_cmd *cmd, t_data *data, pid_t *pids)
 {
 	char	**env;
 
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 	if (is_builtin(cmd->av[0]))
 	{
 		exec_builtin(cmd, cmd->av, data);

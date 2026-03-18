@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 10:49:54 by storck            #+#    #+#             */
-/*   Updated: 2026/03/17 14:30:07 by marvin           ###   ########.fr       */
+/*   Updated: 2026/03/18 11:12:21 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,7 @@ char	*read_word(char *line, int *i);
 t_token	*lexer(char *input, t_data *data);
 
 /* utils */
+void	set_g_sig(t_data *data);
 int		is_space(char c);
 int		is_operator(char c);
 int		is_redir(t_type type);
@@ -180,8 +181,8 @@ void	add_back_token(t_token **list, t_token *new);
 t_token	*create_token(t_type type, char *value);
 
 /* here_doc_process.c */
-int		file_heredoc_process(t_redir *heredoc);
-int		prepare_heredoc(t_cmd *cmd);
+int		file_heredoc_process(t_redir *heredoc, t_data *data);
+int		prepare_heredoc(t_cmd *cmd, t_data *data);
 
 /* append_file_process.c */
 int		file_append_process(char *outfile);
