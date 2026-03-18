@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 09:31:41 by storck            #+#    #+#             */
-/*   Updated: 2026/03/18 15:14:15 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/18 15:20:01 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	no_path(char *str)
 {
-	if (!ft_strncmp(str, "./", 2))
+	if (access(str, F_OK) == 0 && !ft_strncmp(str, "./", 2))
 	{
 		error_permission_denied(str);
 		free(str);
