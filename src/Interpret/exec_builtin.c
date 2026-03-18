@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 09:31:41 by storck            #+#    #+#             */
-/*   Updated: 2026/03/18 10:26:54 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/18 11:50:31 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	exec_cmd(t_cmd *cmd, char **env)
 
 	if (!cmd || !cmd->av || !cmd->av[0])
 		exit (0);
-	signal_child();
 	set_fds(cmd);
 	path = get_path(cmd->av[0], env);
 	if (!path && ft_strchr(cmd->av[0], '/'))

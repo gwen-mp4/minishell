@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: marvin <marvin@student.42.fr>              +#+  +:+       +#+         #
+#    By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/11 15:53:54 by gwen              #+#    #+#              #
-#    Updated: 2026/03/17 15:44:15 by marvin           ###   ########.fr        #
+#    Updated: 2026/03/18 11:41:18 by gwen             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,7 +55,6 @@ SRC = main.c \
 	Utils/error.c \
 	Utils/error2.c \
 	Utils/free.c \
-	Utils/signal_child.c \
 	Utils/signal_heredoc.c \
 	Utils/signal.c \
 	Utils/debug.c \
