@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   interpret.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 12:43:54 by storck            #+#    #+#             */
-/*   Updated: 2026/03/18 11:50:49 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/18 12:20:44 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,29 +92,26 @@ static void	exec_last(t_cmd *cmd, t_data *data, int save_in, int save_out)
 
 void	execution(t_cmd *cmd, t_data *data)
 {
-	int		save_in;
-	int		save_out;
-
 	if (!cmd)
 		return ;
-	save_in = dup_process(STDIN_FILENO, -1);
-	save_out = dup_process(STDOUT_FILENO, save_in);
+	data->fd_in = dup_process(STDIN_FILENO, -1);
+	data->fd_out = dup_process(STDOUT_FILENO, data->fd_in);
 	if ((!cmd->av || !cmd->av[0]) && cmd->redirs != NULL && !cmd->next)
 	{
 		check_only_fds(cmd, data);
-		reset_fds(save_in, save_out);
+		reset_fds(data->fd_in, data->fd_out);
 	}
 	if ((prepare_heredoc(cmd, data) == EXIT_FAILURE || !cmd->av || !cmd->av[0])
 		&& !cmd->next)
 	{
-		close_all(save_in, save_out);
+		close_all(data->fd_in, data->fd_out);
 		return ;
 	}
 	if (data->pipe_count == 0 && is_builtin(cmd->av[0]))
 	{
 		exec_builtin(cmd, cmd->av, data);
-		reset_fds(save_in, save_out);
+		reset_fds(data->fd_in, data->fd_out);
 		return ;
 	}
-	exec_last(cmd, data, save_in, save_out);
+	exec_last(cmd, data, data->fd_in, data->fd_out);
 }
