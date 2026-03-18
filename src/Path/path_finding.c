@@ -6,7 +6,7 @@
 /*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 12:00:42 by storck            #+#    #+#             */
-/*   Updated: 2026/03/13 12:54:48 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/18 15:47:14 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ char	*build_my_path(char *path, char *cmd)
 	char	*tmp;
 	char	*full_path;
 
+	if (!cmd[0])
+		return (NULL);
 	tmp = ft_strjoin(path, "/");
 	if (!tmp)
 		return (NULL);
