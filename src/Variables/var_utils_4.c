@@ -1,4 +1,14 @@
-//42 HEADER
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   var_utils_4.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/03/18 09:32:05 by storck            #+#    #+#             */
+/*   Updated: 2026/03/18 09:32:05 by storck           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
@@ -36,7 +46,8 @@ static char	*build_result(char *head, char *value, char *tail)
 	return (res);
 }
 
-/*Function that will replace the variable after $ by the actual value of the env*/
+/*Function that will replace the variable*/
+/*after $ by the actual value of the env*/
 /*and concatenate all at the end (if no delimiter ofc)*/
 void	replace_var(char **var, t_data *data)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:54:48 by storck            #+#    #+#             */
-/*   Updated: 2026/03/17 14:33:56 by marvin           ###   ########.fr       */
+/*   Updated: 2026/03/18 09:45:17 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,18 @@ void	do_line(t_data *data)
 	data->cmd = NULL;
 }
 
+void	set_g_sig(t_data *data)
+{
+	data->exit_code = 130;
+	g_sig = 0;
+}
+
+void	reset_line(t_data *data)
+{
+	free(data->line);
+	data->line = NULL;
+}
+
 int	main(int ac, char **av, char **env)
 {
 	t_data	data;
@@ -57,22 +69,17 @@ int	main(int ac, char **av, char **env)
 		if (!data.line)
 			break ;
 		if (g_sig == SIGINT)
-		{
-			data.exit_code = 130;
-			g_sig = 0;
-		}
+			set_g_sig(&data);
 		if (*data.line)
 			add_history(data.line);
 		data.cmd = lexing_and_parsing(&data);
 		if (!data.cmd)
 		{
-			free(data.line);
-			data.line = NULL;
+			reset_line(&data);
 			continue ;
 		}
 		do_line(&data);
 	}
 	rl_clear_history();
-	ft_putstr_fd("exit\n", STDOUT_FILENO);
-	return (free_data(&data), 0);
+	return (ft_putstr_fd("exit\n", STDOUT_FILENO), free_data(&data), 0);
 }

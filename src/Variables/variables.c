@@ -3,17 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   variables.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/04 15:02:36 by storck            #+#    #+#             */
-/*   Updated: 2026/03/17 15:54:21 by marvin           ###   ########.fr       */
+/*   Updated: 2026/03/18 09:34:10 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-/*Function that will set the export OR replace the variable and removing the quotes*/
-/*and remove null string in the case if $DONTEXIST so that there're no problems*/
+/*Function that will set the export OR replace*/
+/*the variable and removing the quotes*/
+/*and remove null string in the case if*/
+/*$DONTEXIST so that there're no problems*/
 static void	process_cmd_args(t_cmd *cmd, t_data *data)
 {
 	int	i;
@@ -39,7 +41,8 @@ static void	process_cmd_args(t_cmd *cmd, t_data *data)
 	}
 }
 
-/*Function that will do basically do the same thing as above but except i starts at 1*/
+/*Function that will do basically do the same*/
+/*thing as above but except i starts at 1*/
 /*because we don't take export as argument*/
 static void	process_export_args(t_cmd *cmd, t_data *data)
 {
