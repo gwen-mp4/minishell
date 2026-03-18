@@ -6,7 +6,7 @@
 /*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 12:43:54 by storck            #+#    #+#             */
-/*   Updated: 2026/03/18 10:52:32 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/18 11:40:38 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,18 +91,21 @@ void	execution(t_cmd *cmd, t_data *data)
 		return ;
 	save_in = dup_process(STDIN_FILENO, -1);
 	save_out = dup_process(STDOUT_FILENO, save_in);
-	if ((prepare_heredoc(cmd) == EXIT_FAILURE || !cmd->av || !cmd->av[0]) && !cmd->next)
+	if ((!cmd->av || !cmd->av[0]) && cmd->redirs != NULL && !cmd->next)
 	{
-		//check_only_fds(cmd, data);
-		close(save_in);
-		close(save_out);
+		check_only_fds(cmd, data);
+		reset_fds(save_in, save_out);
+	}
+	if ((prepare_heredoc(cmd) == EXIT_FAILURE || !cmd->av || !cmd->av[0])
+		&& !cmd->next)
+	{
+		close_all(save_in, save_out);
 		return ;
 	}
 	if (data->pipe_count == 0 && is_builtin(cmd->av[0]))
 	{
 		exec_builtin(cmd, cmd->av, data);
-		redirect_fd(save_in, STDIN_FILENO);
-		redirect_fd(save_out, STDOUT_FILENO);
+		reset_fds(save_in, save_out);
 		return ;
 	}
 	exec_last(cmd, data, save_in, save_out);

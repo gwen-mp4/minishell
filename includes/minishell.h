@@ -6,7 +6,7 @@
 /*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 10:49:54 by storck            #+#    #+#             */
-/*   Updated: 2026/03/18 10:31:22 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/18 11:41:16 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,6 +174,8 @@ int		file_write_process(char *outfile);
 pid_t	fork_process(void);
 void	pipe_process(int p_fd[2]);
 int		dup_process(int fd, int save_in);
+void	close_all(int save_in, int save_out);
+void	reset_fds(int save_in, int save_out);
 
 /* create_tokens.c */
 void	add_back_token(t_token **list, t_token *new);

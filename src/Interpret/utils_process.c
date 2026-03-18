@@ -48,3 +48,15 @@ int	dup_process(int fd, int save_in)
 	}
 	return (new_fd);
 }
+
+void	close_all(int save_in, int save_out)
+{
+	close(save_in);
+	close(save_out);
+}
+
+void	reset_fds(int save_in, int save_out)
+{
+	redirect_fd(save_in, STDIN_FILENO);
+	redirect_fd(save_out, STDOUT_FILENO);
+}
