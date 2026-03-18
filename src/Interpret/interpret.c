@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   interpret.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 12:43:54 by storck            #+#    #+#             */
-/*   Updated: 2026/03/17 14:25:08 by marvin           ###   ########.fr       */
+/*   Updated: 2026/03/18 10:52:32 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,9 @@ void	execution(t_cmd *cmd, t_data *data)
 		return ;
 	save_in = dup_process(STDIN_FILENO, -1);
 	save_out = dup_process(STDOUT_FILENO, save_in);
-	if (prepare_heredoc(cmd) == EXIT_FAILURE || !cmd->av || !cmd->av[0])
+	if ((prepare_heredoc(cmd) == EXIT_FAILURE || !cmd->av || !cmd->av[0]) && !cmd->next)
 	{
+		//check_only_fds(cmd, data);
 		close(save_in);
 		close(save_out);
 		return ;

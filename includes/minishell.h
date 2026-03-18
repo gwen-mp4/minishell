@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 10:49:54 by storck            #+#    #+#             */
-/*   Updated: 2026/03/17 14:30:07 by marvin           ###   ########.fr       */
+/*   Updated: 2026/03/18 10:31:22 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,6 +191,7 @@ int		input_redirection(t_redir *redir);
 int		output_redirection(t_redir *redir);
 void	find_way(t_cmd *cmd, t_data *data, pid_t *pids);
 void	set_fds(t_cmd *cmd);
+void	check_only_fds(t_cmd *cmd, t_data *data);
 
 /* exec_builtin */
 void	exec_cmd(t_cmd *cmd, char **env);
