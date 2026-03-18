@@ -6,7 +6,7 @@
 /*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 10:49:54 by storck            #+#    #+#             */
-/*   Updated: 2026/03/18 13:10:58 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/18 14:46:17 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,6 +170,7 @@ void	do_pipe(t_cmd *cmd, t_data *data, pid_t *pids, int index);
 void	redirect_fd(int old_fd, int new_fd);
 int		file_read_process(char *infile);
 int		file_write_process(char *outfile);
+void	free_find_way(t_data *data, pid_t *pids, t_cmd *cmd);
 
 /* utils_process.c*/
 pid_t	fork_process(void);
@@ -197,7 +198,7 @@ void	set_fds(t_cmd *cmd);
 void	check_only_fds(t_cmd *cmd, t_data *data);
 
 /* exec_builtin */
-void	exec_cmd(t_cmd *cmd, char **env);
+void	exec_cmd(t_cmd *cmd, char **env, t_data *data, pid_t *pids);
 int		is_builtin(char *str);
 void	exec_builtin(t_cmd *cmd, char **args, t_data *data);
 

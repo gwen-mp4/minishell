@@ -6,7 +6,7 @@
 /*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 15:27:33 by storck            #+#    #+#             */
-/*   Updated: 2026/03/18 13:10:32 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/18 14:44:09 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,13 @@ int	file_write_process(char *outfile)
 		return (-1);
 	}
 	return (fd_out);
+}
+
+void	free_find_way(t_data *data, pid_t *pids, t_cmd *cmd)
+{
+	if (cmd != NULL)
+		set_fds(cmd);
+	close_all(data->fd_in, data->fd_out);
+	free_data(data);
+	free(pids);
 }

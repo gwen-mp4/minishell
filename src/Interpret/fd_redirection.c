@@ -6,7 +6,7 @@
 /*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/25 10:31:45 by storck            #+#    #+#             */
-/*   Updated: 2026/03/18 13:10:45 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/18 14:46:28 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,27 +46,26 @@ void	find_way(t_cmd *cmd, t_data *data, pid_t *pids)
 	char	**env;
 
 	if (!cmd->av || !cmd->av[0])
-		set_fds(cmd);
+	{
+		free_find_way(data, pids, cmd);
+		exit (0);
+	}
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
 	if (is_builtin(cmd->av[0]))
 	{
 		exec_builtin(cmd, cmd->av, data);
 		if (ft_strcmp(cmd->av[0], "exit"))
-		{
-			free_data(data);
-			free(pids);
-		}
+			free_find_way(data, pids, NULL);
 		exit(0);
 	}
 	env = regen_env(data->envlst);
 	if (!env)
 		return (perror("malloc: "));
 	else
-		exec_cmd(cmd, env);
+		exec_cmd(cmd, env, data, pids);
 	free_env(env, -1);
-	free_data(data);
-	free(pids);
+	free_find_way(data, pids, NULL);
 	exit(data->exit_code);
 }
 
