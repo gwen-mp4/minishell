@@ -6,7 +6,7 @@
 /*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 12:32:06 by storck            #+#    #+#             */
-/*   Updated: 2026/03/13 12:41:55 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/19 15:18:29 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,7 @@ bool	unset(char *str, t_list **env)
 	if (!str || !*str)
 		return (false);
 	if (!syntax(str))
-	{
-		ft_putendl_fd("unset: invalid identifier", 2);
 		return (true);
-	}
 	pos = exist(str, *env);
 	if (pos == -1)
 		return (false);
