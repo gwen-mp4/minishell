@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_process.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 15:27:33 by storck            #+#    #+#             */
-/*   Updated: 2026/03/18 16:11:41 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/19 10:53:33 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ int	file_read_process(char *infile)
 {
 	int	fd_in;
 
-	if (opendir(infile) == NULL)
-		return (0);
+	// if (opendir(infile) == NULL)
+	// 	return (0);
 	fd_in = open(infile, O_RDONLY, 0644);
 	if (fd_in == -1)
 	{
