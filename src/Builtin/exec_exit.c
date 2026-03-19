@@ -6,7 +6,7 @@
 /*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 12:32:23 by storck            #+#    #+#             */
-/*   Updated: 2026/03/11 09:21:10 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/19 10:23:49 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,12 @@ void	err_exit(t_data *data, char *str)
 	exit (2);
 }
 
+void	exit_ret(t_data *data, int ret)
+{
+	free_data(data);
+	exit(ret);
+}
+
 void	exec_exit(char **args, t_data *data)
 {
 	int	ret;
@@ -57,6 +63,8 @@ void	exec_exit(char **args, t_data *data)
 
 	ret = 0;
 	err = 0;
+	if (args[1] && args[1][0] == '\0')
+		err_exit(data, args[1]);
 	if (args[1])
 	{
 		ret = ato_exit_code(args[1], &err);
@@ -72,9 +80,7 @@ void	exec_exit(char **args, t_data *data)
 	if (!args[1])
 	{
 		ret = data->exit_code;
-		free_data(data);
-		exit (ret);
+		exit_ret(data, ret);
 	}
-	free_data(data);
-	exit(ret);
+	exit_ret(data, ret);
 }

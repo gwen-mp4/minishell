@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 09:31:41 by storck            #+#    #+#             */
-/*   Updated: 2026/03/18 16:13:40 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/19 10:16:35 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,19 +84,19 @@ int	is_builtin(char *str)
 void	exec_builtin(t_cmd *cmd, char **arg, t_data *data)
 {
 	set_fds(cmd);
-	if (strncmp(arg[0], "echo", ft_strlen(arg[0])) == 0)
+	if (ft_strncmp(arg[0], "echo", ft_strlen(arg[0])) == 0)
 		data->exit_code = exec_echo(arg + 1, data);
-	else if (strncmp(arg[0], "cd", ft_strlen(arg[0])) == 0)
+	else if (ft_strncmp(arg[0], "cd", ft_strlen(arg[0])) == 0)
 		data->exit_code = exec_cd(data, cmd->av);
-	else if (strncmp(arg[0], "pwd", ft_strlen(arg[0])) == 0)
+	else if (ft_strncmp(arg[0], "pwd", ft_strlen(arg[0])) == 0)
 		data->exit_code = exec_pwd(cmd->av);
-	else if (strncmp(arg[0], "export", ft_strlen(arg[0])) == 0)
+	else if (ft_strncmp(arg[0], "export", ft_strlen(arg[0])) == 0)
 		data->exit_code = exec_export(arg, &(data->envlst), data);
-	else if (strncmp(arg[0], "unset", ft_strlen(arg[0])) == 0)
+	else if (ft_strncmp(arg[0], "unset", ft_strlen(arg[0])) == 0)
 		data->exit_code = exec_unset(arg + 1, &data->envlst);
-	else if (strncmp(arg[0], "env", ft_strlen(arg[0])) == 0)
+	else if (ft_strncmp(arg[0], "env", ft_strlen(arg[0])) == 0)
 		data->exit_code = exec_env(data->envlst);
-	else if (strncmp(arg[0], "exit", ft_strlen(arg[0])) == 0)
+	else if (ft_strncmp(arg[0], "exit", ft_strlen(arg[0])) == 0)
 	{
 		close_all(data->fd_in, data->fd_out);
 		exec_exit(arg, data);
