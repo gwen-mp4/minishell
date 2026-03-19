@@ -6,7 +6,7 @@
 /*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 15:27:33 by storck            #+#    #+#             */
-/*   Updated: 2026/03/19 12:04:40 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/19 12:50:21 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	file_write_process(char *outfile)
 {
 	int	fd_out;
 
-	if (opendir(outfile) == NULL)
+	if (opendir(outfile) != NULL)
 		return (error_is_a_directory(outfile), -1);
 	fd_out = open(outfile, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (fd_out == -1)
