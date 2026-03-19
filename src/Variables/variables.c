@@ -6,7 +6,7 @@
 /*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/04 15:02:36 by storck            #+#    #+#             */
-/*   Updated: 2026/03/18 09:34:10 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/19 12:02:21 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,11 @@ void	filter_var(t_cmd *cmd, t_data *data)
 	t_cmd	*tmp;
 
 	if (!cmd || !cmd->av || !cmd->av[0])
+	{
+		if (cmd->redirs != NULL)
+			process_redir_args(cmd->redirs, data);
 		return ;
+	}
 	tmp = cmd;
 	while (tmp && tmp->av && tmp->av[0])
 	{
