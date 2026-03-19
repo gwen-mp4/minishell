@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils_1.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/04 10:00:38 by storck            #+#    #+#             */
-/*   Updated: 2026/03/19 14:05:11 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/19 14:26:58 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,10 @@ int	init_envlst(t_data *data, char **env)
 		if (!tmp)
 			return (free_list(&list));
 		if (!append(&list, tmp))
-			return (free_list(&list));
+		{
+			free(tmp);
+			return (free_list(&list));	
+		}
 	}
 	data->envlst = list;
 	export_ex("OLDPWD=", &data->envlst);

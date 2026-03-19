@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_process.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 15:27:33 by storck            #+#    #+#             */
-/*   Updated: 2026/03/19 14:11:06 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/19 14:26:20 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,16 +46,19 @@ void	redirect_fd(int old_fd, int new_fd)
 int	file_read_process(char *infile)
 {
 	int	fd_in;
+	DIR	*fd;
 
-	if (opendir(infile) != NULL)
+	fd = opendir(infile);
+	if (fd != NULL)
 	{
 		if (errno == ENOENT)
 			return (0);
+		closedir(fd);
 	}
 	fd_in = open(infile, O_RDONLY, 0644);
 	if (fd_in == -1)
 	{
-		ft_putstr_fd("open ", 2);
+		ft_putstr_fd("minishell: ", 2);
 		perror(infile);
 		return (-1);
 	}
@@ -65,13 +68,15 @@ int	file_read_process(char *infile)
 int	file_write_process(char *outfile)
 {
 	int	fd_out;
+	DIR	*fd;
 
-	if (opendir(outfile) != NULL)
-		return (error_is_a_directory(outfile), -1);
+	fd = opendir(outfile);
+	if (fd != NULL)
+		return (error_is_a_directory(outfile), closedir(fd), -1);
 	fd_out = open(outfile, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (fd_out == -1)
 	{
-		ft_putstr_fd("open ", 2);
+		ft_putstr_fd("minishell: ", 2);
 		perror(outfile);
 		return (-1);
 	}
