@@ -6,7 +6,7 @@
 /*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 10:49:54 by storck            #+#    #+#             */
-/*   Updated: 2026/03/18 14:46:17 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/19 14:22:47 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,8 @@ char	**get_args(t_token *token);
 void	signal_heredoc(void);
 void	setup_signal(void);
 void	signal_child(void);
+void	free_heredoc(char *line, int fd, t_data *data, char *doc_name);
+void	check_find_way(t_data *data, t_cmd *cmd, pid_t *pids);
 
 /* init.c */
 int		init_data(t_data *data, int ac, char **av, char **env);
@@ -194,7 +196,7 @@ int		file_append_process(char *outfile);
 int		input_redirection(t_redir *redir);
 int		output_redirection(t_redir *redir);
 void	find_way(t_cmd *cmd, t_data *data, pid_t *pids);
-void	set_fds(t_cmd *cmd);
+int		set_fds(t_cmd *cmd);
 void	check_only_fds(t_cmd *cmd, t_data *data);
 
 /* exec_builtin */

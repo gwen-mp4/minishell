@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 09:31:41 by storck            #+#    #+#             */
-/*   Updated: 2026/03/19 10:16:35 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/19 14:12:27 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ void	exec_cmd(t_cmd *cmd, char **env, t_data *data, pid_t *pids)
 
 	if (!cmd || !cmd->av || !cmd->av[0])
 		exit (0);
-	set_fds(cmd);
 	name = ft_strdup(cmd->av[0]);
 	path = get_path(cmd->av[0], env);
 	if (!path)
@@ -83,7 +82,6 @@ int	is_builtin(char *str)
 
 void	exec_builtin(t_cmd *cmd, char **arg, t_data *data)
 {
-	set_fds(cmd);
 	if (ft_strncmp(arg[0], "echo", ft_strlen(arg[0])) == 0)
 		data->exit_code = exec_echo(arg + 1, data);
 	else if (ft_strncmp(arg[0], "cd", ft_strlen(arg[0])) == 0)
