@@ -6,7 +6,7 @@
 /*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 12:31:48 by storck            #+#    #+#             */
-/*   Updated: 2026/03/19 13:30:12 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/19 15:22:27 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ int	exec_export(char **args, t_list **env, t_data *data)
 		if (!valid_identifier(args[i], data))
 		{
 			error_invalid_identifier(args[i]);
-			exit_code = 1;
+			exit_code = 2;
 		}
 		else if (!export_ex(args[i], env))
 			return (perror("malloc"), 1);

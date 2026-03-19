@@ -6,7 +6,7 @@
 /*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/04 10:00:38 by storck            #+#    #+#             */
-/*   Updated: 2026/03/19 14:05:11 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/19 14:26:49 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,5 @@ int	init_envlst(t_data *data, char **env)
 			return (free_list(&list));
 	}
 	data->envlst = list;
-	export_ex("OLDPWD=", &data->envlst);
 	return (1);
 }
