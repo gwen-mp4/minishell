@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_unset.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 12:32:06 by storck            #+#    #+#             */
-/*   Updated: 2026/03/19 15:18:29 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/20 14:05:20 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@ static bool	syntax(char *str)
 {
 	int	i;
 
-	if (str[0] != '_' && !ft_isalpha(str[0]))
+	if (!is_special_op(str[0]))
 		return (false);
 	i = 0;
 	while (str[i])
 	{
-		if (!ft_isalnum(str[i]) && str[i] != '_')
+		if (!is_special_op(str[i]) && str[i] != '-')
 			return (false);
 		i++;
 	}
@@ -99,7 +99,11 @@ int	exec_unset(char **args, t_list **env)
 	while (args[i])
 	{
 		if (unset(args[i], env))
+		{
+			ft_putstr_fd(args[i], STDERR_FILENO);
+			ft_putendl_fd(" :command not found", STDERR_FILENO);
 			exit_code = 1;
+		}
 		i++;
 	}
 	return (exit_code);

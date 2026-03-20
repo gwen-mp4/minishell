@@ -6,7 +6,7 @@
 /*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 10:49:54 by storck            #+#    #+#             */
-/*   Updated: 2026/03/20 11:58:16 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/20 13:58:59 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,13 @@ typedef struct s_cmd
 	struct s_cmd	*next;
 }	t_cmd;
 
+typedef struct s_parse_h
+{
+	t_cmd	*head;
+	t_cmd	*current;
+	t_token	*tokens_head;
+}	t_parse_h;
+
 typedef struct s_var
 {
 	char			*name;
@@ -134,6 +141,7 @@ int		is_operator(char c);
 int		is_redir(t_type type);
 int		is_number(char *num);
 int		is_expandable(char c);
+int		is_special_op(char c);
 void	clean_tokens(t_token *tokens);
 void	free_cmds(t_cmd *cmd);
 void	free_data(t_data *data);
