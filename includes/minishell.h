@@ -6,7 +6,7 @@
 /*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 10:49:54 by storck            #+#    #+#             */
-/*   Updated: 2026/03/19 14:22:47 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/20 11:58:16 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -254,5 +254,7 @@ void	new_var(t_data *data, char *str);
 int		var_declaration(char *str);
 int		find_dollar(char *str);
 void	remove_av_at(char **av, int i);
+void	word_split(t_cmd *cmd, int *i);
+void	free_tab(char **tabl);
 
 #endif

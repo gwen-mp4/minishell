@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   variables.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/04 15:02:36 by storck            #+#    #+#             */
-/*   Updated: 2026/03/20 11:19:07 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/20 12:36:51 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,12 @@ static void	process_cmd_args(t_cmd *cmd, t_data *data)
 		{
 			while (do_replace(cmd->av[i]))
 				replace_var(&cmd->av[i], data);
+			word_split(cmd, &i);
+			strip_quotes(&cmd->av[i]);
 			if (!cmd->av[i][0])
 				remove_av_at(cmd->av, i);
 			else
-				strip_quotes(&cmd->av[i++]);
+				i++;
 		}
 	}
 }
