@@ -6,7 +6,7 @@
 #    By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/11 15:53:54 by gwen              #+#    #+#              #
-#    Updated: 2026/03/20 12:18:01 by gwen             ###   ########.fr        #
+#    Updated: 2026/03/20 13:59:10 by gwen             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,6 +51,7 @@ SRC = main.c \
 	Path/path_finding.c \
 	Path/path_split.c \
 	Utils/utils.c \
+	Utils/utils2.c \
 	Utils/init.c \
 	Utils/error.c \
 	Utils/error2.c \

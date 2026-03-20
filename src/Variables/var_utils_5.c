@@ -6,7 +6,7 @@
 /*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 11:31:22 by gwen              #+#    #+#             */
-/*   Updated: 2026/03/20 12:14:05 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/20 13:15:59 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ static int	add_splitted_to_cmd(t_cmd *cmd, int i, char **words)
 	count = j;
 	free(cmd->av[i]);
 	cmd->av[i] = ft_strdup(words[0]);
+	if (cmd->av[i])
+		return (0);
 	j = 1;
 	while (words[j])
 	{
@@ -56,12 +58,15 @@ static int	add_splitted_to_cmd(t_cmd *cmd, int i, char **words)
 void	word_split(t_cmd *cmd, int *i)
 {
 	char	**words;
+	int		count;
 
 	if (!has_quote(cmd->av[*i]))
 		return ;
 	words = ft_split(cmd->av[*i], ' ');
 	if (!words)
 		return ;
-	*i += add_splitted_to_cmd(cmd, *i, words) - 1;
+	count = add_splitted_to_cmd(cmd, *i, words);
 	free_tab(words);
+	if (count > 0)
+		*i += count - 1;
 }
