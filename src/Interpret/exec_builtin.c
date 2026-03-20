@@ -6,29 +6,46 @@
 /*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 09:31:41 by storck            #+#    #+#             */
-/*   Updated: 2026/03/20 12:57:24 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/20 13:08:28 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	no_path(char *str)
+int	path_is_set(char **env)
+{
+	int	i;
+
+	i = 0;
+	while (env[i])
+	{
+		if (ft_strnstr(env[i], "PATH", 4))
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+void	no_path(char *str, char **env)
 {
 	if (access(str, F_OK) == 0 && !ft_strncmp(str, "./", 2))
 	{
 		error_permission_denied(str);
+		free_env(env, -1);
 		free(str);
 		exit (126);
 	}
-	else if (ft_strchr(str, '/'))
+	else if (!path_is_set(env) || ft_strchr(str, '/'))
 	{
 		error_no_such_file(str);
+		free_env(env, -1);
 		free(str);
 		exit (127);
 	}
 	else
 	{
 		error_command_not_found(str);
+		free_env(env, -1);
 		free(str);
 		exit (127);
 	}
@@ -46,8 +63,7 @@ void	exec_cmd(t_cmd *cmd, char **env, t_data *data, pid_t *pids)
 	if (!path)
 	{
 		free_find_way(data, pids, NULL);
-		free_env(env, -1);
-		no_path(name);
+		no_path(name, env);
 	}
 	free(name);
 	if (execve(path, cmd->av, env) == -1)
