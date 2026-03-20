@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_unset.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 12:32:06 by storck            #+#    #+#             */
-/*   Updated: 2026/03/20 14:05:20 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/20 15:04:12 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,11 @@ int	exec_unset(char **args, t_list **env)
 
 	exit_code = 0;
 	i = 0;
+	if (args[0] && args[0][0] == '-' && args[0][1] != '\0')
+	{
+		error_invalid_option(args[0][1]);
+		return (2);
+	}
 	while (args[i])
 	{
 		if (unset(args[i], env))

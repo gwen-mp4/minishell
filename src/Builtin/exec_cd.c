@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 11:02:03 by storck            #+#    #+#             */
-/*   Updated: 2026/03/19 15:27:15 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/20 14:51:49 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ int	exec_cd(t_data *data, char **args)
 {
 	char	*path;
 
+	if (args[1] && args[1][0] == '-' && args[1][1] != '\0')
+		return (error_invalid_option(args[1][1]), 2);
 	if (count_arg(args) > 2)
 		return (error_too_many_arguments(args[0]), 1);
 	if (count_arg(args) == 1)

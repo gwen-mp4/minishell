@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 10:49:54 by storck            #+#    #+#             */
-/*   Updated: 2026/03/20 14:19:57 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/20 15:04:00 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,7 +219,7 @@ int		check_key(char *str);
 /* builtins */
 int		exec_cd(t_data *data, char **args);
 int		exec_echo(char **arg, t_data *data);
-int		exec_env(t_list *env);
+int		exec_env(t_list *env, char **av);
 void	exec_exit(char **args, t_data *data);
 bool	export_ex(char *str, t_list **env);
 int		exec_export(char **args, t_list **env, t_data *data);
@@ -244,6 +244,7 @@ int		len_list(t_list *lst);
 void	sort_array(char **arr, int len);
 char	**lst_to_arr(t_list *env);
 bool	null_env(t_data *data);
+void	error_invalid_option(char c);
 
 /* variable.c */
 void	filter_var(t_cmd *cmd, t_data *data);
