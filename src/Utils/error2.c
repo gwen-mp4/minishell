@@ -32,3 +32,28 @@ void	error_invalid_identifier(const char *str)
 	ft_putstr_fd((char *)str, STDERR_FILENO);
 	ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
 }
+
+void	error_file_name_argument(char *str)
+{
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
+	ft_putstr_fd((char *)str, STDERR_FILENO);
+	ft_putstr_fd(": filename argument required\n", STDERR_FILENO);
+}
+
+void	free_exec(t_data *data, char **env, DIR *fd, char *str)
+{
+	closedir(fd);
+	free_env(env, -1);
+	if (ft_strchr(str, '/'))
+	{
+		error_is_a_directory(str);
+		free_data(data);
+		exit (126);
+	}
+	else
+	{
+		error_file_name_argument(str);
+		free_data(data);
+		exit(2);
+	}
+}

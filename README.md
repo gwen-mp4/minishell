@@ -342,9 +342,9 @@ export T="echo segfault | grep segfault"  -->  $T       *bash prints "segfault |
 
 **20/03/2026 by gwen**:
 I found some leaks:
-"."
+~~"."~~
 
-/bin/
+~~/bin/~~
 
 Not leaks but should watch:
 

@@ -6,7 +6,7 @@
 /*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 10:49:54 by storck            #+#    #+#             */
-/*   Updated: 2026/03/20 15:04:00 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/20 15:36:33 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,6 +165,8 @@ void	error_no_such_file(const char *file);
 void	error_too_many_arguments(const char *cmd);
 void	error_is_a_directory(const char *cmd);
 void	error_invalid_identifier(const char *str);
+void	error_file_name_argument(char *str);
+void	free_exec(t_data *data, char **env, DIR *fd, char *str);
 
 /* path_finding.c */
 char	*get_path(char *cmd, char **envp);

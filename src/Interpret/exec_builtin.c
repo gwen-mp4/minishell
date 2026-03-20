@@ -6,7 +6,7 @@
 /*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 09:31:41 by storck            #+#    #+#             */
-/*   Updated: 2026/03/20 14:33:02 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/20 15:34:14 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void	exec_cmd(t_cmd *cmd, char **env, t_data *data, pid_t *pids)
 {
 	char	*path;
 	char	*name;
+	DIR		*fd;
 
 	if (!cmd || !cmd->av || !cmd->av[0])
 		exit (0);
@@ -68,10 +69,12 @@ void	exec_cmd(t_cmd *cmd, char **env, t_data *data, pid_t *pids)
 	free(name);
 	if (execve(path, cmd->av, env) == -1)
 	{
-		if (opendir(cmd->av[0]))
+		fd = opendir(cmd->av[0]);
+		if (fd)
 		{
-			error_is_a_directory(cmd->av[0]);
-			exit (126);
+			free(path);
+			free(pids);
+			free_exec(data, env, fd, cmd->av[0]);
 		}
 	}
 }
