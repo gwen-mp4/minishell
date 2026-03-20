@@ -6,7 +6,7 @@
 /*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:54:48 by storck            #+#    #+#             */
-/*   Updated: 2026/03/19 14:04:39 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/20 11:19:00 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,25 +39,7 @@ void	reset_line(t_data *data)
 
 void	do_line(t_data *data)
 {
-	char	*tmp;
-
-	if (!data->cmd->next && !data->cmd->redirs && !data->cmd->av[1]
-		&& data->cmd->av[0][0] == '$')
-	{
-		filter_var(data->cmd, data);
-		if (data->cmd->av[0])
-		{
-			tmp = ft_strdup(data->cmd->av[0]);
-			clean_tokens(data->token);
-			free_cmds(data->cmd);
-			reset_line(data);
-			data->line = tmp;
-			data->cmd = lexing_and_parsing(data);
-			filter_var(data->cmd, data);
-		}
-	}
-	else
-		filter_var(data->cmd, data);
+	filter_var(data->cmd, data);
 	execution(data->cmd, data);
 	reset_line(data);
 	clean_tokens(data->token);

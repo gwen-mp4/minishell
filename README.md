@@ -338,6 +338,9 @@ in short, i let you see by yourself using the tester but it's generally the redi
 export T="echo segfault | grep segfault"  -->  $T       *bash prints "segfault | grep segfault" but for us, it prints command not found*
 
 
+-unset PATH --> cd /bin --> ls      *ls should work, basically if we are in the command's folder, it can find it even if PATH is unset.*
+
+
 *This project has been created as part of the 42 curriculum by gwen, storck*
 
 # Minishell
