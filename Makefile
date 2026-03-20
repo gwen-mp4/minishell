@@ -6,7 +6,7 @@
 #    By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/11 15:53:54 by gwen              #+#    #+#              #
-#    Updated: 2026/03/18 11:41:18 by gwen             ###   ########.fr        #
+#    Updated: 2026/03/20 12:18:01 by gwen             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,6 +62,7 @@ SRC = main.c \
 	Variables/var_utils_2.c \
 	Variables/var_utils_3.c \
 	Variables/var_utils_4.c \
+	Variables/var_utils_5.c \
 	Variables/variables.c
 
 SRCS = $(addprefix $(SRC_DIR), $(SRC))
