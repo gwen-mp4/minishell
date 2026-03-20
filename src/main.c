@@ -31,12 +31,35 @@ t_cmd	*lexing_and_parsing(t_data *data)
 	return (ret);
 }
 
-void	do_line(t_data *data)
+void	reset_line(t_data *data)
 {
-	filter_var(data->cmd, data);
-	execution(data->cmd, data);
 	free(data->line);
 	data->line = NULL;
+}
+
+void	do_line(t_data *data)
+{
+	char	*tmp;
+
+	if (!data->cmd->next && !data->cmd->redirs && !data->cmd->av[1]
+		&& data->cmd->av[0][0] == '$')
+	{
+		filter_var(data->cmd, data);
+		if (data->cmd->av[0])
+		{
+			tmp = ft_strdup(data->cmd->av[0]);
+			clean_tokens(data->token);
+			free_cmds(data->cmd);
+			reset_line(data);
+			data->line = tmp;
+			data->cmd = lexing_and_parsing(data);
+			filter_var(data->cmd, data);
+		}
+	}
+	else
+		filter_var(data->cmd, data);
+	execution(data->cmd, data);
+	reset_line(data);
 	clean_tokens(data->token);
 	data->token = NULL;
 	free_cmds(data->cmd);
@@ -47,12 +70,6 @@ void	set_g_sig(t_data *data)
 {
 	data->exit_code = 130;
 	g_sig = 0;
-}
-
-void	reset_line(t_data *data)
-{
-	free(data->line);
-	data->line = NULL;
 }
 
 int	main(int ac, char **av, char **env)
