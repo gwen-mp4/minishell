@@ -6,7 +6,7 @@
 /*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 10:22:39 by storck            #+#    #+#             */
-/*   Updated: 2026/03/11 09:53:06 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/20 14:45:26 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,4 +105,11 @@ bool	null_env(t_data *data)
 		exit(ex);
 	}
 	return (1);
+}
+
+void	error_invalid_option(char c)
+{
+	ft_putstr_fd("minishell: unset: -", 2);
+	ft_putchar_fd(c, 2);
+	ft_putendl_fd(": invalid option", 2);
 }

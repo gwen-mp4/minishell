@@ -6,7 +6,7 @@
 /*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 09:31:41 by storck            #+#    #+#             */
-/*   Updated: 2026/03/20 13:08:28 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/20 14:33:02 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ void	exec_builtin(t_cmd *cmd, char **arg, t_data *data)
 	else if (ft_strncmp(arg[0], "unset", ft_strlen(arg[0])) == 0)
 		data->exit_code = exec_unset(arg + 1, &data->envlst);
 	else if (ft_strncmp(arg[0], "env", ft_strlen(arg[0])) == 0)
-		data->exit_code = exec_env(data->envlst);
+		data->exit_code = exec_env(data->envlst, arg);
 	else if (ft_strncmp(arg[0], "exit", ft_strlen(arg[0])) == 0)
 	{
 		close_all(data->fd_in, data->fd_out);

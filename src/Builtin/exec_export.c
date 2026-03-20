@@ -6,7 +6,7 @@
 /*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 12:31:48 by storck            #+#    #+#             */
-/*   Updated: 2026/03/20 09:46:38 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/20 14:51:58 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,8 @@ int	exec_export(char **args, t_list **env, t_data *data)
 
 	exit_code = 0;
 	i = 1;
+	if (args[1] && args[1][0] == '-' && args[1][1] != '\0')
+		return (error_invalid_option(args[1][1]), 2);
 	if (!args[1])
 	{
 		if (!export_no_args(*env) && !env)
