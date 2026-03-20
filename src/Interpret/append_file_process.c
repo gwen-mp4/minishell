@@ -3,14 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   append_file_process.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 11:01:44 by storck            #+#    #+#             */
-/*   Updated: 2026/03/19 14:22:41 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/20 13:56:28 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+void	set_exit_1(t_data *data)
+{
+	data->exit_code = 1;
+}
 
 int	file_append_process(char *outfile)
 {

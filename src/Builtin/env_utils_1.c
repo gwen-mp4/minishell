@@ -6,7 +6,7 @@
 /*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/04 10:00:38 by storck            #+#    #+#             */
-/*   Updated: 2026/03/19 15:30:06 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/20 13:18:37 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ int	init_envlst(t_data *data, char **env)
 		if (!append(&list, tmp))
 		{
 			free(tmp);
-			return (free_list(&list));	
+			return (free_list(&list));
 		}
 	}
 	data->envlst = list;

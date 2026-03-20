@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   interpret.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 12:43:54 by storck            #+#    #+#             */
-/*   Updated: 2026/03/18 13:10:23 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/20 13:54:28 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,15 +103,16 @@ void	execution(t_cmd *cmd, t_data *data)
 	}
 	if ((prepare_heredoc(cmd, data) == EXIT_FAILURE || !cmd->av || !cmd->av[0])
 		&& !cmd->next)
-	{
-		close_all(data->fd_in, data->fd_out);
-		return ;
-	}
+		return (close_all(data->fd_in, data->fd_out));
 	if (data->pipe_count == 0 && is_builtin(cmd->av[0]))
 	{
+		if (!ft_strcmp(cmd->av[0], "echo") || !ft_strcmp(cmd->av[0], "pwd"))
+		{
+			if (set_fds(cmd) == EXIT_FAILURE)
+				return (set_exit_1(data));
+		}
 		exec_builtin(cmd, cmd->av, data);
-		reset_fds(data->fd_in, data->fd_out);
-		return ;
+		return (reset_fds(data->fd_in, data->fd_out));
 	}
 	exec_last(cmd, data, data->fd_in, data->fd_out);
 }

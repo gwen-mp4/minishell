@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 10:49:54 by storck            #+#    #+#             */
-/*   Updated: 2026/03/20 11:58:16 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/20 13:56:12 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,6 +190,7 @@ int		file_heredoc_process(t_redir *heredoc, t_data *data);
 int		prepare_heredoc(t_cmd *cmd, t_data *data);
 
 /* append_file_process.c */
+void	set_exit_1(t_data *data);
 int		file_append_process(char *outfile);
 
 /* fd_redirection.c */
