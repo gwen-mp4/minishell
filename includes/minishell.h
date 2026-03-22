@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 10:49:54 by storck            #+#    #+#             */
-/*   Updated: 2026/03/19 09:39:00 by marvin           ###   ########.fr       */
+/*   Updated: 2026/03/22 11:08:09 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,13 @@ typedef struct s_cmd
 	struct s_cmd	*next;
 }	t_cmd;
 
+typedef struct s_parse_h
+{
+	t_cmd	*head;
+	t_cmd	*current;
+	t_token	*tokens_head;
+}	t_parse_h;
+
 typedef struct s_var
 {
 	char			*name;
@@ -134,6 +141,7 @@ int		is_operator(char c);
 int		is_redir(t_type type);
 int		is_number(char *num);
 int		is_expandable(char c);
+int		is_special_op(char c);
 void	clean_tokens(t_token *tokens);
 void	free_cmds(t_cmd *cmd);
 void	free_data(t_data *data);
@@ -141,6 +149,8 @@ char	**get_args(t_token *token);
 void	signal_heredoc(void);
 void	setup_signal(void);
 void	signal_child(void);
+void	free_heredoc(char *line, int fd, t_data *data, char *doc_name);
+void	check_find_way(t_data *data, t_cmd *cmd, pid_t *pids);
 
 /* init.c */
 int		init_data(t_data *data, int ac, char **av, char **env);
@@ -188,13 +198,14 @@ int		file_heredoc_process(t_redir *heredoc, t_data *data);
 int		prepare_heredoc(t_cmd *cmd, t_data *data);
 
 /* append_file_process.c */
+void	set_exit_1(t_data *data);
 int		file_append_process(char *outfile);
 
 /* fd_redirection.c */
 int		input_redirection(t_redir *redir);
 int		output_redirection(t_redir *redir);
 void	find_way(t_cmd *cmd, t_data *data, pid_t *pids);
-void	set_fds(t_cmd *cmd);
+int		set_fds(t_cmd *cmd);
 void	check_only_fds(t_cmd *cmd, t_data *data);
 
 /* exec_builtin */
@@ -252,5 +263,7 @@ void	new_var(t_data *data, char *str);
 int		var_declaration(char *str);
 int		find_dollar(char *str);
 void	remove_av_at(char **av, int i);
+void	word_split(t_cmd *cmd, int *i);
+void	free_tab(char **tabl);
 
 #endif

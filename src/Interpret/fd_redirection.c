@@ -6,7 +6,7 @@
 /*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/25 10:31:45 by storck            #+#    #+#             */
-/*   Updated: 2026/03/18 14:56:38 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/19 14:25:05 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,7 @@ void	find_way(t_cmd *cmd, t_data *data, pid_t *pids)
 {
 	char	**env;
 
-	if (!cmd->av || !cmd->av[0])
-	{
-		free_find_way(data, pids, cmd);
-		exit (0);
-	}
+	check_find_way(data, cmd, pids);
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
 	if (is_builtin(cmd->av[0]))
@@ -61,15 +57,14 @@ void	find_way(t_cmd *cmd, t_data *data, pid_t *pids)
 	}
 	env = regen_env(data->envlst);
 	if (!env)
-		return (perror("malloc: "));
-	else
-		exec_cmd(cmd, env, data, pids);
+		return (free_find_way(data, pids, NULL), perror("malloc: "));
+	exec_cmd(cmd, env, data, pids);
 	free_env(env, -1);
 	free_find_way(data, pids, NULL);
 	exit(data->exit_code);
 }
 
-void	set_fds(t_cmd *cmd)
+int	set_fds(t_cmd *cmd)
 {
 	t_redir	*tmp;
 
@@ -79,15 +74,16 @@ void	set_fds(t_cmd *cmd)
 		if (tmp->type == INPUT || tmp->type == HEREDOC)
 		{
 			if (input_redirection(tmp) == EXIT_FAILURE)
-				exit (1);
+				return (EXIT_FAILURE);
 		}
 		if (tmp->type == OUTPUT || tmp->type == APPEND)
 		{
 			if (output_redirection(tmp) == EXIT_FAILURE)
-				exit (1);
+				return (EXIT_FAILURE);
 		}
 		tmp = tmp->next;
 	}
+	return (EXIT_SUCCESS);
 }
 
 void	check_only_fds(t_cmd *cmd, t_data *data)

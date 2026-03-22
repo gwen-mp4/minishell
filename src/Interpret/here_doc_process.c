@@ -6,7 +6,7 @@
 /*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 11:58:17 by storck            #+#    #+#             */
-/*   Updated: 2026/03/18 13:48:01 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/20 13:22:20 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,14 @@ static char	*get_heredoc_name(void)
 	if (!number)
 		return (NULL);
 	name = ft_strjoin(HEREDOC_NAME, number);
+	if (!name)
+		return (free(number), NULL);
 	free(number);
 	i++;
 	return (name);
 }
 
-int	fill_doc(int fd, char *delim)
+int	fill_doc(int fd, char *delim, char *doc_name, t_data *data)
 {
 	char	*line;
 
@@ -38,15 +40,14 @@ int	fill_doc(int fd, char *delim)
 		line = readline("heredoc>");
 		if (!line || g_sig == SIGINT)
 		{
-			free(line);
-			close(fd);
+			free_heredoc(line, fd, data, doc_name);
 			signal(SIGINT, SIG_DFL);
 			kill(getpid(), SIGINT);
 			exit(1);
 		}
 		if ((ft_strlen(line) == ft_strlen(delim))
 			&& ft_strcmp(line, delim) == 0)
-			return (free(line), close(fd), EXIT_SUCCESS);
+			return (free_heredoc(line, fd, data, doc_name), EXIT_SUCCESS);
 		ft_putendl_fd(line, fd);
 		free(line);
 	}
@@ -54,9 +55,10 @@ int	fill_doc(int fd, char *delim)
 	return (close(fd), EXIT_SUCCESS);
 }
 
-int	heredoc_parent(pid_t pid, char *doc_name, int fd, t_data *data)
+int	heredoc_parent(pid_t pid, char *doc_name, t_data *data)
 {
 	int	status;
+	int	fd;
 
 	if (pid < 0)
 		return (unlink(doc_name), free(doc_name), -1);
@@ -93,14 +95,12 @@ int	file_heredoc_process(t_redir *heredoc, t_data *data)
 	if (!pid)
 	{
 		signal_heredoc();
-		if (fill_doc(fd, heredoc->filename) == EXIT_FAILURE)
+		if (fill_doc(fd, heredoc->filename, doc_name, data) == EXIT_FAILURE)
 			exit(1);
 		exit(0);
 	}
 	close(fd);
-	if (heredoc_parent(pid, doc_name, fd, data) < 0)
-		return (-1);
-	return (fd);
+	return (heredoc_parent(pid, doc_name, data));
 }
 
 int	prepare_heredoc(t_cmd *cmd, t_data *data)

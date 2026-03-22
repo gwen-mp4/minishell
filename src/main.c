@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:54:48 by storck            #+#    #+#             */
-/*   Updated: 2026/03/19 09:39:30 by marvin           ###   ########.fr       */
+/*   Updated: 2026/03/22 11:08:24 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,28 +31,33 @@ t_cmd	*lexing_and_parsing(t_data *data)
 	return (ret);
 }
 
+void	reset_line(t_data *data, int f1, int f2)
+{
+	if (f1 != -1)
+	{
+		clean_tokens(data->token);
+		data->token = NULL;
+	}
+	if (f2 != -1)
+	{
+		free_cmds(data->cmd);
+		data->cmd = NULL;
+	}
+	free(data->line);
+	data->line = NULL;
+}
+
 void	do_line(t_data *data)
 {
 	filter_var(data->cmd, data);
 	execution(data->cmd, data);
-	free(data->line);
-	data->line = NULL;
-	clean_tokens(data->token);
-	data->token = NULL;
-	free_cmds(data->cmd);
-	data->cmd = NULL;
+	reset_line(data, 1, 1);
 }
 
 void	set_g_sig(t_data *data)
 {
 	data->exit_code = 130;
 	g_sig = 0;
-}
-
-void	reset_line(t_data *data)
-{
-	free(data->line);
-	data->line = NULL;
 }
 
 int	main(int ac, char **av, char **env)
@@ -75,7 +80,7 @@ int	main(int ac, char **av, char **env)
 		data.cmd = lexing_and_parsing(&data);
 		if (!data.cmd)
 		{
-			reset_line(&data);
+			reset_line(&data, -1, -1);
 			continue ;
 		}
 		do_line(&data);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path_finding.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 12:00:42 by storck            #+#    #+#             */
-/*   Updated: 2026/03/18 15:47:14 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/20 12:23:38 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ char	**paths(char **envp)
 {
 	char	**my_paths;
 	char	*path;
+	char	buffer[PATH_MAX];
 	int		i;
 
 	i = 0;
@@ -37,7 +38,14 @@ char	**paths(char **envp)
 		i++;
 	}
 	if (!path)
-		return (NULL);
+	{
+		getcwd(buffer, PATH_MAX);
+		path = ft_substr(buffer, ft_strlen(buffer) - 4, ft_strlen(buffer));
+		if (path && path[4] == '\0')
+			path = ft_strdup(buffer);
+		else
+			return (NULL);
+	}
 	my_paths = path_split(path, ':');
 	return (my_paths);
 }

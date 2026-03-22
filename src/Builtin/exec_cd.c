@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 11:02:03 by storck            #+#    #+#             */
-/*   Updated: 2026/03/13 14:25:20 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/19 15:27:15 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ static void	update_oldpwd(t_data *data)
 		test = ft_strjoin("OLD", test);
 		if (!test)
 			return (perror("malloc"));
-		unset("OLDPWD", &data->envlst);
 		export_ex(test, &data->envlst);
 	}
 	free(test);
@@ -64,7 +63,6 @@ static void	update_pwd(t_data *data, char *arg)
 	pwd = ft_strjoin("PWD=", cwd);
 	if (!pwd)
 		return (perror("malloc"));
-	unset("PWD", &data->envlst);
 	export_ex(pwd, &data->envlst);
 	free(pwd);
 }

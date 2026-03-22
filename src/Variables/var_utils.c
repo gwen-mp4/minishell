@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/04 15:39:39 by storck            #+#    #+#             */
-/*   Updated: 2026/03/17 11:21:01 by marvin           ###   ########.fr       */
+/*   Updated: 2026/03/19 13:54:41 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,15 @@ char	*get_var_content(char *var, t_data *data)
 	char	*rest;
 
 	rest = NULL;
-	tmp = data->envlst->next;
 	if (ft_strchr(var, '/'))
 		rest = scalp(&var);
+	len = get_eq_pos(data->envlst->str);
+	if (len == -1)
+		return (free(rest), NULL);
+	if ((int)ft_strlen(var) == len && !ft_strncmp(data->envlst->str, var, len)
+		&& data->envlst->str[len] == '=')
+		return (return_content(rest, var, data->envlst->str, len));
+	tmp = data->envlst->next;
 	while (tmp != data->envlst)
 	{
 		len = get_eq_pos(tmp->str);
@@ -82,8 +88,7 @@ char	*get_var_content(char *var, t_data *data)
 			return (return_content(rest, var, tmp->str, len));
 		tmp = tmp->next;
 	}
-	free(rest);
-	return (NULL);
+	return (free(rest), NULL);
 }
 
 t_var	*init_var(char *name, char *content)

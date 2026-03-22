@@ -332,6 +332,30 @@ echo <"./test_files/infile" "bonjour       42"      *the output should be **bonj
 cat <"./test_files/file name with spaces"       *it should do nothing because the file is empty but it says no such file or directory, maybe it doesn't manage spaces?*
 in short, i let you see by yourself using the tester but it's generally the redirections that doesn't works (except heredoc)
 
+**19/03/2026 by gwen**:
+
+-Not sure about these errors if we should manage them or not:
+export T="echo segfault | grep segfault"  -->  $T       *bash prints "segfault | grep segfault" but for us, it prints command not found*
+
+
+-unset PATH --> cd /bin --> ls      *ls should work, basically if we are in the command's folder, it can find it even if PATH is unset.*
+
+**20/03/2026 by gwen**:
+I found some leaks:
+"."
+
+/bin/
+
+Not leaks but should watch:
+
+export test="arg1	arg2"       *these 6 lines are executed in order*
+echo 'echo $1' > tmp_test_sh
+bash tmp_test_sh $test
+echo 'echo $2' > tmp_test_sh
+bash tmp_test_sh $test
+rm -f tmp_test_sh
+
+
 
 *This project has been created as part of the 42 curriculum by gwen, storck*
 

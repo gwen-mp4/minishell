@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils_1.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/04 10:00:38 by storck            #+#    #+#             */
-/*   Updated: 2026/03/10 09:59:22 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/20 14:20:22 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,10 @@ int	init_envlst(t_data *data, char **env)
 		if (!tmp)
 			return (free_list(&list));
 		if (!append(&list, tmp))
+		{
+			free(tmp);
 			return (free_list(&list));
+		}
 	}
 	data->envlst = list;
 	return (1);
