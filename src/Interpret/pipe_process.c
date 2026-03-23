@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_process.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 15:27:33 by storck            #+#    #+#             */
-/*   Updated: 2026/03/19 14:26:20 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/23 18:31:52 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void	do_pipe(t_cmd *cmd, t_data *data, pid_t *pids, int index)
 	{
 		close(p_fd[1]);
 		redirect_fd(p_fd[0], STDIN_FILENO);
+		if (ft_strcmp(cmd->av[0], "yes") && ft_strcmp(cmd->av[0], "sleep"))
+			waitpid(pids[index], NULL, 0);
 	}
 }
 
