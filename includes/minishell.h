@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 10:49:54 by storck            #+#    #+#             */
-/*   Updated: 2026/03/22 11:09:42 by marvin           ###   ########.fr       */
+/*   Updated: 2026/03/23 10:51:44 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -247,6 +247,7 @@ void	sort_array(char **arr, int len);
 char	**lst_to_arr(t_list *env);
 bool	null_env(t_data *data);
 void	error_invalid_option(char c);
+int		handle_shlvl(t_data *data);
 
 /* variable.c */
 void	filter_var(t_cmd *cmd, t_data *data);

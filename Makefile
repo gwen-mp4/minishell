@@ -6,7 +6,7 @@
 #    By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/11 15:53:54 by gwen              #+#    #+#              #
-#    Updated: 2026/03/20 13:59:10 by gwen             ###   ########.fr        #
+#    Updated: 2026/03/23 10:53:31 by gwen             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ SRC = main.c \
 	Builtin/env_utils_1.c \
 	Builtin/env_utils_2.c \
 	Builtin/env_utils_3.c \
+	Builtin/env_utils_4.c \
 	Builtin/exec_cd.c \
 	Builtin/exec_echo.c \
 	Builtin/exec_env.c \
