@@ -405,7 +405,7 @@ Execute with:
 Delete .o files with:
     make clean
 
-Delete .o file and ./minishell with:
+Delete .o file and minishell with:
     make fclean
 
 Recompile with:
@@ -413,7 +413,7 @@ Recompile with:
 
 ### Resources
 
-The following article was particularly usefull in the beginning of this project to help s build our road map, understand the loging of a shell and how to breakdown the lexing and parsing of of the commands inputed in our minishell.
+The following article was particularly usefull in the beginning of this project to help us build our road map, understand the logic of a shell and how to breakdown the lexing and parsing of of the commands inputed in our minishell.
 [text](https://m4nnb3ll.medium.com/minishell-building-a-mini-bash-a-42-project-b55a10598218)
 
 No AI was used in the making of this project.
