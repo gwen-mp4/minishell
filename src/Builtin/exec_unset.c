@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_unset.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 12:32:06 by storck            #+#    #+#             */
-/*   Updated: 2026/03/20 15:04:12 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/23 17:08:41 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ bool	unset(char *str, t_list **env)
 	if (!str || !*str)
 		return (false);
 	if (!syntax(str))
-		return (true);
+		return (false);
 	pos = exist(str, *env);
 	if (pos == -1)
 		return (false);

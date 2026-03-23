@@ -6,7 +6,7 @@
 /*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 12:19:41 by storck            #+#    #+#             */
-/*   Updated: 2026/03/20 13:52:56 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/23 17:35:16 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,20 +40,19 @@ int	parsing_token_one(t_token **token, t_parse_h *h, t_data *data)
 	if (tok->type == WORD)
 	{
 		if (!add_arg_to_cmd(tok->value, h->current))
-			return (error_cleanup_parsing(h->head, NULL, h->tokens_head, data),
-				0);
+			return (error_cleanup_parsing(h->head, NULL, data), 0);
 	}
 	else if (is_redir(tok->type))
 	{
 		if (!tok->next || tok->next->type != WORD)
 		{
+			if (tok->next->type == PIPE && tok->type == OUTPUT)
+				return (free_cmds(h->head), 0);
 			err = get_token_str(tok->next);
-			return (error_cleanup_parsing(h->head, err, h->tokens_head, data),
-				0);
+			return (error_cleanup_parsing(h->head, err, data), 0);
 		}
 		if (!add_redir_to_cmd(tok->type, tok->next->value, h->current))
-			return (error_cleanup_parsing(h->head, NULL, h->tokens_head, data),
-				0);
+			return (error_cleanup_parsing(h->head, NULL, data), 0);
 		*token = tok->next;
 	}
 	return (1);
@@ -71,7 +70,7 @@ int	parsing_token_two(t_token **token, t_parse_h *h, t_data *data)
 		if (!tok->next || tok->next->type == PIPE)
 		{
 			err = get_token_str(tok->next);
-			error_cleanup_parsing(h->head, err, h->tokens_head, data);
+			error_cleanup_parsing(h->head, err, data);
 			return (0);
 		}
 		h->current->next = new_cmd();
@@ -90,7 +89,7 @@ t_cmd	*parsing(t_token *token, t_data *data)
 	if (!token)
 		return (NULL);
 	if (token->type == PIPE)
-		return (error_cleanup_parsing(NULL, get_token_str(token), token, data),
+		return (error_cleanup_parsing(NULL, get_token_str(token), data),
 			NULL);
 	h.head = new_cmd();
 	if (!h.head)

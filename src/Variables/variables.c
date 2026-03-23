@@ -6,7 +6,7 @@
 /*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/04 15:02:36 by storck            #+#    #+#             */
-/*   Updated: 2026/03/23 12:32:22 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/23 14:45:16 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,11 @@ static void	process_redir_args(t_redir *redir, t_data *data)
 {
 	while (redir)
 	{
-		while (do_replace(redir->filename))
-			replace_var(&redir->filename, data);
+		if (redir->type != HEREDOC)
+		{
+			while (do_replace(redir->filename))
+				replace_var(&redir->filename, data);
+		}
 		strip_quotes(&redir->filename);
 		redir = redir->next;
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path_finding.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 12:00:42 by storck            #+#    #+#             */
-/*   Updated: 2026/03/20 12:23:38 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/23 14:26:21 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	**paths(char **envp)
 	path = NULL;
 	while (envp[i])
 	{
-		if (ft_strnstr(envp[i], "PATH", 4))
+		if (ft_strnstr(envp[i], "PATH=", 5) && envp[i][5] != 0)
 			path = envp[i] + 5;
 		i++;
 	}
@@ -41,10 +41,10 @@ char	**paths(char **envp)
 	{
 		getcwd(buffer, PATH_MAX);
 		path = ft_substr(buffer, ft_strlen(buffer) - 4, ft_strlen(buffer));
-		if (path && path[4] == '\0')
+		if (path && !ft_strncmp(path, "/bin", 4))
 			path = ft_strdup(buffer);
 		else
-			return (NULL);
+			return (free(path), NULL);
 	}
 	my_paths = path_split(path, ':');
 	return (my_paths);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 09:31:41 by storck            #+#    #+#             */
-/*   Updated: 2026/03/23 09:33:22 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/23 17:14:15 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ void	no_path(char *str, char **env)
 		free(str);
 		exit (126);
 	}
-	else if (!path_is_set(env) || ft_strchr(str, '/'))
+	else if ((!path_is_set(env) && access(str, F_OK) == 0)
+		|| ft_strchr(str, '/'))
 	{
 		error_no_such_file(str);
 		free_env(env, -1);

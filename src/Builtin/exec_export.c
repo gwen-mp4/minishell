@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_export.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 12:31:48 by storck            #+#    #+#             */
-/*   Updated: 2026/03/23 10:32:27 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/23 14:25:31 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,9 @@ static int	exist(char *str, t_list *env)
 
 	if (!env)
 		return (-1);
-	i = 0;
-	while (str[i] && str[i] != '=')
-		i++;
+	i = find_equal(str);
+	if (str[i] == 0)
+		return (-2);
 	j = 0;
 	tmp = env;
 	if (!ft_strncmp(tmp->str, str, i) && (tmp->str[i] == '\0'
@@ -95,17 +95,16 @@ bool	export_ex(char *str, t_list **env)
 	char	*value;
 
 	pos = exist(str, (*env));
+	if (pos == -2)
+		return (true);
 	value = ft_strdup(str);
 	if (!value)
 		return (false);
 	if (pos >= 0)
 	{
-		i = 0;
-		while (i < pos)
-		{
+		i = -1;
+		while (++i < pos)
 			(*env) = (*env)->next;
-			i++;
-		}
 		free ((*env)->str);
 		(*env)->str = value;
 	}
