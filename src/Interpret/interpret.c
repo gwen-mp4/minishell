@@ -6,7 +6,7 @@
 /*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 12:43:54 by storck            #+#    #+#             */
-/*   Updated: 2026/03/23 17:44:27 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/23 18:18:28 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,9 @@ static void	exec_last(t_cmd *cmd, t_data *data, int save_in, int save_out)
 	int		total;
 
 	total = data->pipe_count + 1;
+	signal(SIGPIPE, SIG_IGN);
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 	pids = run_pipes(&cmd, data, total);
 	if (!pids)
 	{
@@ -81,9 +84,6 @@ static void	exec_last(t_cmd *cmd, t_data *data, int save_in, int save_out)
 	pids[total - 1] = fork_process();
 	if (!pids[total - 1])
 		find_way(cmd, data, pids);
-	signal(SIGPIPE, SIG_IGN);
-	signal(SIGINT, SIG_IGN);
-	signal(SIGQUIT, SIG_IGN);
 	redirect_fd(save_in, STDIN_FILENO);
 	redirect_fd(save_out, STDOUT_FILENO);
 	wait_all(pids, total, data);
