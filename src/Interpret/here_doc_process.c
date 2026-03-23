@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc_process.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 11:58:17 by storck            #+#    #+#             */
-/*   Updated: 2026/03/20 13:22:20 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/23 09:53:24 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ int	file_heredoc_process(t_redir *heredoc, t_data *data)
 	if (!pid)
 	{
 		signal_heredoc();
+		close_all(data->fd_in, data->fd_out);
 		if (fill_doc(fd, heredoc->filename, doc_name, data) == EXIT_FAILURE)
 			exit(1);
 		exit(0);

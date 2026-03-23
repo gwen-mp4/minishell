@@ -19,6 +19,8 @@ void	free_redir(t_redir *redir)
 	while (redir)
 	{
 		next = redir->next;
+		if (redir->type == HEREDOC)
+			close(redir->fd);
 		free(redir->filename);
 		free(redir);
 		redir = next;
