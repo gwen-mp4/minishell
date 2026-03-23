@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   append_file_process.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 11:01:44 by storck            #+#    #+#             */
-/*   Updated: 2026/03/20 14:19:11 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/23 19:55:48 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,27 @@ void	check_find_way(t_data *data, t_cmd *cmd, pid_t *pids)
 	{
 		free_find_way(data, pids, NULL);
 		exit(1);
+	}
+}
+
+void	close_heredoc(t_cmd *cmd)
+{
+	t_cmd	*c;
+	t_redir	*r;
+
+	c = cmd;
+	while (c)
+	{
+		r = c->redirs;
+		while (r)
+		{
+			if (r->type == HEREDOC && r->fd >= 0)
+			{
+				close(r->fd);
+				r->fd = -1;
+			}
+			r = r->next;
+		}
+		c = c->next;
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 10:49:54 by storck            #+#    #+#             */
-/*   Updated: 2026/03/23 16:38:05 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/23 19:56:06 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,6 +197,7 @@ t_token	*create_token(t_type type, char *value);
 /* here_doc_process.c */
 int		file_heredoc_process(t_redir *heredoc, t_data *data);
 int		prepare_heredoc(t_cmd *cmd, t_data *data);
+void	close_heredoc(t_cmd *cmd);
 
 /* append_file_process.c */
 void	set_exit_1(t_data *data);
