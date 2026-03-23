@@ -6,7 +6,7 @@
 /*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 09:31:41 by storck            #+#    #+#             */
-/*   Updated: 2026/03/20 15:34:14 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/23 09:33:22 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ void	exec_cmd(t_cmd *cmd, char **env, t_data *data, pid_t *pids)
 		{
 			free(path);
 			free(pids);
+			close_all(data->fd_in, data->fd_out);
 			free_exec(data, env, fd, cmd->av[0]);
 		}
 	}
@@ -114,8 +115,5 @@ void	exec_builtin(t_cmd *cmd, char **arg, t_data *data)
 	else if (ft_strncmp(arg[0], "env", ft_strlen(arg[0])) == 0)
 		data->exit_code = exec_env(data->envlst, arg);
 	else if (ft_strncmp(arg[0], "exit", ft_strlen(arg[0])) == 0)
-	{
-		close_all(data->fd_in, data->fd_out);
 		exec_exit(arg, data);
-	}
 }

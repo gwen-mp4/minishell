@@ -6,7 +6,7 @@
 /*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 12:32:23 by storck            #+#    #+#             */
-/*   Updated: 2026/03/19 10:23:49 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/23 09:27:57 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	err_exit(t_data *data, char *str)
 
 void	exit_ret(t_data *data, int ret)
 {
+	close_all(data->fd_in, data->fd_out);
 	free_data(data);
 	exit(ret);
 }
