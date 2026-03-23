@@ -6,11 +6,16 @@
 /*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 11:31:22 by gwen              #+#    #+#             */
-/*   Updated: 2026/03/23 11:18:38 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/23 12:13:00 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+int	is_ws(char c)
+{
+	return (c == ' ' || (c >= 9 && c <= 13));
+}
 
 static int	has_quote(char *src)
 {
@@ -62,7 +67,7 @@ void	word_split(t_cmd *cmd, int *i)
 
 	if (!has_quote(cmd->av[*i]))
 		return ;
-	words = ft_split(cmd->av[*i], ' ');
+	words = ft_split_ws(cmd->av[*i]);
 	if (!words)
 		return ;
 	count = add_splitted_to_cmd(cmd, *i, words);

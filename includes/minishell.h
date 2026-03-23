@@ -6,7 +6,7 @@
 /*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 10:49:54 by storck            #+#    #+#             */
-/*   Updated: 2026/03/23 10:51:44 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/23 11:47:44 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -269,5 +269,7 @@ int		find_dollar(char *str);
 void	remove_av_at(char **av, int i);
 void	word_split(t_cmd *cmd, int *i);
 void	free_tab(char **tabl);
+char	**ft_split_ws(char const *s);
+int		is_ws(char c);
 
 #endif
