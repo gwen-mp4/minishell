@@ -6,7 +6,7 @@
 /*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 10:56:12 by gwen              #+#    #+#             */
-/*   Updated: 2026/03/13 11:26:48 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/23 17:54:11 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,5 @@ void	setup_signal(void)
 	sa.sa_handler = SIG_IGN;
 	sigaction(SIGQUIT, &sa, NULL);
 	sigaction(SIGTSTP, &sa, NULL);
+	sigaction(SIGPIPE, &sa, NULL);
 }

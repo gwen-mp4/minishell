@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 10:43:38 by storck            #+#    #+#             */
-/*   Updated: 2026/03/18 12:04:10 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/23 16:38:16 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,8 @@ void	error_cleanup_lexing(t_token *tokens, int status, t_data *data)
 	data->exit_code = 2;
 }
 
-void	error_cleanup_parsing(t_cmd *cmds, const char *error, t_token *token,
-			t_data *data)
+void	error_cleanup_parsing(t_cmd *cmds, const char *error, t_data *data)
 {
-	(void)token;
 	if (cmds)
 		free_cmds(cmds);
 	if (error)

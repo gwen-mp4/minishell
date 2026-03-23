@@ -6,7 +6,7 @@
 /*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/23 10:42:07 by gwen              #+#    #+#             */
-/*   Updated: 2026/03/23 11:05:58 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/23 14:25:35 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,14 @@ int	handle_shlvl(t_data *data)
 		current = current->next;
 	}
 	return (append(&data->envlst, ft_strdup("1")));
+}
+
+int	find_equal(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] && str[i] != '=')
+		i++;
+	return (i);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   interpret.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 12:43:54 by storck            #+#    #+#             */
-/*   Updated: 2026/03/23 09:28:19 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/23 17:44:27 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ static void	exec_last(t_cmd *cmd, t_data *data, int save_in, int save_out)
 	pids[total - 1] = fork_process();
 	if (!pids[total - 1])
 		find_way(cmd, data, pids);
+	signal(SIGPIPE, SIG_IGN);
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 	redirect_fd(save_in, STDIN_FILENO);

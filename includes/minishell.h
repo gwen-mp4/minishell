@@ -6,7 +6,7 @@
 /*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 10:49:54 by storck            #+#    #+#             */
-/*   Updated: 2026/03/23 11:47:44 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/23 16:38:05 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,8 +157,7 @@ int		init_data(t_data *data, int ac, char **av, char **env);
 
 /* error */
 void	error_cleanup_lexing(t_token *tokens, int status, t_data *data);
-void	error_cleanup_parsing(t_cmd *cmds, const char *error, t_token *token,
-			t_data *data);
+void	error_cleanup_parsing(t_cmd *cmds, const char *error, t_data *data);
 void	error_command_not_found(const char *cmd);
 void	error_permission_denied(const char *file);
 void	error_no_such_file(const char *file);
@@ -217,6 +216,7 @@ void	exec_builtin(t_cmd *cmd, char **args, t_data *data);
 
 /* builtin_utils */
 int		check_key(char *str);
+int		find_equal(char *str);
 
 /* builtins */
 int		exec_cd(t_data *data, char **args);
