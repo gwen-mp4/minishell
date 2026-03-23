@@ -6,7 +6,7 @@
 /*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/04 10:00:38 by storck            #+#    #+#             */
-/*   Updated: 2026/03/20 14:20:22 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/23 10:52:16 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int	init_envlst(t_data *data, char **env)
 	char	*tmp;
 	t_list	*list;
 
-	if (!(*env))
+	if (!env || !(*env))
 		return (null_env(data));
 	i = -1;
 	list = NULL;
@@ -120,5 +120,7 @@ int	init_envlst(t_data *data, char **env)
 		}
 	}
 	data->envlst = list;
+	if (!handle_shlvl(data))
+		return (0);
 	return (1);
 }
