@@ -6,7 +6,7 @@
 /*   By: storck <storck@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 11:31:22 by gwen              #+#    #+#             */
-/*   Updated: 2026/03/23 11:07:57 by storck           ###   ########.fr       */
+/*   Updated: 2026/03/23 11:50:02 by storck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ static int	add_splitted_to_cmd(t_cmd *cmd, int i, char **words)
 	j = 1;
 	while (words[j])
 	{
-
 		if (!add_arg_to_cmd(words[j], cmd))
 			return (0);
 		j++;
