@@ -6,7 +6,7 @@
 /*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 10:22:39 by storck            #+#    #+#             */
-/*   Updated: 2026/03/23 12:19:48 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/23 12:44:58 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ bool	null_env(t_data *data)
 		free_data(data);
 		exit(ex);
 	}
+	export_ex("SHLVL=1", &(data->envlst));
 	return (1);
 }
 

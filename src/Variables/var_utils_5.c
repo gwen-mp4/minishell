@@ -6,7 +6,7 @@
 /*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 11:31:22 by gwen              #+#    #+#             */
-/*   Updated: 2026/03/23 12:22:44 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/23 12:36:46 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	has_quote(char *src)
 			sq = !sq;
 		else if (*src == '"' && !sq)
 			dq = !dq;
-		else if (*src == ' ' && !dq && !sq)
+		else if (is_ws(*src) && !dq && !sq)
 			return (1);
 		src++;
 	}
