@@ -6,7 +6,7 @@
 /*   By: gwen <gwen@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 12:19:41 by storck            #+#    #+#             */
-/*   Updated: 2026/03/23 17:35:16 by gwen             ###   ########.fr       */
+/*   Updated: 2026/03/24 10:45:19 by gwen             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,6 @@ int	parsing_token_one(t_token **token, t_parse_h *h, t_data *data)
 	{
 		if (!tok->next || tok->next->type != WORD)
 		{
-			if (tok->next->type == PIPE && tok->type == OUTPUT)
-				return (free_cmds(h->head), 0);
 			err = get_token_str(tok->next);
 			return (error_cleanup_parsing(h->head, err, data), 0);
 		}
